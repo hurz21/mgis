@@ -1,0 +1,118 @@
+﻿<Window x:Class="winBestand"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:bgm"
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen"
+        Title="Bestand" Height="450" Width="900">
+    <Window.Resources>
+        <XmlDataProvider x:Key="XMLSourceComboBoxgemarkungen" />
+        <Style x:Key="dgRowStyleRB" TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource dgRowStyle}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding STATUS}" Value="1">
+                    <Setter Property="Foreground" Value="blue" />
+                    <Setter Property="ToolTip" Value="Dieser Eintrag ist eine Verlinkung mit einem Verwandten Vorgang" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding gueltig}" Value="N">
+                    <Setter Property="Background" Value="Red" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding genese}" Value="2">
+                    <Setter Property="Background" Value="Orange" />
+                    <Setter Property="ToolTip" Value="Diese Objekte wurden selbst digitalisiert" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+
+    </Window.Resources>
+    <TabControl>
+        <TabItem  Header="GIS-Bestand">
+            <DockPanel Background="LightGray">
+                <StackPanel Orientation="Horizontal" Height="50" DockPanel.Dock="Top">
+                    <ComboBox Name="cmbgemarkung"  MaxDropDownHeight="800"   Height="30" Margin="5"
+                                       DataContext="{Binding Source={StaticResource XMLSourceComboBoxgemarkungen}, XPath=/Variablen/Variable}"
+                                                                ItemsSource="{Binding}" 
+                                                                DisplayMemberPath="@Name" 
+                                                                SelectedValuePath="@ID"
+                                                                SelectedValue="{Binding Path=ID}" 
+                                                              SelectionChanged="cmbgemarkung_SelectionChanged"
+                                      Width="200"
+                                      >
+                    </ComboBox>
+                    <TextBlock Name="tbTreffer" Width="100" Margin="5" Height="30" Padding="5"/>
+                </StackPanel>
+                <DataGrid  x:Name="dgBestand"   ItemsSource="{Binding ''}"    Margin="5"                                             
+                                              RowStyle="{StaticResource dgRowStyleRB}"                                              
+                                              ColumnHeaderStyle="{StaticResource dgHeaderStyle}"    
+                  SelectionChanged="dgBestand_SelectionChanged"                   
+                                   >
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="gid"      Binding="{Binding katFST.gid}"     />
+                        <DataGridTextColumn Header="Gemeinde"      Binding="{Binding katFST.gemeindename}"     />
+                        <DataGridTextColumn Header="Gemarkung"      Binding="{Binding katFST.gemarkungstext}"     />
+                        <DataGridTextColumn Header="gemnr"      Binding="{Binding katFST.gemcode}"     />
+                        <DataGridTextColumn Header="Flur"  Binding="{Binding katFST.flur}" />
+                        <DataGridTextColumn Header="Zähler"   Binding="{Binding katFST.zaehler}" />
+                        <DataGridTextColumn Header="Nenner"   Binding="{Binding katFST.nenner}" />
+                        <DataGridTextColumn Header=""  Binding="{Binding katFST.fstueckKombi}" />
+                        <DataGridTextColumn Header="blattNr"    Binding="{Binding blattnr}" Foreground="Blue" />
+                        <DataGridTextColumn Header="k"    Binding="{Binding laufnr}" />
+                        <DataGridTextColumn Header="status"    Binding="{Binding status}" ToolTipService.ToolTip=" '1 - eintrag, 2 - änderung, 3 -?, 4 - verz gelöscht" />
+                        <DataGridTextColumn Header="gueltig"    Binding="{Binding gueltig}" />
+                        <DataGridTextColumn Header="gefundenIn"    Binding="{Binding katFST.zeigtauf}" />
+                        <!--<DataGridTextColumn Header="TIFF"    Binding="{Binding datei}" />-->
+                        <DataGridTextColumn Header="Datum"    Binding="{Binding datum1}" />
+                        <DataGridTextColumn Header="digit"    Binding="{Binding genese}" />
+                    </DataGrid.Columns>
+                </DataGrid>
+
+            </DockPanel>
+
+        </TabItem>
+        <TabItem  Header="ProbauG">
+            <DockPanel Background="LightGray">
+                <StackPanel Orientation="Horizontal" Height="50" DockPanel.Dock="Top">
+                    <Button Name="btnPROBAUGinit" Click="btnPROBAUGinit_Click" Content="Auffrischen" Margin="5"/>
+                    <TextBlock >... dauert ewig ...</TextBlock>
+                    <!--<ComboBox Name="cmbgemarkung"  MaxDropDownHeight="800"   Height="30" Margin="5"
+                                       DataContext="{Binding Source={StaticResource XMLSourceComboBoxgemarkungen}, XPath=/Variablen/Variable}"
+                                                                ItemsSource="{Binding}" 
+                                                                DisplayMemberPath="@Name" 
+                                                                SelectedValuePath="@ID"
+                                                                SelectedValue="{Binding Path=ID}" 
+                                                              SelectionChanged="cmbgemarkung_SelectionChanged"
+                                      Width="200"
+                                      >
+                    </ComboBox>-->
+                    <!--<TextBlock Name="tbTreffer" Width="100" Margin="5" Height="30" Padding="5"/>-->
+                </StackPanel>
+                <DataGrid  x:Name="dgProbaug"   ItemsSource="{Binding ''}"    Margin="5"                                             
+                                              RowStyle="{StaticResource dgRowStyleRB}"                                              
+                                              ColumnHeaderStyle="{StaticResource dgHeaderStyle}"    
+                  SelectionChanged="dgProbaug_SelectionChanged"         AutoGenerateColumns="True"           
+                                   >
+                    <!--<DataGrid.Columns>
+                        <DataGridTextColumn Header="gid"      Binding="{Binding katFST.gid}"     />
+                        <DataGridTextColumn Header="Gemeinde"      Binding="{Binding katFST.gemeindename}"     />
+                        <DataGridTextColumn Header="Gemarkung"      Binding="{Binding katFST.gemarkungstext}"     />
+                        <DataGridTextColumn Header="gemnr"      Binding="{Binding katFST.gemcode}"     />
+                        <DataGridTextColumn Header="Flur"  Binding="{Binding katFST.flur}" />
+                        <DataGridTextColumn Header="Zähler"   Binding="{Binding katFST.zaehler}" />
+                        <DataGridTextColumn Header="Nenner"   Binding="{Binding katFST.nenner}" />
+                        <DataGridTextColumn Header=""  Binding="{Binding katFST.fstueckKombi}" />
+                        <DataGridTextColumn Header="blattNr"    Binding="{Binding blattnr}" Foreground="Blue" />
+                        <DataGridTextColumn Header="k"    Binding="{Binding laufnr}" />
+                        <DataGridTextColumn Header="status"    Binding="{Binding status}" ToolTipService.ToolTip=" '1 - eintrag, 2 - änderung, 3 -?, 4 - verz gelöscht" />
+                        <DataGridTextColumn Header="gueltig"    Binding="{Binding gueltig}" />
+                        <DataGridTextColumn Header="gefundenIn"    Binding="{Binding katFST.zeigtauf}" />
+                        --><!--<DataGridTextColumn Header="TIFF"    Binding="{Binding datei}" />--><!--
+                        <DataGridTextColumn Header="Datum"    Binding="{Binding datum1}" />
+                    </DataGrid.Columns>-->
+                </DataGrid>
+
+            </DockPanel>
+
+        </TabItem>
+    </TabControl>
+</Window>

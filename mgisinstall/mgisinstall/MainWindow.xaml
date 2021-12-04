@@ -1,0 +1,54 @@
+﻿<Window x:Class="MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:mgisinstall" WindowStartupLocation="CenterScreen"
+        mc:Ignorable="d"
+        Title="Installation DesktopGIS Kreis Offenbach" Height="650" Width="525" Background="Beige">
+    <DockPanel>
+        <StackPanel>
+            <TextBlock Text="Installation DesktopGIS" FontWeight="Bold" Margin="5" FontSize="15"/>
+            <StackPanel Orientation="Horizontal">
+                <Label   x:Name="tbadminBplan"  Margin="0,5,0,5"
+                          Padding="5" >Hotline: 06074 8180 4434,</Label>
+                <TextBlock Padding="5" Margin="0,5,5,5">
+                    <Hyperlink NavigateUri="mailto:dr.j.feinen@kreis-offenbach.de?subject=Beplankataster&amp;body=Wir haben folgendes Problem..."
+                                RequestNavigate="OnNavigate">
+                        dr.j.feinen@kreis-offenbach.de
+                    </Hyperlink>
+                </TextBlock>
+            </StackPanel>
+
+            <TextBlock Text="Herausgeber: Kreis Offenbach" Name="tbVorabinfo" Margin="5" TextWrapping="Wrap" Height="80"/>
+            <StackPanel Orientation="Horizontal" Name="spTop" Margin="50" HorizontalAlignment="Center">
+                <Button Name="btnInstall" Click="btnInstall_Click" Content=" Ausführen " Width="150" Background="Black" Foreground="Beige"
+                    Margin="5"  />
+
+                <Button Name="btnabbruch" Click="btnabbruch_Click" Content=" Abbruch " Margin="5" Width="150" Foreground="DarkGray" />
+            </StackPanel>
+
+            <ScrollViewer CanContentScroll="True" Name="sc1"
+                                  >
+                <TextBox Name="tbinfo" TextWrapping="Wrap" AcceptsReturn="True" Height="200" Margin="5"
+                         HorizontalScrollBarVisibility="Auto"
+                     ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Auto"  />
+            </ScrollViewer >
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Name="spErfolg"  >
+
+                <Button Name="btnShortcut" Click="btnShortcut_Click" Content="Verknüpfung auf dem Desktop anlegen"
+                        Margin="5"   Visibility="Collapsed"/>
+                <Button Name="btnExplorer" Click="btnExplorer_Click" Content="  Programmverzeichnis öffnen  " Margin="5"   Visibility="Visible"/>
+
+            </StackPanel>
+            <StackPanel HorizontalAlignment="Center" Margin="5" Name="spAusfuehren">
+                <CheckBox Content="DesktopGIS ausführen" IsChecked="True" Margin="5" IsEnabled="False"/>
+                <Button Name="btnStarteUpdate" Click="btnStarteUpdate_Click" Content="Beenden"
+                    Margin="5"  Width="150"
+                      Visibility="Visible"
+                  />
+            </StackPanel>
+
+        </StackPanel>
+    </DockPanel>
+</Window>

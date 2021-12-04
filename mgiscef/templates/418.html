@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<meta charset='utf-8'>
+<head>
+    <title>DB-Abfrage</title>
+<style>
+body                  {margin:0; font-family:Arial;}
+
+table.tabellenkopf        {white-space:normal; font-size:12pt; table-layout:fixed; border-collapse:collapse; overflow:hidden;}
+table.tabellenkopf2       {border-bottom:1px solid #aac0dc; white-space:normal; font-size:9pt; table-layout:fixed; border-collapse:collapse; overflow:hidden;}
+table.tabelleneintraege   {margin-top:3px; white-space:normal; font-size:9pt; table-layout:fixed; border-bottom:1px solid #aac0dc; border-collapse:collapse;}
+table.schalter            {margin-bottom:3px; font-size:9pt; cursor:pointer}
+table.datenabfrage        {border-bottom:1px solid #aac0dc;}
+
+tr.tabellenkopf        {height:40px;}
+
+th.tabellenkopfx        {height:18px; padding-top:7px; border:1px solid #000000;}
+th.tabellenkopf        {height:19px; padding-top:7px;}
+
+td.schalteraus         {border:1px solid #8e8e8e; border-radius:3px; background:linear-gradient(#e8e9e9, #c4c6c8); color:#000000; text-align:center;}
+td.schalterover        {border:1px solid #8e8e8e; border-radius:3px; background-color:#e8e9e9; color:#000000; text-align:center;}
+td.schalterein         {border:1px solid #648cbe; border-radius:3px; background:linear-gradient(#aac0dc, #648cbe); color:#ffffff; text-align:center;}
+
+td.norm                {border-top:1px solid #aac0dc; border-right:1px solid #aac0dc;}
+td.gruppe              {border-top:1px solid #aac0dc; border-right:1px solid #aac0dc;}
+td.teil                {padding-right:10px; border-right:1px solid #aac0dc; text-align:right;}
+td.feldinhalt          {border-top:1px solid #ece9d8; background-color:#ffffff;}
+td.alink               {border-top:1px solid #ece9d8; background-color:#ffffff; color:#1c5180;}
+
+td.aschalter_0         {width:104px; height:24; text-align:center; background-color:#ece9d8; border-style:solid; border-width:1px; border-top-color:#FFFFFF; border-right-color:#ACA899; border-bottom-color:#ACA899; border-left-color:#FFFFFF}
+td.aschalter_1         {width:104px; height:24; text-align:center; background-color:#F6F3E1; border-style:solid; border-width:1px; border-top-color:#ACA899; border-right-color:#FFFFFF; border-bottom-color:#FFFFFF; border-left-color:#ACA899}
+td.bschalter_0         {width:156px; height:24; text-align:center; background-color:#ece9d8; border-style:solid; border-width:1px; border-top-color:#FFFFFF; border-right-color:#ACA899; border-bottom-color:#ACA899; border-left-color:#FFFFFF; font-weight:bold; color:#1C5180}
+td.bschalter_1         {width:156px; height:24; text-align:center; background-color:#F6F3E1; border-style:solid; border-width:1px; border-top-color:#ACA899; border-right-color:#FFFFFF; border-bottom-color:#FFFFFF; border-left-color:#ACA899; font-weight:bold; color:#1C5180}
+
+a.datenabfr            {color:#4040be;}
+a.datenabfr:link       {color:#4040be;}
+a.datenabfr:visited    {color:#4040be;}
+a.datenabfr:hover      {color:#e00000;}
+a.datenabfr:active     {color:#e00000;}
+
+p.mehrfachebene        {margin:7px 0 0 5px; font-size:9pt; font-weight:bold; color:#5080b0;}
+
+/* Tabellenvorlage wegweiserfoto_2009 */
+div.foto_uebersicht   {width:193px; height:158px; margin:0 auto 0 auto;  border-right:1px solid #aac0dc; border-bottom:1px solid #aac0dc;  border-left:1px solid #aac0dc; font-size:9pt; display:block;}
+div.foto_ansicht      {width:193px; height:158px; margin:0; border:1px solid #aac0dc; font-size:9pt; display:inline-block;}
+p.oben                {line-height:20px; text-align:center; vertical-align:middle;}
+p.foto                {margin:0; text-align:center;}
+p.unten               {line-height:20px; text-align:center; vertical-align:middle;}
+img.foto              {border:2px solid #d8dadc; cursor:pointer;}
+
+</style>
+	<script type="text/javascript"> 
+	function openMedium(id) {
+	//alert(id);
+  window.open(id);
+}
+	  </script>
+</head>
+<body>
+      <table class="tabellenkopf" cellspacing="0" cellpadding="0"><colgroup><col width="391px"></colgroup><tbody>
+	  <tr><th class="tabellenkopf">Trinkwasserschutzgebiete</br>    [NUTZUNG]&nbsp;  </br> [AENDERUNGSTITEL]</th></tr></tbody></table>
+ 
+ 
+ <table 	   id="tabelleneintraege" class="tabelleneintraege" cellspacing="0" cellpadding="5"><colgroup><col width="150"><col width="241"></colgroup><tbody>
+ [TABLEBODY]
+ </tbody></table>
+</body>
+</html>

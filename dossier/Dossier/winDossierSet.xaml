@@ -1,0 +1,164 @@
+﻿<Window x:Class="winDossierSet"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:gisDossier" WindowStartupLocation="CenterScreen" 
+        mc:Ignorable="d" 
+        Title="Einstellungen" Height="450" Width="900">
+    <DockPanel Background="{StaticResource flaechenBackground}">
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="1" Width="800" HorizontalAlignment="Left">
+            <TextBlock  Text="Analysen-Auswahl " FontWeight="Black"
+                        ToolTip="Hier kann festgelegt werde, welche Analysen durchgeführt werden sollen." 
+                        Margin="5" Padding="5" Width="150"/>
+            <Border BorderBrush="Black" BorderThickness="1">
+                <StackPanel Orientation="Horizontal" Visibility="Collapsed">
+                    <TextBlock Padding="5" Margin="5">     Voreinstellungen:</TextBlock>
+                    <ComboBox Name="cmbProfile" SelectionChanged="cmbProfile_SelectionChanged">
+                        <ComboBoxItem Tag="leer"></ComboBoxItem>
+                        <ComboBoxItem Tag="unb">Untere Naturschutzbehörde</ComboBoxItem>
+                        <ComboBoxItem Tag="uwb">Untere Wasserbehörde</ComboBoxItem>
+                        <ComboBoxItem Tag="immi">Immissionschutz</ComboBoxItem>
+                        <ComboBoxItem Tag="ba">Bauaufsicht</ComboBoxItem>
+                        <ComboBoxItem Tag="gebw">Gebäudewirtschaft</ComboBoxItem>
+                    </ComboBox>
+                </StackPanel>
+            </Border>
+            <TextBlock Margin="5" Padding="5" FontSize="10">Jede Änderung wird sofort gespeichert. Alle Änderungen gelten nur für Sie persönlich!</TextBlock>
+            <Button Name="btnabbruch" Click="btnabbruch_Click" IsCancel="True" Content="Abbruch (Esc)" Margin="5" Width="100" 
+                   HorizontalAlignment="Right" Style="{StaticResource lessButton}" />
+
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <StackPanel>
+                <StackPanel Margin="5">
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <CheckBox IsChecked="True" Margin="5,5,0,5" Content="" Name="cbbplanANA" Click="cbbplanANA_Click"/>
+                        <TextBlock Text="Bebauungspläne" Margin="5" Width="161"></TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <CheckBox IsChecked="True" Margin="5,5,0,5" Content="" Name="cbNSGANA" Click="cbNSGANA_Click"/>
+                        <TextBlock Text="NSG GLB" Margin="5" Width="161" ToolTip="Naturschutzgebiete - Geschützte Landschaftsbestandteile"></TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <CheckBox IsChecked="True" Margin="5,5,0,5" Content="" Name="cbbLSGANA" Click="cbbLSGANA_Click"/>
+                        <TextBlock Text="LSG" Margin="5" Width="161" ToolTip="Landschaftsschutzgebiete"></TextBlock>
+                    </StackPanel>
+                  
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <CheckBox IsChecked="True" Margin="5,5,0,5" Content="" Name="cbNDANA" Click="cbNDANA_Click"/>
+                        <TextBlock Text="Naturdenkmale" Margin="5" Width="161" ToolTip="Naturdenkmale"></TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <CheckBox IsChecked="True" Margin="5,5,0,5" Content="" Name="cbFoerderANA" Click="cbFoerderANA_Click"/>
+                        <TextBlock Text="Förderflächen" Margin="5" Width="161" ToolTip="Förderflächen"></TextBlock>
+                    </StackPanel>
+                 
+                   
+              
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <CheckBox IsChecked="True" Margin="5,5,0,5" Content="" Name="cbFFHANA" Click="cbFFHANA_Click"/>
+                        <TextBlock Text="FFH" Margin="5" Width="161"></TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <CheckBox IsChecked="True" Margin="5,5,0,5" Content="" Name="cbIlleNeuANA" Click="cbIlleNeuANA_Click"/>
+                        <TextBlock Text="Illegale Bauten Neu" Margin="5" Width="161"></TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <CheckBox IsChecked="True" Margin="5,5,0,5" Content="" Name="cbIlleAltNA" Click="cbIlleAltNA_Click"/>
+                        <TextBlock Text="Illegale Bauten ALT(bis 2004)" Margin="5" Width="161"></TextBlock>
+                    </StackPanel>
+                  
+                </StackPanel>
+            </StackPanel>
+            <StackPanel>
+                <StackPanel Margin="5">
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <CheckBox IsChecked="True" Margin="5,5,0,5" Content="" Name="cbWSGANA" Click="cbWSGANA_Click"/>
+                        <TextBlock Text="WSG" Margin="5" Width="161" ToolTip="Wassserschutzgebiete"></TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <CheckBox IsChecked="True" Margin="5,5,0,5" Content="" Name="cbKehrbezAna" Click="cbKehrbezAna_Click"/>
+                        <TextBlock Text="Kehrbezirke" Margin="5" Width="161"></TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <CheckBox IsChecked="True" Margin="5,5,0,5" Content="" Name="cbUebANA" Click="cbUebANA_Click"/>
+                        <TextBlock Text="Überschwemmungsg. HLFU" Margin="5" Width="161" ToolTip="Überschwemmungsgebiete (HW100) und Abflussflächen"></TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <CheckBox IsChecked="True" Margin="5,5,0,5" Content="" Name="cbUebKROFANA" Click="cbUebKROFANA_Click"/>
+                        <TextBlock Text="Überschwemmungsg. KrOF" Margin="5" Width="161" ToolTip="Überschwemmungsgebiete (HW100) "></TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <CheckBox IsChecked="True" Margin="5,5,0,5" Content="" Name="cbaltlastANA" Click="cbaltlastANA_Click"/>
+                        <TextBlock Text="Altlasten-Hinweisflächen" Margin="5" Width="161"></TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <CheckBox IsChecked="True" Margin="5,5,0,5" Content="" Name="cbBaulastANA" Click="cbBaulastANA_Click"/>
+                        <TextBlock Text="Baulasten" Margin="5" Width="161"></TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <CheckBox IsChecked="True" Margin="5,5,0,5" Content="" Name="cbBorisANA" Click="cbBorisANA_Click"/>
+                        <TextBlock Text="Bodenrichtwerte" Margin="5" Width="161"></TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <CheckBox IsChecked="True" Margin="5,5,0,5" Content="" Name="cbEigentuemerANA" Click="cbEigentuemerANA_Click"/>
+                        <TextBlock Text="Eigentümer" Margin="5" Width="161"></TextBlock>
+                    </StackPanel>
+                </StackPanel>
+           
+            </StackPanel>
+            <StackPanel Margin="5">
+                <StackPanel Orientation="Horizontal" Margin="5">
+                    <CheckBox IsChecked="True" Margin="5,5,0,5" Content="" Name="cbHbiotop" Click="cbHbiotop_Click"/>
+                    <TextBlock Text="Biotope" Margin="5" Width="161" ToolTip="Hessische Biotopkartierung - Biotope"></TextBlock>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="5">
+                    <CheckBox IsChecked="True" Margin="5,5,0,5" Content="" Name="cbHkomplexe" Click="cbHkomplexe_Click"/>
+                    <TextBlock Text="Komplexe" Margin="5" Width="161" ToolTip="Hessische Biotopkartierung - Komplexe"></TextBlock>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="5">
+                    <CheckBox IsChecked="True" Margin="5,5,0,5" Content="" Name="cbAmphibien" Click="cbAmphibien_Click"/>
+                    <TextBlock Text="Amphibienkartierung" Margin="5" Width="161" ToolTip="Amphibien und Gewässerkartierung"></TextBlock>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="5">
+                    <CheckBox IsChecked="True" Margin="5,5,0,5" Content="" Name="cbBSE" Click="cbBSE_Click"/>
+                    <TextBlock Text="BannSchutzErhol.Wald" Margin="5" Width="161" ToolTip="Bann-Schutz und Erholungswald"></TextBlock>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="5">
+                    <CheckBox IsChecked="True" Margin="5,5,0,5" Content="" Name="cbOEKOKO" Click="cbOEKOKO_Click"/>
+                    <TextBlock Text="Ökokonto" Margin="5" Width="161" ToolTip="Ökokonto"></TextBlock>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="5">
+                    <CheckBox IsChecked="True" Margin="5,5,0,5" Content="" Name="cbKompensation" Click="cbKompensation_Click"/>
+                    <TextBlock Text="Kompensationsflächen" Margin="5" Width="161" ToolTip="Kompensationsflächen"></TextBlock>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="5">
+                    <CheckBox IsChecked="True" Margin="5,5,0,5" Content="" Name="cbschwalben" Click="cbschwalben_Click"/>
+                    <TextBlock Text="Schwalben" Margin="5" Width="161" ToolTip="Schwalben (Mehlschwalben)"></TextBlock>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="5">
+                    <CheckBox IsChecked="True" Margin="5,5,0,5" Content="" Name="cbaltis16" Click="cbaltis16_Click"/>
+                    <TextBlock Text="Altis 2016" Margin="5" Width="161" ToolTip="Altis"></TextBlock>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Margin="5">
+             
+                <StackPanel Orientation="Horizontal" Margin="5">
+                    <CheckBox IsChecked="True" Margin="5,5,0,5" Content="" Name="cbAltstadtsatzung" Click="cbAltstadtsatzung_Click"/>
+                    <TextBlock Text="Altstadtsatzung" Margin="5" Width="161" ToolTip="Altstadtsatzung"></TextBlock>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="5">
+                    <CheckBox IsChecked="True" Margin="5,5,0,5" Content="" Name="cbstandorttypisierung" Click="cbstandorttypisierung_Click"/>
+                    <TextBlock Text="Standorttypisierung" Margin="5" Width="161" ToolTip="standorttypisierung"></TextBlock>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="5">
+                    <CheckBox IsChecked="True" Margin="5,5,0,5" Content="" Name="cbwsgHNUGwms" Click="cbwsgHNUGwms_Click"/>
+                    <TextBlock Text="WSG HLNUG" Margin="5" Width="161" ToolTip="wsgHNUGwms"></TextBlock>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+
+    </DockPanel>
+</Window>

@@ -1,0 +1,23 @@
+﻿update planung.baulasten_neu set gefundenin='flurkarte.aktuell' where gefundenin='flurkarte.basis_f'
+
+update planung.baulasten_neu set gefundenin=replace(gefundenin,'h_flurkarte.j', 'hist.Flurkarte.')
+
+update planung.baulasten_neu set gefundenin=replace(gefundenin,'_flurstueck_f', '')
+
+select distinct(gefundenin) from planung.baulasten_neu order by gefundenin desc
+
+
+update public.halofs set normname=trim(lower(sname)) ; 
+update public.halofs set normname=replace(normname,'-','');
+update public.halofs set normname=replace(normname,'ß','ss');
+update public.halofs set normname=replace(normname,' ','');
+update public.halofs set normname=replace(normname,'.','');
+update public.halofs set normname=replace(normname,'str.','strasse');
+update public.halofs set normname=replace(normname,'str ','strasse');
+update public.halofs set normname=replace(normname,'_','');
+update public.halofs set normname=replace(normname,'/','');
+update public.halofs set normname=replace(normname,':','');
+update public.halofs set normname=replace(normname,'adolph','adolf');
+update public.halofs set normname=replace(normname,'ä','ae');
+update public.halofs set normname=replace(normname,'ü','ue');
+update public.halofs set normname=replace(normname,'ö','oe');

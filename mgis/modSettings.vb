@@ -1,0 +1,3 @@
+﻿Module modSettings
+
+End Module

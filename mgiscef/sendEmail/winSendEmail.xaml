@@ -1,0 +1,87 @@
+﻿<Window x:Class="winSendEmail"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:mgis" WindowStartupLocation="CenterScreen"
+        mc:Ignorable="d"  Background="{StaticResource flaechenBackground}"
+        Title="Karte als Email verschicken" Height="650" Width="600">
+    <DockPanel Margin="5">
+        <StackPanel Margin="5">
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <!--<StackPanel>
+                    <TextBlock Width="100" Text="Empfänger:" Margin="5" Padding="5,15,5,5"/>
+                    <TextBlock Width="100" Text="(Email-Adresse):" Margin="5"/>
+                </StackPanel>-->
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel Name="spADsuche" Orientation="Horizontal" Visibility="Visible" Margin="5">
+                            <TextBlock Text="  " Padding="0,9,0,0" Width="115"/>
+                            <TextBlock Text="Suche im Intranet: " Padding="0,9,0,0"/>
+                            <TextBox Name="tbfilter"  Width="80" Height="25" Text= "" TextChanged="tbfilter_TextChanged" ToolTip="Hier den Filter eingeben und 'Suche' drücken"/>
+                            <Button Name="btnsuchen" Content="suchen" Click="btnsuchen_Click"  Margin="5"/>
+
+                            <ComboBox Name="cmbEmails" ItemsSource="{Binding}" SelectionChanged="cbEmails_SelectionChanged" Width="167" Height="30">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding }"   MaxHeight="600" />
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="  " Padding="0,9,0,0" Width="115"/>
+                        <TextBlock Text="Zuletzt verwendet: " Padding="0,9,0,0" Width="230" Margin="5"/>
+                        <ComboBox Name="cmbEmailszuletzt" ItemsSource="{Binding}" SelectionChanged="cmbEmailszuletzt_SelectionChanged" Width="167" Height="30">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding }"   MaxHeight="600" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Name="spParadigma">
+                        <TextBlock Text="  " Padding="0,9,0,0" Width="115"/>
+                        <TextBlock Text="Aus Paradigmavorgang: " Padding="0,9,0,0" Width="230" Margin="5"/>
+                        <ComboBox Name="cmbEmailsParadigma" ItemsSource="{Binding}" SelectionChanged="cmbEmailsParadigma_SelectionChanged" Width="167" Height="30">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding }"   MaxHeight="600" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Width="105" Text="Empfänger:" Margin="5" Padding="5,15,5,5"/>
+                        <TextBox Name="tbReceiver" Width="400" Height="90" Text="" TextWrapping="Wrap" AcceptsReturn="True"  
+                             ToolTip="Sie können hier auch frei irgendeine Emailadresse eingeben." Margin="5"/>
+                        <Button Name="btnClearEliste" Click="btnClearEliste_Click" Content=" C " ToolTip="liste löschen"/>
+                    </StackPanel>
+                </StackPanel>
+
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <TextBlock Width="100" Text="Betreff:" Margin="10"/>
+                <TextBox Name="tbBetreff" MinWidth="400"  />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <TextBlock Width="100 " Text="Nachricht:" Margin="10"/>
+                <TextBox Name="tbbody" MinWidth="400"   Height="150"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Width="100 " Text=" " Margin="5"/>
+                <RadioButton Name="rbPNGmail" GroupName="mailformat" IsChecked="True" Content="als PNG-Grafik" Margin="5"/>
+                <RadioButton Name="rbPDFmail" GroupName="mailformat" IsChecked="False" Content="als PDF" Margin="5"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <TextBlock Width="100 " Text=" " Margin="5"/>
+                <Button Name="btnabbruch" Click="btnabbruch_Click" IsCancel="True" Content="Abbruch" Margin="20"    Style="{StaticResource lessButton}"/>
+                <Button Name="btnsend" Click="btnsend_Click" IsCancel="True" Content="Email abschicken" 
+                        Width="200" Margin="20"
+                       />
+            </StackPanel>
+        </StackPanel>
+    </DockPanel>
+</Window>

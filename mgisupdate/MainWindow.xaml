@@ -1,0 +1,30 @@
+﻿<Window x:Class="MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ 
+        mc:Ignorable="d" Background="Beige"
+        Title="Kreis Offenbach DesktopGIS" Height="350" Width="525" WindowStartupLocation="CenterScreen">
+    <DockPanel>
+        <StackPanel>
+            <TextBlock Name="tbhinweis" Margin="10" TextWrapping="Wrap">
+             Bei Problemen prüfen Sie bitte regelmäßig auf Updates. Vor dem Download bitte das GIS beenden.
+                
+            </TextBlock>
+            <TextBlock Name="tbhinweisURL" Margin="10">
+               https://buergergis.kreis-offenbach.de/fkat/paradigma/mgis/releases/gisinstaller.exe
+            </TextBlock>
+            <Button Name="btnCALLURL" Click="btnCALLURL_Click" Content="Update downloaden" Margin="10"/>
+
+            <Button Name="btnEnde" Click="btnEnde_Click" Content="Abbruch" IsCancel="True" Margin="10" Height="50"/>
+            
+            <Button Name="btnstart" Click="btnstart_Click" Content="Starte Kreis Offenbach DesktopGIS" Margin="50"
+                    Height="50" Visibility="Collapsed"/>
+            <ScrollViewer CanContentScroll="True" Margin="5" Visibility="Collapsed">
+                <TextBox Name="tbinfo" TextWrapping="Wrap" AcceptsReturn="True" 
+                         ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Auto"  Height="253.684" />
+            </ScrollViewer>
+        </StackPanel>
+    </DockPanel>
+</Window>

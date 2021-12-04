@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Variablen>
+  <Variable Name="Abbruch" ID="Abbruch" />
+  <Variable Name="Altlast" ID="Altlast" />
+  <Variable Name="Altstandort" ID="Altstandort" />
+  <Variable Name="Artenschutz" ID="Artenschutz" />
+  <Variable Name="Baulast" ID="Baulast" />
+  <Variable Name="Bauort" ID="Bauort" />
+  <Variable Name="Beobachtungsort" ID="Beobachtungsort" />
+  <Variable Name="Biotop" ID="Biotop" />
+  <Variable Name="Eingriffsort" ID="Eingriffsort" />
+  <Variable Name="Erdwärmeanlage" ID="Erdwärmeanlage" />
+  <Variable Name="Gewerbe-Anmeldung" ID="Gewerbe-Anmeldung" />
+  <Variable Name="Kompensationsfläche" ID="Kompensationsfläche" />
+  <Variable Name="Konzession" ID="Konzession" />
+  <Variable Name="Nutzungsänderung" ID="Nutzungsänderung" />
+  <Variable Name="Pflegeflächen" ID="Pflegeflächen" />
+  <Variable Name="Plangebiet" ID="Plangebiet" />
+  <Variable Name="Projektfläche" ID="Projektfläche" />
+  <Variable Name="POI" ID="POI" />
+  <Variable Name="Rückständige Gebühr" ID="Rückständige Gebühr" />
+  <Variable Name="Schadensort" ID="Schadensort" />
+  <Variable Name="Veranstaltungsort" ID="Veranstaltungsort" />
+  <Variable Name="Verweigerung Arbeiten" ID="Verweigerung Arbeiten" />
+  <Variable Name="Messort" ID="Messort" />
+</Variablen>

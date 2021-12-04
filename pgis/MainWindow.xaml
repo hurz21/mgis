@@ -1,0 +1,138 @@
+﻿<Window x:Class="MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:pgis"
+        mc:Ignorable="d"
+        Title="GooglesVogelperspektive und 3D-Ansicht" WindowStartupLocation="CenterScreen" WindowState="Maximized">
+    <Window.Resources>
+        <!--<src:myGlobalz   x:Key="myGlobalz"/>-->
+        <XmlDataProvider x:Key="XMLSourceComboBoxRBfunktion" />
+        <XmlDataProvider x:Key="XMLSourceComboBoxgemarkungen" />
+        <XmlDataProvider x:Key="XMLSourceComboBoxgemeinden" />
+    </Window.Resources>
+    <DockPanel>
+        <TabControl>
+            <TabItem Header="GoogleMap Luftbilder aus 4 Himmelsrichtungen">
+                <DockPanel>                 
+                    <StackPanel DockPanel.Dock="Left" Width="150" HorizontalAlignment="Left" x:Name="dockMenu">
+                        <TabControl>
+                            <TabItem Name="tbAdresse" Header="Adresse">
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal" >
+                                        <TextBlock Text="Gemeinde" Name="tbGemeinde" Margin="5,0,0,0" Padding="5" Width="90" HorizontalAlignment="Left"></TextBlock>
+                                        <ComboBox Name="cmbgemeinde"   
+                                       DataContext="{Binding Source={StaticResource XMLSourceComboBoxgemeinden}, XPath=/Variablen/Variable}"
+                                                                ItemsSource="{Binding}" 
+                                                                DisplayMemberPath="@Name" 
+                                                                SelectedValuePath="@ID"
+                                                                SelectedValue="{Binding Path=ID}" 
+                                                              SelectionChanged="cmbgemeinde_SelectionChanged"
+                                      Width="20" Grid.Column="2"   />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal"  >
+                                        <TextBlock Text="Strasse" Name="tbStrasse"  Margin="5,0,0,0"  Padding="5" Width="90" HorizontalAlignment="Left"></TextBlock>
+                                        <ComboBox Name="cmbStrasse" ItemsSource="{Binding}" SelectionChanged="cmbStrasse_SelectionChanged"   
+                                              Width="20"  
+                                      DisplayMemberPath="sname"  SelectedValuePath="strcode" Grid.Column="2"    Grid.Row="1">
+                                        </ComboBox>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal"  >
+                                        <TextBlock Text="Hausnr:" Name="tbHausnr"  Margin="5,0,0,0"  Padding="5" Width="90" HorizontalAlignment="Left"></TextBlock>
+                                        <ComboBox Name="cmbHausnr" ItemsSource="{Binding}" SelectionChanged="cmbHausnr_SelectionChanged"   
+                                              Width="20"  
+                                       DisplayMemberPath="hausnr"  SelectedValuePath="hausnr"  Grid.Column="2"    Grid.Row="1">
+                                        </ComboBox>
+                                    </StackPanel>
+
+                                </StackPanel>
+                            </TabItem>
+                            <TabItem Name="tbFstueck" Header="Flurstück">
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal" >
+                                        <TextBlock Text="Gemarkung" Name="tbGemarkung" Margin="5,0,0,0" Padding="5" Width="90" HorizontalAlignment="Left"></TextBlock>
+                                        <ComboBox Name="cmbgemarkung" 
+                                       DataContext="{Binding Source={StaticResource XMLSourceComboBoxgemarkungen}, XPath=/Variablen/Variable}"
+                                                                ItemsSource="{Binding}" 
+                                                                DisplayMemberPath="@Name" 
+                                                                SelectedValuePath="@ID"
+                                                                SelectedValue="{Binding Path=ID}" 
+                                                              SelectionChanged="cmbgemarkung_SelectionChanged" Grid.Column="3" Margin="1,0,9,0" />
+
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal"  >
+                                        <TextBlock Text="Flur" Name="tbFlur"  Margin="5,0,0,0"  Padding="5" Width="90" HorizontalAlignment="Left"></TextBlock>
+                                        <ComboBox Name="cmbFlur" ItemsSource="{Binding}" 
+                                      DisplayMemberPath="flur"  SelectedValuePath="flur" Grid.Column="3"  Margin="1,0,9,0" Grid.Row="1"
+                              SelectionChanged="cmbFlur_SelectionChanged"/>
+
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal"  >
+                                        <TextBlock Text="Zähler:" Name="tbZaehler"  Margin="5,0,0,0"  Padding="5" Width="90" HorizontalAlignment="Left"></TextBlock>
+                                        <ComboBox Name="cmbZaehler" ItemsSource="{Binding}" SelectionChanged="cmbZaehler_SelectionChanged"
+                                      DisplayMemberPath="zaehler"  SelectedValuePath="zaehler" Grid.Column="3" Margin="1,0,9,0" Grid.Row="2"/>
+
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal"  >
+                                        <TextBlock Text="Nenner:" Name="tbNenner"  Margin="5,0,0,0"  Padding="5" Width="90" HorizontalAlignment="Left"></TextBlock>
+                                        <ComboBox Name="cmbNenner" ItemsSource="{Binding}" 
+                                      DisplayMemberPath="nenner"  SelectedValuePath="nenner" Grid.Column="3"  Margin="1,0,9,0" Grid.Row="3" 
+                                      SelectionChanged="cmbNenner_SelectionChanged"/>
+                                    </StackPanel>
+                                    <GroupBox Header="Eigentümer" Name="gbEigentuemer">
+                                    <StackPanel Background="AliceBlue">
+                                     
+                                        <StackPanel Orientation="Horizontal">
+                                            <!--<TextBlock  Text="Grund (Az.):" Padding="5"/>-->
+
+                                            <TextBox     Background="Pink"   Width="130" SelectionChanged="tbGrund_SelectionChanged" Text="Aktenzeichen"
+                 x:Name="tbGrund" ToolTip="Geben Sie hier eine Begründung für den Zugriff an. Z.B. das Aktenzeichen."/>
+                                
+                                        </StackPanel>
+                                            <Button Name="btnEigentuemer" Click="btnEigentuemer_Click" Content="Start" Margin="5"/>
+                                            <TextBox    Padding="5" Grid.ColumnSpan="5" Name="tbWeitergabeVerbot" TextWrapping="Wrap" >
+
+                                        </TextBox>
+
+                                    </StackPanel>
+                                    </GroupBox>
+                                </StackPanel>
+                            </TabItem>
+                            <TabItem Header="Koordinate (UTM32)">
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal" >
+                                        <TextBlock Text="Rechts:"  Margin="5,0,0,0" Padding="5" Width="50" HorizontalAlignment="Left"></TextBlock>
+                                        <TextBox Name="tbrechts"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" >
+                                        <TextBlock Text="Hoch:"  Margin="5,0,0,0" Padding="5" Width="50" HorizontalAlignment="Left"></TextBlock>
+                                        <TextBox Name="tbhoch"/>
+                                    </StackPanel>
+                                    <Button Name="startKoord" Click="startKoord_Click" Content="Zeige"/>
+
+
+                                </StackPanel>
+                            </TabItem>
+                        </TabControl>
+                        <Button  Name="btngoogle3d"  Click="btngoogle3d_Click"   Width="120" Height="45" Margin="15"
+                                 Visibility="Visible" ToolTip="Echte 3D-Ansicht">3D Ansicht</Button>
+                        <Button  Name="btnInfo"  Click="btnInfo_Click"   Width="120" Height="25" Margin="15"
+                                 Visibility="Visible" ToolTip="Echte 3D-Ansicht">Bedienungsanleitung</Button>
+                        <TextBox Text="Bei Fragen: Tel. 4434 / dr.j.feinen@kreis-offenbach.de" TextWrapping="Wrap"/>
+
+                        <!--<Button Content="Ebenen" Width="50" Height="30" Click="Button_Click"></Button>-->
+                    </StackPanel>
+                    <DockPanel>
+                        <!--<StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+                            <Button Name="btnaktualisiernvogel" Click="btnaktualisiernvogel_Click" Content="Aktualisieren" 
+                            Width="100" Height="30" Panel.ZIndex="20" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,5,5,5"/>
+                        </StackPanel>-->
+                        <WebBrowser Name="wbSample"  Panel.ZIndex="100" ></WebBrowser>
+                    </DockPanel >
+                </DockPanel>
+            </TabItem>
+        </TabControl>
+        
+    </DockPanel>
+</Window>

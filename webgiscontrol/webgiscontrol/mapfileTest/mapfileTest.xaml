@@ -1,0 +1,63 @@
+﻿<Window x:Class="mapfileTest"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:webgiscontrol"
+        mc:Ignorable="d"
+        Title="mapfileTest" Height="900" Width="900" WindowStartupLocation="CenterScreen">
+    <DockPanel Background="AliceBlue">
+        <StackPanel DockPanel.Dock="Top" Height="200" Margin="10">
+            <StackPanel Orientation="Horizontal">
+                <!--<CheckBox Name="cbErrormode" Content="Fehler statt Bild anzeigen" IsChecked="False" Margin="00,20,20,20"/>-->
+                <Button Name="cbmserror" Content="root-ms_error.txt" Click="cbmserror_Click" Height="30" Margin="5" />
+                <Button Name="cbmserrorExt" Content="websys-ms_error.txt" Click="cbmserrorExt_Click" Height="30"  />
+                <Button Name="btnLayerMapfile" Click="btnLayerMapfile_Click" Content="layer.map" Margin="5"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Height="100">
+                <StackPanel> 
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox Text="Bilderzeugung testen kleiner maßstab" Width="300"/>
+                            <Button Name="btnBilderzeugen1" Click="btnBilderzeugen_Click" Content="start"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox Text="Bilderzeugung testen mittlerer maßstab" Width="300"/>
+                            <Button Name="btnBilderzeugen2" Click="btnBilderzeugen2_Click" Content="start"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox Text="Bilderzeugung testen grosser maßstab" Width="300"/>
+                            <Button Name="btnBilderzeugen3" Click="btnBilderzeugen3_Click" Content="start"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox Text="Bilderzeugung testen lastrange" Width="300"/>
+                            <Button Name="btnBilderzeugenLastRange" Click="btnBilderzeugenLastRange_Click" Content="start"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox Text="Imagemap testen" Width="300"/>
+                            <Button Name="btnImagemap" Click="btnImagemap_Click" Content="start" IsEnabled="False"/>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="20,0,0,0">
+                        <TextBox Name="tbaufruf" TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True" Height="90" Width="500"
+                                Text="gen. aufruf"/>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+        <StackPanel VerticalAlignment="Top">
+
+            <ScrollViewer CanContentScroll="True"   VerticalScrollBarVisibility="Visible" VerticalAlignment="Top">
+                <TextBox  Name="tbError" Width="800" Height="500" TextWrapping="Wrap"  VerticalAlignment="Top"
+                          AcceptsReturn="True"  AcceptsTab="True"  AutoWordSelection="True" 
+                            ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Visible" 
+                        VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Auto" 
+               
+                 />
+            </ScrollViewer>
+            <Image Name="myimage" Width="900" Height="600"/>
+        </StackPanel>
+    </DockPanel>
+</Window>

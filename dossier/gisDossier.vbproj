@@ -1,0 +1,238 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8F65F6F2-5C46-44BE-8D95-92BD8BAF3147}</ProjectGuid>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{F184B08F-C81C-45F6-A57F-5ABD9991F28F}</ProjectTypeGuids>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>gisDossier</RootNamespace>
+    <AssemblyName>gisDossier</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MyType>Custom</MyType>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
+    <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <IncrementalBuild>true</IncrementalBuild>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>gisDossier.xml</DocumentationFile>
+    <NoWarn>42314</NoWarn>
+    <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <IncrementalBuild>false</IncrementalBuild>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>gisDossier.xml</DocumentationFile>
+    <NoWarn>42314</NoWarn>
+    <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>On</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="itextsharp, Version=4.1.6.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Security">
+      <HintPath>..\mgis\dll\Mono.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Npgsql">
+      <HintPath>..\mgis\dll\Npgsql.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="Application.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="clsStartup.vb" />
+    <Compile Include="db\clsWMS.vb" />
+    <Compile Include="Dossier\clsSchwalben.vb" />
+    <Compile Include="gisanalyse.vb" />
+    <Compile Include="clsAdress.vb" />
+    <Compile Include="clsEigentuemerschnell.vb" />
+    <Compile Include="clsFlurstueck.vb" />
+    <Compile Include="clsFSTtools.vb" />
+    <Compile Include="clsGemarkungsParams.vb" />
+    <Compile Include="clsINIDatei.vb" />
+    <Compile Include="clsclsMyComboboxItem.vb" />
+    <Compile Include="clsParaLinie.vb" />
+    <Compile Include="clsParapolygon.vb" />
+    <Compile Include="db\clsDBspecMSSQL.vb" />
+    <Compile Include="db\clsDBspecPG.vb" />
+    <Compile Include="db\clsPgtools.vb" />
+    <Compile Include="db\ParaPunkt.vb" />
+    <Compile Include="Dossier\clsAltis16.vb" />
+    <Compile Include="Dossier\clsAltlast.vb" />
+    <Compile Include="Dossier\clsAmphibien.vb" />
+    <Compile Include="Dossier\clsBaulasten.vb" />
+    <Compile Include="Dossier\clsBplan.vb" />
+    <Compile Include="Dossier\clsBSE.vb" />
+    <Compile Include="Dossier\clsDossier.vb" />
+    <Compile Include="Dossier\clsDossierItem.vb" />
+    <Compile Include="Dossier\clsEigentuemerAnalyse.vb" />
+    <Compile Include="Dossier\clsFFH.vb" />
+    <Compile Include="Dossier\clsFoerder.vb" />
+    <Compile Include="Dossier\clsGeopoint.vb" />
+    <Compile Include="Dossier\clsGisresult.vb" />
+    <Compile Include="Dossier\clsHbiotope.vb" />
+    <Compile Include="Dossier\clsIllegaleALT.vb" />
+    <Compile Include="Dossier\clsIllegaleNeu.vb" />
+    <Compile Include="Dossier\clsKehrbezirk.vb" />
+    <Compile Include="Dossier\clsKompensation.vb" />
+    <Compile Include="Dossier\clsKomplexe.vb" />
+    <Compile Include="Dossier\clsLSG.vb" />
+    <Compile Include="Dossier\clsND.vb" />
+    <Compile Include="Dossier\clsNSG.vb" />
+    <Compile Include="Dossier\clsOekoko.vb" />
+    <Compile Include="clsTools.vb" />
+    <Compile Include="Dossier\clsParadigmaVorgang.vb" />
+    <Compile Include="Dossier\clsUebKrof.vb" />
+    <Compile Include="Dossier\clsWSG.vb" />
+    <Compile Include="Dossier\winDossierSet.xaml.vb" />
+    <Compile Include="IDB_grundfunktionen.vb" />
+    <Compile Include="iRaumbezug.vb" />
+    <Compile Include="lage\clsNASLageTools.vb" />
+    <Compile Include="lage\NASlage.vb" />
+    <Compile Include="linx\clsDatenbankZugriff.vb" />
+    <Compile Include="linx\clsDBtools.vb" />
+    <Compile Include="m.vb" />
+    <Compile Include="ParaFlurstueck.vb" />
+    <Compile Include="pdf\createPDF.vb" />
+    <Compile Include="pdf\wrapItextSharp.vb" />
+    <Compile Include="PolygonTools.vb" />
+    <Compile Include="RaumbezugsTyp.vb" />
+    <Compile Include="tools.vb" />
+    <Page Include="Dictionary1.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dossier\winDossierSet.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainWindowDossier.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="Application.xaml.vb">
+      <DependentUpon>Application.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MainWindowDossier.xaml.vb">
+      <DependentUpon>MainWindowDossier.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="System.Threading.Tasks" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Windows" />
+    <Import Include="System.Windows.Controls" />
+    <Import Include="System.Windows.Data" />
+    <Import Include="System.Windows.Documents" />
+    <Import Include="System.Windows.Input" />
+    <Import Include="System.Windows.Shapes" />
+    <Import Include="System.Windows.Media" />
+    <Import Include="System.Windows.Media.Imaging" />
+    <Import Include="System.Windows.Navigation" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="My Project\AssemblyInfo.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="My Project\MyExtensions\MyWpfExtension.vb">
+      <VBMyExtensionTemplateID>Microsoft.VisualBasic.WPF.MyExtension</VBMyExtensionTemplateID>
+      <VBMyExtensionTemplateVersion>1.0.0.0</VBMyExtensionTemplateVersion>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\BuildDate.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icons\refresh.png" />
+    <Content Include="itextsharp.dll" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="..\shared\sharedGis_Dossier.projitems" Label="Shared" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>if $(ConfigurationName) == Release (
+copy $(targetfilename) l:\apps\gisdossier\gisdossier.exe
+rem copy $(targetfilename) c:\ptest\gisdossier\gisdossier.exe
+ rem copy $(targetfilename) O:\UMWELT-PARADIGMA\div\deploy\paradigma\gisdossier\gisdossier.exe
+)</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>echo %25date%25 %25time%25  &gt; "$(ProjectDir)\resources\BuildDate.txt"</PreBuildEvent>
+  </PropertyGroup>
+</Project>

@@ -1,0 +1,1565 @@
+﻿<Window
+    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Icon="/mgisNT;component/icons/favicon.ico"
+    xmlns:cefSharp="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
+    x:Class="MainWindow" SizeChanged="Window_SizeChanged" StateChanged="Window_StateChanged" WindowState="Normal"
+    Title="Desktop-GIS" Height="950" Width="1895"  WindowStartupLocation="Manual">
+    <Window.Resources>
+        <ScaleTransform x:Key="FontStretchCondensed" ScaleX="0.8" />
+        <ScaleTransform x:Key="FontStretchExpanded" ScaleX="1.2" />
+
+        <Style x:Key="dgRowStyleHistory" TargetType="DataGridRow">
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver"  Value="True">
+                    <Setter Property="Background" Value="#CCCC00" />
+                </Trigger>
+
+            </Style.Triggers>
+        </Style>
+        <BitmapImage x:Key="imgKreisUebersicht" UriSource="../icons/kreisuebersicht.png" />
+        <XmlDataProvider x:Key="XMLSourceComboBoxHintergrund" />
+        <DataTemplate x:Key="ListItemTemplate">
+            <StackPanel   Orientation="Horizontal" Background="{StaticResource flaechenBackground}" Height="19"
+                              >
+                <CheckBox IsChecked="{Binding mithaken, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Tag="{Binding aid}"
+                              ToolTip="Ebene ausschalten"   
+                                  Click="chkauswahlgeaendert" Margin="0">
+                    <CheckBox.LayoutTransform>
+                        <ScaleTransform ScaleX="1.2" ScaleY="1.2" />
+                    </CheckBox.LayoutTransform>
+                </CheckBox>
+                <RadioButton IsChecked="{Binding RBischecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Tag="{Binding aid}" GroupName="radioLayer"
+                                  Click="chkAktiveEbenegeaendert" Margin="1" Visibility="{Binding RBsichtbarkeit}" 
+                                 ToolTip="Datenbank dieser Ebene aktiv machen">
+                </RadioButton>
+                <Button    Click="btnremovelayerFromList" Width="15"        Style="{StaticResource listenButton}"
+                             ToolTip="Diese Ebene entfernen" Tag="{Binding aid}"   >
+                    <Image  x:Name="myimagerefresh" Source="/mgisNT;component/icons/redx.png"  
+                            />
+                </Button>
+                <TextBlock   Text="{Binding titel}"  Tag="{Binding aid}" Uid="{Binding sid}" 
+                                  ToolTipService.ShowDuration="30000"  Margin="5,0,0,0"  
+                                 FontStyle="{Binding myFontStyle}"  FontWeight="{Binding myFontWeight}" 
+                                 MouseDown="txtitel_MouseDown"  MouseRightButtonDown="txtitel_MouseRightButtonDown" 
+                                 Background="{Binding farbe}" 
+                                  >
+                    <TextBlock.ToolTip>
+                        <ToolTip MaxWidth="400" MaxHeight="600" StaysOpen="True">
+                            <StackPanel Width="400" MaxHeight="600" >
+                                <TextBlock Text="{Binding titel}" TextWrapping="Wrap" MaxHeight="600" FontWeight="Bold"/>
+                                <TextBlock Text="{Binding dokutext}" TextWrapping="Wrap" MaxHeight="600" />
+                                <Image Source="{Binding thumbnailFullPath}" Width="210" Height="140"/>
+                            </StackPanel>
+                        </ToolTip>
+                    </TextBlock.ToolTip> 
+                    </TextBlock>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="lvEbenenKategorieTemplate">
+            <StackPanel   Orientation="Horizontal" Background="{StaticResource flaechenBackground}" Height="19">
+                <CheckBox IsChecked="{Binding mithaken, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Tag="{Binding aid}"
+                            ToolTip="Ebene ausschalten"   
+                            Click="chkauswahlgeaendertKategorie" Margin="0">
+                    <CheckBox.LayoutTransform>
+                        <ScaleTransform ScaleX="1.2" ScaleY="1.2" />
+                    </CheckBox.LayoutTransform>
+                </CheckBox>
+                <RadioButton IsChecked="{Binding RBischecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Tag="{Binding aid}" GroupName="radioLayerKategorie"
+                                  Click="chkAktiveEbenegeaendertKategorie" Margin="1" Visibility="{Binding RBsichtbarkeit}" 
+                                 ToolTip="Datenbank dieser Ebene aktiv machen">
+                </RadioButton>
+                <TextBlock   Text="{Binding titel}"  Tag="{Binding aid}" Uid="{Binding sid}" 
+                                  ToolTipService.ShowDuration="30000"  Margin="5,0,0,0"  
+                                 FontStyle="{Binding myFontStyle}"  FontWeight="{Binding myFontWeight}" 
+                                 MouseDown="txtitel_MouseDown"  MouseRightButtonDown="txtitel_MouseRightButtonDown" 
+                                 Background="{Binding farbe}" Foreground="{Binding etikettfarbe}" 
+                                  >
+                    <TextBlock.ToolTip>
+                        <ToolTip MaxWidth="400" MaxHeight="600" StaysOpen="True">
+                            <StackPanel Width="400" MaxHeight="600" >
+                                <TextBlock Text="{Binding titel}" TextWrapping="Wrap" MaxHeight="600" FontWeight="Bold"/>
+                                <TextBlock Text="{Binding dokutext}" TextWrapping="Wrap" MaxHeight="600" />
+                                <Image Source="{Binding thumbnailFullPath}" Width="210" Height="140"/>
+                            </StackPanel>
+                        </ToolTip>
+                    </TextBlock.ToolTip> 
+                    </TextBlock>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="lvGesamtExplorerTemplate">
+            <StackPanel   Orientation="Horizontal" Background="{StaticResource flaechenBackground}" Height="19"
+                              >
+                <CheckBox IsChecked="{Binding mithaken, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Tag="{Binding aid}"
+                              ToolTip="Ebene ausschalten"   
+                                  Click="chkauswahlgeaendertExplorer" Margin="0">
+                    <CheckBox.LayoutTransform>
+                        <ScaleTransform ScaleX="1.2" ScaleY="1.2" />
+                    </CheckBox.LayoutTransform>
+                </CheckBox>
+                <RadioButton IsChecked="{Binding RBischecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Tag="{Binding aid}" GroupName="radioLayerKategorie"
+                                  Click="chkAktiveEbenegeaendertExplorer" Margin="1" Visibility="{Binding RBsichtbarkeit}" 
+                                 ToolTip="Datenbank dieser Ebene aktiv machen">
+                </RadioButton>
+
+                <TextBlock   Text="{Binding titel}"  Tag="{Binding aid}" Uid="{Binding sid}" 
+                                  ToolTipService.ShowDuration="30000"  Margin="5,0,0,0"  
+                                 FontStyle="{Binding myFontStyle}"  FontWeight="{Binding myFontWeight}" 
+                                 MouseDown="txtitel_MouseDown"  MouseRightButtonDown="txtitel_MouseRightButtonDown" 
+                                 Background="{Binding farbe}" Foreground="{Binding etikettfarbe}" 
+                                  >
+                    <TextBlock.ToolTip>
+                        <ToolTip MaxWidth="400" MaxHeight="600" StaysOpen="True">
+                            <StackPanel Width="400" MaxHeight="600" >
+                                <TextBlock Text="{Binding titel}" TextWrapping="Wrap" MaxHeight="600" FontWeight="Bold"/>
+                                <TextBlock Text="{Binding dokutext}" TextWrapping="Wrap" MaxHeight="600" />
+                                <Image Source="{Binding thumbnailFullPath}" Width="210" Height="140"/>
+                            </StackPanel>
+                        </ToolTip>
+                    </TextBlock.ToolTip> 
+                    </TextBlock>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="lvEbenenSucheTemplate">
+            <StackPanel   Orientation="Horizontal" Background="{StaticResource flaechenBackground}" Height="19">
+                <CheckBox IsChecked="{Binding mithaken, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Tag="{Binding aid}"
+                            ToolTip="Ebene ausschalten"   
+                            Click="chkauswahlgeaendertKategorie" Margin="0">
+                    <CheckBox.LayoutTransform>
+                        <ScaleTransform ScaleX="1.2" ScaleY="1.2" />
+                    </CheckBox.LayoutTransform>
+                </CheckBox>
+                <RadioButton IsChecked="{Binding RBischecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Tag="{Binding aid}" GroupName="radioLayerKategorie"
+                                  Click="chkAktiveEbenegeaendertSuche" Margin="1" Visibility="{Binding RBsichtbarkeit}" 
+                                 ToolTip="Datenbank dieser Ebene aktiv machen">
+                </RadioButton>
+                <TextBlock   Text="{Binding titel}"  Tag="{Binding aid}" Uid="{Binding sid}" 
+                                  ToolTipService.ShowDuration="30000"  Margin="5,0,0,0"  
+                                 FontStyle="{Binding myFontStyle}"  FontWeight="{Binding myFontWeight}" 
+                                 MouseDown="txtitel_MouseDown"  MouseRightButtonDown="txtitel_MouseRightButtonDown" 
+                                 Background="{Binding farbe}" Foreground="{Binding etikettfarbe}" 
+                                  >
+                    <TextBlock.ToolTip>
+                        <ToolTip MaxWidth="400" MaxHeight="600" StaysOpen="True">
+                            <StackPanel Width="400" MaxHeight="600" >
+                                <TextBlock Text="{Binding titel}" TextWrapping="Wrap" MaxHeight="600" FontWeight="Bold"/>
+                                <TextBlock Text="{Binding dokutext}" TextWrapping="Wrap" MaxHeight="600" />
+                                <Image Source="{Binding thumbnailFullPath}" Width="210" Height="140"/>
+                            </StackPanel>
+                        </ToolTip>
+                    </TextBlock.ToolTip> 
+                    </TextBlock>
+            </StackPanel>
+        </DataTemplate>
+    </Window.Resources>
+    <DockPanel  Background="{StaticResource flaechenBackground}" >
+        <DockPanel Cursor="Arrow" x:Name="tigis" Panel.ZIndex="0">
+            <StackPanel x:Name="dockMenu" Panel.ZIndex="0"   Grid.RowSpan="2" Margin="0,0,0,12" CanVerticallyScroll="True"  
+                                DockPanel.Dock="Left" Width="420"   Cursor="Arrow"
+                               >
+                <StackPanel Visibility="Collapsed"  x:Name="stPDFDruck" Panel.ZIndex="0" Width="420" Height="500" 
+                            HorizontalAlignment="Left"   Background="{StaticResource flaechenBackground}"
+                            VerticalAlignment="Center" Orientation="Horizontal" Margin="0,0,-0,0"
+                            >
+                    <Border BorderThickness="2" BorderBrush="Black" >
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text=" Druckausgabe PDF" FontSize="16"/>
+                                <Button Content="schliessen" Padding="5"   Click="btnclosePDF_Click" 
+                                                FontSize="12" HorizontalAlignment="Right"
+                                                Background="white"  Foreground="red"  Margin="200,0,0,0"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="10">
+                                <TextBlock Text="Format" Width="120" Padding="0"/>
+                                <RadioButton x:Name="rbFormatA4" GroupName="radioFormat" Content="DinA4" 
+                                             IsChecked="True"  Click="rbFormatA4_Click"
+                                                Margin="0,0,10,0"/>
+                                <RadioButton x:Name="rbFormatA3" GroupName="radioFormat" Content="DinA3"
+                                             IsEnabled="True" Click="rbFormatA3_Click"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="10">
+                                <TextBlock Text="Maßstab verwenden" Width="120" Padding="0"/>
+                                <RadioButton x:Name="rbOhneMasstab" GroupName="grpMasstab" Content="ohne Maßstab"  IsChecked="True"  
+                                             Checked="rbchkMitMasstab_Checked"/>
+                                <RadioButton x:Name="rbMitMasstab" GroupName="grpMasstab" Content="mit Maßstab" 
+                                                 Checked="rbchkMitMasstab_Checked" Margin="10,0,10,0"  />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="10" Name="spAusrichtung">
+                                <TextBlock Text="Ausrichtung" Width="120" Padding="0"/>
+                                <RadioButton x:Name="quer" GroupName="Radioausrichtung" Content="Quer" IsChecked="True" 
+                                                 Checked="quer_Checked" Margin="0,0,10,0"/>
+                                <RadioButton x:Name="hoch" GroupName="Radioausrichtung" Content="Hoch" Checked="hoch_Checked"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="5" Name="spdruckmasstab">
+                                <TextBlock Text="Druckmaßstab   " Width="120" Padding="5"/>
+                                <Border BorderThickness="1" Margin="2" BorderBrush="Black">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock x:Name="tbMasstabDruck" Text="1 : 10.000" Padding="2" ToolTip="Druckmaßstab" 
+                                              Width="80" HorizontalAlignment="Right"/>
+                                        <ComboBox x:Name="cmbMasstabDruck" SelectionChanged="cmbMasstabDruck_SelectionChanged" 
+                                                ToolTip="Druckmaßstab" MaxDropDownHeight="600"
+                                                Width="20" 
+                                                Height="24" 
+                                                VerticalAlignment="Bottom"                                                  
+                                                ItemsSource="{Binding}" 
+                                                DisplayMemberPath="displayVal" 
+                                                SelectedValuePath="tagVal"
+                                              />
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="10">
+                                <TextBlock Text="Bemerkung" Width="120" Padding="0"/>
+                                <TextBox x:Name="tbPDF_Bemerkung" Text="bmerkung" Width="250" Padding="0"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="10">
+                                <TextBlock Text="Ort" Width="120" Padding="0"/>
+                                <TextBox x:Name="tbPDF_Ort" Text="ort" Width="250" Padding="0"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="10"   >
+                                <CheckBox x:Name="cbmitsuchobjekt" Content=" _Zuletzt gesuchtes Flurstück gelb unterlegen"
+                                          Width="250" Padding="0"/>
+                            </StackPanel>
+                            <GroupBox Header="Paradigma-Vorgang" x:Name="gbPDFparadigma" BorderThickness="1" BorderBrush="Gray">
+                                <StackPanel>
+                                    <CheckBox x:Name="cbPDFnachParadigma" Content="PDF-Datei in den Paradigma-Vorgang übernehmen " 
+                                                          IsChecked="False" Margin="20,10"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Bezeichnung im Vorgang: " Margin="20,10"  />
+                                        <TextBox x:Name="tbPDFnachParadigmaTitel" Width="200" Height="25" Text="Druckfertige Karte"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </GroupBox>
+                            <GroupBox Header="PDF erzeugen">
+                                <StackPanel>
+                                    <Button Name="btnPrintPdf" Content="Pdf-Datei öffnen" Click="btnPrintPdf_Click" Width="200"/>
+                                    <CheckBox Name="cbhochaufloesend" IsChecked="False" Content="Klassisch (Luftbilder hochauflösend)" Margin="5" HorizontalAlignment="Center"/>
+                                </StackPanel>
+                                <!--<StackPanel>
+                                    <Button Name="btnEWmailPdf" Content="Pdf-Datei drucken" Click="btnPrintPdf_Click" Width="200"/>
+                                    <CheckBox Name="cbhochaufloesend" IsChecked="False" Content="Klassisch (Luftbilder hochauflösend)" Margin="5" HorizontalAlignment="Center"/>
+                                </StackPanel>-->
+                            </GroupBox>
+                            <StackPanel>
+                                <TextBlock Height="150" Width="400"  Name="tbPdfMasstabserror" TextWrapping="Wrap" 
+                                           Foreground="DarkRed" FontSize="14" FontWeight="Bold"  />
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+                <StackPanel x:Name="stMenu" Panel.ZIndex="0"  Background="{StaticResource flaechenBackground}">
+                    <StackPanel Name="spMenueHead" Height="111">
+                        <StackPanel Orientation="Horizontal" Cursor="Arrow">
+                            <Button Width="48" Height="40" x:Name="btnAddLayer" Click="btnAddLayer_Click"  
+                                    Visibility="Collapsed"
+                                        ToolTip="Explorer: Ebenen hinzufügen"  Style="{StaticResource listenButton}">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="+" Width="6"  Margin="-0,-5,0,0"/>
+                                    <Image    Source="/mgisNT;component/icons/gis.png"  Width="30"  />
+                                </StackPanel>
+                            </Button>
+                            <!--<GroupBox  BorderBrush="Black" Height="48">
+                                <CheckBox x:Name="cballeeinaus" Click="cballeeinaus_Click"  IsChecked="True" 
+                                  ToolTip="Die Haken werden rausgenommen, die Ebenen werden nicht mehr dargestellt, sind aber noch in der Liste der Vordergrundebenen vorhanden."
+                                  Margin="5,5,5,0" >
+                                    <StackPanel>
+                                        <TextBlock Text="Ebenen"/>
+                                        <TextBlock Text="ein/aus"/>
+                                    </StackPanel>
+                                </CheckBox>
+                            </GroupBox>-->
+
+                            <!--<Button Height="30"   Width="30" Margin="5" Click="btnFavoSave"
+                                       ToolTip="Favoritenliste speichern">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image    Source="/mgis;component/icons/herz.png"  Width="20"></Image>
+                                </StackPanel>
+                            </Button>-->
+                            <GroupBox  BorderBrush="Black" FontSize="9" Height="48"  Margin="5,0,0,0">
+                                <StackPanel Orientation="Horizontal" Height="48">
+                                    <ComboBox Text="favorite" Width="28" Height="30" x:Name="cmbfavorite"   FontSize="18" 
+                                      SelectionChanged="cmbfavorite_SelectionChanged" MaxDropDownHeight="523" 
+                                  ToolTip="Ebenenzusammenstellungen der verschiedenen Ämter aufrufen">
+                                        <ComboBoxItem Tag="nichts" Content=" "/>
+                                        <ComboBoxItem Tag="uwbb" Content="UWBB" ToolTip="Untere Wasser und Bodenschutzbehörde"/>
+                                        <ComboBoxItem Tag="unb" Content="UNB" ToolTip="Untere Naturschutzbehörde, mit Lubi und weisser Flurkarte"/>
+                                        <ComboBoxItem Tag="unb_2" Content="UNB-2" ToolTip="Untere Naturschutzbehörde, gleiche Themen aber schneller weil ohne weisse Flurkarte und Lubi "/>
+                                        <ComboBoxItem Tag="immi" Content="Immission" ToolTip="Immissionsschutz"/>
+                                        <ComboBoxItem Tag="ille" Content="Illegale Bauten" ToolTip=""/>
+                                        <ComboBoxItem Tag="feger" Content="Feger" ToolTip="Schornsteinfegerwesen"/>
+                                        <ComboBoxItem Tag="ba" Content="Bauaufsicht"/>
+                                        <ComboBoxItem Tag="ba_2" Content="Bauaufsicht-Minimal" ToolTip="gleiche Themen aber nur wenige angeklickt. Übersichtlicher!"/>
+                                        <ComboBoxItem Tag="gebw" Content="Gebäudewirtschaft"/>
+                                        <ComboBoxItem Tag="kats" Content="Sicherheit (KatS)" ToolTip="Katastrophenschutz / Gesundheitswesen"/>
+                                        <ComboBoxItem Tag="soziales" Content="Soziales" ToolTip="Soziales"/>
+                                        <ComboBoxItem Tag="intranet" Content="Intranet" ToolTip="unspezifisch im Intranet"/>
+                                        <!--<ComboBoxItem Tag="meinespeichern" Content="Meine Favoriten (speichern)"/>-->
+                                    </ComboBox>
+                                    <Button Name="btnGruppeFavo" Click="btnGruppeFavo_Click"  Width="48" Height="30" Style="{StaticResource lessButton}"
+                                ToolTip="Die Ansicht meiner Gruppe aufrufen.">
+                                        <StackPanel Orientation="Horizontal">
+                                            <!--<TextBlock Text="+" Width="6"  Margin="-0,0,0,0"/>-->
+                                            <Image    Source="/mgisNT;component/icons/gruppe1.png"  Width="30"  />
+                                        </StackPanel>
+                                    </Button>
+                                    <Button Name="btnMeineFavo" Click="btnMeineFavo_Click"  Width="48" Height="30"
+                                ToolTip="Die persönliche Ansicht aufrufen"  Style="{StaticResource lessButton}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <!--<TextBlock Text="+" Width="6"  Margin="-0,0,0,0"/>-->
+                                            <Image    Source="/mgisNT;component/icons/einzelperson.ico"  Width="22"  />
+                                        </StackPanel>
+                                    </Button>
+                                    <Button Name="btnFavoSave" Click="btnFavoSave_Click"  Width="48" Height="30"
+                                ToolTip="Die aktuelle Zusammenstellung als persönliche Ansicht speichern."  Style="{StaticResource lessButton}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <!--<TextBlock Text="+" Width="6"  Margin="-0,0,0,0"/>-->
+                                            <Image    Source="/mgisNT;component/icons/meineSpeichern.png"  Width="25" Height="25"  />
+                                        </StackPanel>
+                                    </Button>
+                                </StackPanel>
+                            </GroupBox>
+
+                            <Button Name="btnbookmark" Click="btnbookmark_Click"  Width="48" Height="30" Margin="5,0,0,0"
+                                          Style="{StaticResource lessButton}" ToolTipService.ShowDuration="600000"  Padding="3,0,0,0">
+                                <Button.ToolTip>
+                                    <StackPanel>
+                                        <TextBlock TextWrapping="Wrap" Width="210" Height="40" FontSize="14" Margin="10" > 
+                                                 Lesezeichen
+                                        </TextBlock>
+                                        <TextBlock TextWrapping="Wrap" Width="210" Height="100" FontSize="12" Margin="10" > 
+                                                Mit Lesezeichen können Sie die aktuelle Situation komplett abspeichern. Sie müssen Ihr dabei einen Titel geben, damit Sie Sie leicht wiedererkennen können.
+                                        </TextBlock>
+                                        <TextBlock TextWrapping="Wrap" Width="210" Height="100" FontSize="12" Margin="10" > 
+                                                Das ist nützlich, wenn Sie z.B. eine Besprechung vorbereiten wollen und dann lediglich die Lesezeichen nutzen um völlig verschiedene Orte und Ebenenzusammenstellungen  darzustellen.
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Button.ToolTip>
+                                <Button.Content >
+                                    <Image    Source="/mgisNT;component/icons/lesezeichen.png"  Width="25" Height="25"    />
+                                </Button.Content>
+                            </Button>
+
+
+
+                            <Button Content=" "  Height="30" Name="btnEbenenaktualisieren" Click="btnEbenenaktualisieren_Click"
+                                ToolTip="Änderungen übernehmen" Width="58" Visibility="Collapsed"/>
+                            <!--<CheckBox x:Name="cbSofortSchalter" IsChecked="True" Margin="5" ToolTip="refresh sofort ausführen" Visibility="Hidden"/>-->
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Button Name="btnStartBplan" Click="btnStartBplan_Click" 
+                                    ToolTip="Das externe Bebauungsplankataster wird gestartet. Dort können sie sich einen B-Plan aussuchen!" Style="{StaticResource lessButton}"
+                                                Margin="5" Content="Bebauungsplankataster" FontSize="10" Width="120"     />
+                            <Button Name="btnExplorer" Content=" . . ." Click="btnExplorer_Click" 
+                                    Width="60" Style="{StaticResource lessButton}" Visibility="Collapsed" />
+                            <!--<Button Name="btnWMSgetfeatureinfo" Click="btnWMSgetfeatureinfo_Click" Content="WMS" Width="60"
+                                    ToolTip="WMS-Datenabfrage" Visibility="Visible" Background="Blue" Height="25" Margin="5"/>-->
+
+
+                            <Button Name="btnDossier" Content="Dossier" Click="btnDossier_Click" FontWeight="Bold"
+                                    ToolTip="Die Funktion wird bald eingestellt, weil sie kaum genutzt wird."
+                                    Width="60" Style="{StaticResource newButton}"  Visibility="Visible"/>
+                            <!--<Button x:Name="btnSuchobjAusSchalten" Click="btnSuchobjAusSchalten_Click"  Width="200"  Visibility="Collapsed"
+                                    Style="{StaticResource lessButton}"
+                                        ToolTip="löscht den Google-pin und die blaue Markierung des gesuchten Flurstücks" 
+                                       >
+                                <StackPanel >
+                                    <TextBlock Text="Suchobjekt unsichtbar"/>
+                                    <TextBlock Text="  "/>
+                                </StackPanel>
+
+                            </Button>-->
+                            <StackPanel Margin="5,5,0,0">
+                                <CheckBox Name="cbSOeinschalten"  IsChecked="True" 
+                                          Click="cbSOeinschalten_Click" Height="25" Width="90" >
+                                    <TextBlock  FontSize="10" TextWrapping="Wrap"  >  Suchobjekt sichtbar</TextBlock>
+                                </CheckBox>
+
+                            </StackPanel>
+                            <Button Name="btnMgisHistoryBack" Click="btnMgisHistoryBack_Click" Content=" &lt;" Width="18" Margin="6,0,5,0" Style="{StaticResource lessButton}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal"  Margin="5,0,0,0" Visibility="Visible"  HorizontalAlignment="Left">
+                            <!--<TextBlock Text="Ebenen suchen:" Padding="3" />-->
+                            <xctk:WatermarkTextBox Watermark="Ebenen / Themen suchen"  TextChanged="TbEbenensuche_TextChanged" Height="25"
+                                                     x:Name="tbEbenensuche" Width="220" AcceptsReturn="True" ToolTip="Stichworte durch Leerzeichen trennen"
+                                                  />
+                            <Button Name="btnStichwortsuchebeenden" Click="BtnStichwortsuchebeenden_Click" Content=" x " Foreground="red"
+                                    Height="25" Width="18" Margin="5,0,5,0" IsEnabled="False"/>
+                            <Button Name="btnEbenensuche" Click="BtnEbenensuche_Click" Content=" start"  Width="35"  Style="{StaticResource lessButton}"
+                                    Margin="0" IsEnabled="True" Visibility="Collapsed"/>
+                        </StackPanel>
+                    </StackPanel>
+                    <!--<TextBlock x:Name="tbFavoname" Visibility="Collapsed"/>-->
+                    <TabControl Name="tcExplorer">
+                        <TabItem Name="tiExplorerNormal" Header="Bestand">
+                            <DockPanel>
+                                <StackPanel Name="spInfoLegende"   Height="25" Margin="6,0,0,0" DockPanel.Dock="Top">
+                                    <StackPanel   Orientation="Horizontal" Background="{StaticResource flaechenBackground}" Height="19">
+                                        <CheckBox   
+                                       x:Name="cballeeinaus" Click="cballeeinaus_Click"  IsChecked="True" 
+                                       ToolTip="Betrifft nur die bereits angekreuzten Ebenen"
+                                        Margin="1">
+                                            <CheckBox.LayoutTransform>
+                                                <ScaleTransform ScaleX="1.2" ScaleY="1.2" />
+                                            </CheckBox.LayoutTransform>
+                                        </CheckBox>
+                                        <RadioButton   
+                                 Margin="1" Visibility="Hidden"
+                               >
+                                        </RadioButton>
+                                        <Button x:Name="btnRemoveAllLayers" Click="btnRemoveAllLayers_Click"   Width="15"    
+                                        
+                                        
+                                        Style="{StaticResource listenButton}"
+                             ToolTip="ALLE Ebenen entfernen"  >
+                                            <Image  x:Name="myimagerefresh" Source="/mgisNT;component/icons/redx.png"  
+                                        />
+                                        </Button>
+
+
+                                        <TextBlock x:Name="tbInfolegende"  Text="__Bestandsliste__"   
+                                                    ToolTipService.ShowDuration="30000"  Margin="5,0,0,-0.333"
+                                                    FontStyle="Italic"  FontWeight="{Binding myFontWeight}" 
+                                
+                                                    MouseRightButtonDown="txtitel_MouseRightButtonDown" 
+                                                    Background="{Binding farbe}" Height="19" VerticalAlignment="Top" 
+                                  >
+                                        </TextBlock>
+                                        <!--<Button x:Name="btnKompress" Click="btnKompress_Click"   Width="65"   
+                                          Style="{StaticResource listenButton}" FontStyle="Italic"
+                                          ToolTip="Nur die Ebenen mit Haken werden angezeigt"  >
+                                    Kompakt
+                                </Button>-->
+                                        <Button x:Name="btnNichtKompress" Click="btnNichtKompress_Click"   Width="65"   
+                                          Style="{StaticResource listenButton}" FontStyle="Italic"
+                                          ToolTip="Alle Ebenen werden angezeigt"  >
+                                            Refresh
+                                        </Button>
+                                    </StackPanel>
+                                    <!--<TextBlock x:Name="tbInfolegende" Text="Info zu Legende, Dokumentation, Objektsuche" 
+                                       HorizontalAlignment="left"  Padding="2"/>-->
+                                </StackPanel>
+                                <ScrollViewer Name="svMainScrollviewer" CanContentScroll="True" 
+                                  Background="{StaticResource flaechenBackground}" 
+                                  Height="400">
+                                    <ListView  Background="{StaticResource flaechenBackground}" Height="400"
+                                            RenderTransformOrigin="0.5,0.5" 
+                                            Cursor="Arrow" 
+                                            x:Name="lvEbenenAlle"  
+                                            BorderBrush="#FFCCCCCC" 
+                                            BorderThickness="1,1,1,1" 
+                                            FontFamily="Arial" 
+                                            FontSize="12"                    
+                                            Margin="0"                           
+                                            SelectionChanged="lvEbenenAlle_SelectionChanged"
+                                            ItemTemplate="{StaticResource ListItemTemplate}"
+                                            MinHeight="200"  />
+                                </ScrollViewer>
+                            </DockPanel>
+                        </TabItem>
+                        <TabItem Name="tiExplorerKompakt" Header="Bestand (Kompakt)"
+                                 ToolTip="Nur die dargestellten Ebenen werden angezeigt">
+                            <ScrollViewer Name="svEbenenKompakt" CanContentScroll="True" 
+                                  Background="{StaticResource flaechenBackground}" 
+                                  Height="400">
+                                <ListView  Background="{StaticResource flaechenBackground}" Height="400"
+                                            RenderTransformOrigin="0.5,0.5" 
+                                            Cursor="Arrow" 
+                                            x:Name="lvEbenenKompakt"  
+                                            BorderBrush="#FFCCCCCC" 
+                                            BorderThickness="1,1,1,1" 
+                                            FontFamily="Arial" 
+                                            FontSize="12"                    
+                                            Margin="0"                           
+                                            SelectionChanged="lvEbenenAlle_SelectionChanged"
+                                            ItemTemplate="{StaticResource ListItemTemplate}"
+                                            MinHeight="200"  />
+                            </ScrollViewer>
+                        </TabItem>
+                        <TabItem Name="tiExplorerKategorie" Header="Kategorie" Visibility="Collapsed" MouseDown="tiExplorerKategorie_MouseDown" IsEnabled="True"
+                                 MouseRightButtonDown="tiExplorerKategorie_MouseRightButtonDown"
+                                 MouseDoubleClick="tiExplorerKategorie_MouseDown"      Height="22" 
+                                 ToolTip="Doppelklick öffnet Auswahl"   >
+                            <DockPanel>
+                                <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+                                    <TextBlock Text="Bitte wählen:" Margin="5"/>
+                                    <ComboBox Name="cbEbenenKategorien" SelectionChanged="cbEbenenKategorien_SelectionChanged"
+                                             IsEnabled="False" Margin="5" Width="290" >
+
+                                    </ComboBox>
+
+                                    <Image Source="/mgisNT;component/icons/refresh.png" MouseDown="btnKategorieEinzelRefresh_Click" Width="25" 
+                                           ToolTip="Kategorie auffrischen" />
+                                </StackPanel>
+                                <ScrollViewer Name="svEbenenKategorie" CanContentScroll="True" 
+                                  Background="{StaticResource flaechenBackground}" 
+                                  Height="400">
+                                    <ListView  Background="{StaticResource flaechenBackground}" Height="400"
+                                            RenderTransformOrigin="0.5,0.5" 
+                                            Cursor="Arrow" 
+                                            x:Name="lvEbenenKategorie"  
+                                            BorderBrush="#FFCCCCCC" 
+                                            BorderThickness="1,1,1,1" 
+                                            FontFamily="Arial" 
+                                            FontSize="12"                    
+                                            Margin="0"                           
+                                            SelectionChanged="lvEbenenAlle_SelectionChanged"
+                                            ItemTemplate="{StaticResource lvEbenenKategorieTemplate}"
+                                            MinHeight="200"  />
+                                </ScrollViewer>
+                            </DockPanel>
+                        </TabItem>
+                        <TabItem Name="tiGesamtgExplorer" Header="Explorer"
+                                 ToolTip="Für Infos: Bitte den Mauszeiger auf den Text fahren."
+                                  Height="22"   VerticalAlignment="Top"                                 >
+                            <DockPanel>
+                                <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+                                    <ToggleButton Name="btnExplorerKlappen" 
+                                                   Width="200" Margin="5"
+                                                  Click="btnExplorerKlappen_Click">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Name="tbKlappenActionText">Alle auf-</TextBlock>
+                                            <TextBlock >klappen</TextBlock>
+                                        </StackPanel>
+                                    </ToggleButton>
+                                    <Image Source="/mgisNT;component/icons/refresh.png" MouseDown="btnExplorerEinzelRefresh_Click" Width="25" 
+                                           ToolTip="Explorer auffrischen" />
+                                </StackPanel>
+                                <ScrollViewer Name="svGesamtExplorer" CanContentScroll="False" 
+                                      Background="{StaticResource flaechenBackground}" Height="400"> 
+                                    <StackPanel Margin="5" Name="spExplorerParent" >
+
+                                    </StackPanel> 
+                                </ScrollViewer>
+                            </DockPanel>
+                        </TabItem>
+                        <TabItem Name="tiSuche" Header="Suche"
+                                 ToolTip="Suche nach Ebenen/Themen"
+                                 Height="22"   VerticalAlignment="Top" >
+                            <DockPanel  Background="{StaticResource flaechenBackground}" > 
+                                    <StackPanel Orientation="Horizontal"  Margin="5,0,0,0" Visibility="Visible"  HorizontalAlignment="Left"
+                                                     Background="{StaticResource flaechenBackground}"  DockPanel.Dock="Top">
+                                       
+                                        <xctk:WatermarkTextBox Watermark="Ebenen / Themen suchen"  TextChanged="TbEbenensuche2_TextChanged" Height="25"
+                                                     x:Name="tbEbenensuche2" Width="220" AcceptsReturn="True" ToolTip="Stichworte durch Leerzeichen trennen"
+                                                  />
+                                        <Button Name="btnStichwortsuchebeenden2" Click="BtnStichwortsuchebeenden_Click" Content=" x " Foreground="red"
+                                    Height="25" Width="18" Margin="5,0,5,0" IsEnabled="False"/>
+                                  
+                                    </StackPanel> 
+                                <ScrollViewer Name="svEbenenSuche" CanContentScroll="True" 
+                                  Background="{StaticResource flaechenBackground}" 
+                                  Height="400">
+                                    <ListView  Background="{StaticResource flaechenBackground}" Height="400"
+                                            RenderTransformOrigin="0.5,0.5" 
+                                            Cursor="Arrow" 
+                                            x:Name="lvEbenenSuche"  
+                                            BorderBrush="#FFCCCCCC" 
+                                            BorderThickness="1,1,1,1" 
+                                            FontFamily="Arial" 
+                                            FontSize="12"                    
+                                            Margin="0"                           
+                                            SelectionChanged="lvEbenenAlle_SelectionChanged"
+                                            ItemTemplate="{StaticResource lvEbenenSucheTemplate}"
+                                            MinHeight="200"  />
+                                </ScrollViewer>
+                            </DockPanel>
+                        </TabItem>
+                    </TabControl>
+                    <TextBox Name="tbInfopanel" TextWrapping="Wrap" Height="100"/>
+                </StackPanel>
+            </StackPanel>
+            <DockPanel DockPanel.Dock="Top" Height="80"   VerticalAlignment="Top"
+                              x:Name="dockTop"     Panel.ZIndex="0" 
+                            Background="{StaticResource flaechenBackground}">
+                <StackPanel Name="spObereButtonMenu" Orientation="Horizontal" DockPanel.Dock="Top">
+                    <StackPanel Orientation="Horizontal" >
+                        <Button  x:Name="btngoogle3d"  Click="btngoogle3d_Click"    Style="{StaticResource lessButton}"  Margin="5"
+                                             Visibility="Visible"  ToolTipService.ShowDuration="60000"  Content="3D-Luftbild" FontSize="12" >
+                            <Button.ToolTip   >
+                                <StackPanel>
+                                    <TextBlock >Echte 3D-Ansicht</TextBlock>
+                                    <TextBlock >Dabei wird der Ausschnitt übergeben. In einigen Fällen kann es zu geringen Abweichungen kommen.</TextBlock>
+                                    <TextBlock >Steuern Sie die 3D-Ansicht mit:</TextBlock>
+                                    <TextBlock > - Mausrad drehen: Hineinverkleinern und Herausvergrößern (Zoom)</TextBlock>
+                                    <TextBlock > - Maustaste links gedrückt halten und ziehen: Darstellung beweg sich in Richtung des Ziehens</TextBlock>
+                                    <TextBlock > - Maustaste links gedrückt halten + Strg-Taste gedrückt halten  und ziehen: Darstellung lässt sich beliebig kippen</TextBlock>
+                                </StackPanel>
+                            </Button.ToolTip>
+                        </Button>
+                        <StackPanel Orientation="Horizontal">
+                            <Button  x:Name="btnVogel"  Click="btnVogel_Click"   Style="{StaticResource lessButton}"  Margin="5"
+                                              Visibility="Visible"   Content="Vogelperspektive" FontSize="12"  >
+                            </Button>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Button  x:Name="btnGooglemaps"  Click="btnGooglemaps_Click"   Content="Google Luftbild" FontSize="12"   Style="{StaticResource lessButton}"
+                                             Visibility="Visible"    Margin="5" 
+                                             ToolTip="Googlemaps mit Routenplaner wird für diesen Ausschnitt in einem eigenen Fenster geöffnet. Die Aufnahme ist meist ein wenig aktueller als in den anderen Darstellungen">
+
+                            </Button>
+                        </StackPanel>
+                        <Button   x:Name="btnPNG" Click="btnPNG_Click"     ToolTipService.ShowDuration="30000"   Margin="5"
+                              Style="{StaticResource lessButton}">
+                            <ToolTipService.ToolTip>
+                                <StackPanel>
+                                    <TextBlock>Hier können sie die Grafik bearbeiten, also z.B.</TextBlock>
+                                    <TextBlock>Texte oder Markierungen einfügen.</TextBlock>
+                                    <TextBlock>Ausserdem wird das Verzeichnis mit der Grafikdatei geöffnet, so</TextBlock>
+                                    <TextBlock>dass sie die Datei schnell finden können.</TextBlock>
+                                </StackPanel>
+                            </ToolTipService.ToolTip>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="zeichnen"/>
+                                <Image    Source="/mgisNT;component/icons/stift.png"  Width="18" Height="18"  />
+                            </StackPanel>
+                        </Button>
+                        <Button   x:Name="btnEmail" Click="btnEmail_Click"     ToolTipService.ShowDuration="30000"   Margin="5"
+                              Style="{StaticResource lessButton}"  >
+                            <ToolTipService.ToolTip>
+                                <StackPanel>
+                                    <TextBlock>Hier können sie die Karte als Email versenden.</TextBlock>
+                                </StackPanel>
+                            </ToolTipService.ToolTip>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="@ eMail"/>
+                            </StackPanel>
+                        </Button>
+
+
+                        <Button Name="btnDatenschutz" Click="BtnDatenschutz_Click" Content="Datenschutz"    Style="{StaticResource lessButton}"/>
+                        <TextBlock Margin="12" FontSize="9">           
+                                <Hyperlink NavigateUri="mailto:dr.j.feinen@kreis-offenbach.de?subject=gis&amp;body=" RequestNavigate="OnNavigate">
+                                    Notiz an Admin
+                                </Hyperlink>
+                        </TextBlock>
+                        <Button Name="btnHostChange" Click="btnHostChange_Click"   Style="{StaticResource lessButton}" >_</Button>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Cursor="Arrow" Name="spButtonMenu" DockPanel.Dock="Bottom" >
+                    <xctk:DropDownButton  Width="78"   Margin="1" Name="spVIDParadigma"   Background="{StaticResource flaechenBackground}"
+                                                  FontSize="12"    Height="40" >
+                        <StackPanel   Margin="0" Height="40">
+                            <StackPanel Orientation="Vertical" x:Name="stackVorgangsid" Height="40" >
+                                <TextBlock Text="VorgangsID:" Padding="0" FontSize="10"/>
+                                <TextBlock x:Name="tbVorgangsid" Width="58"    Padding="0" 
+                                      FontFamily="arial" FontWeight="bold" FontSize="16">990909</TextBlock>
+                            </StackPanel>
+                        </StackPanel>
+
+
+                        <xctk:DropDownButton.DropDownContent  >
+                            <StackPanel Height="639" Width="849"  Margin="5"   Background="{StaticResource flaechenBackground}">
+                                <StackPanel Orientation="Horizontal" Margin="5" Width="800" >
+                                    <TextBlock Text="Neuen Vorgang anlegen: "    Padding="3" Width="250"/>
+                                    <Button Name="btnNeuenVorgangAnlegen" Click="btnNeuenVorgangAnlegen_Click" Content="anlegen"  
+                                     Margin="5"/>
+                                    <Button Name="btnvorgangabbruch" Click="btnvorgangabbruch_Click" Content="Abbruch" HorizontalAlignment="Right"/>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal" Margin="5" >
+                                    <TextBlock Text="Zu Vorgang wechseln: "    Padding="3" Width="150"/>
+                                    <TextBox Name="tbzuVorgangManuellWechseln" Width="100"  Background="AliceBlue"/>
+                                    <Button Name="btnzuVorgangManuellWechseln" Click="btnzuVorgangManuellWechseln_Click" Content=" wechseln"  />
+                                    <Border BorderBrush="Black" BorderThickness="1" Margin="5">
+                                        <StackPanel Orientation="Horizontal" Margin="5">
+                                            <RadioButton Name="rbVorgangInParadigmaOeffnen" GroupName="rbgVorgangInParadigmaOeffnen" IsChecked="False" Content="in Paradigma öffnen "/>
+                                            <RadioButton Name="rbVorgangRangeholen" GroupName="rbgVorgangInParadigmaOeffnen" IsChecked="true" Content="Aussschnitt des Vorgangs öffnen"/>
+                                        </StackPanel>
+
+                                    </Border>
+                                </StackPanel>
+
+                                <DataGrid x:Name="dgHistory" ItemsSource="{Binding}"     Visibility="Visible"    Margin="5"
+                                      MaxHeight="380" AutoGenerateColumns="False"
+                                
+                                   ColumnHeaderStyle="{StaticResource dgHeaderStyle}"  SelectionChanged="dgHistory_SelectionChanged">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn  Header="Nr" Width="SizeToCells" Binding="{Binding ID}" />
+                                        <DataGridTextColumn Header="Datum" Width="SizeToCells" Binding="{Binding Datum}" />
+
+                                        <DataGridTextColumn Header="Az" MaxWidth="350" Binding="{Binding AZ}" >
+                                            <DataGridTextColumn.ElementStyle>
+                                                <Style TargetType="{x:Type TextBlock}">
+                                                    <Setter Property="TextWrapping" Value="Wrap"/>
+                                                </Style>
+                                            </DataGridTextColumn.ElementStyle>
+                                        </DataGridTextColumn>
+
+                                        <DataGridTextColumn Header="Titel" MaxWidth="400" Binding="{Binding Titel}">
+                                            <DataGridTextColumn.ElementStyle>
+                                                <Style TargetType="{x:Type TextBlock}">
+                                                    <Setter Property="TextWrapping" Value="Wrap"/>
+                                                </Style>
+                                            </DataGridTextColumn.ElementStyle>
+                                        </DataGridTextColumn>
+
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </StackPanel>
+                        </xctk:DropDownButton.DropDownContent>
+                    </xctk:DropDownButton>
+                    <Button Name="btnParadigmaLight" Click="btnParadigmaLight_Click" Content="Vorgänge" Visibility="Collapsed">
+
+                    </Button>
+                    <Border BorderThickness="1" Margin="2" BorderBrush="Black" Height="40">
+                        <StackPanel Orientation="Horizontal" Height="40">
+                            <RadioButton x:Name="rbHgrundAktiveEbene" Margin="0,15,0,0" Checked="rbAktiveEbene_Checked"  Height="40"/>
+                            <TextBlock x:Name="tbhgrund" Width="60" Height="40" FontSize="12" Padding="3"   MouseDown="tbhgrund_MouseDown" 
+                                       TextWrapping="Wrap" 
+                                       TextAlignment="Center"  
+                                       ToolTipService.ShowDuration="30000" 
+                                       >
+                                <TextBlock.ToolTip>
+                                    <ToolTip MaxWidth="400" MaxHeight="600" StaysOpen="True">
+                                        <StackPanel Width="400" MaxHeight="600" >
+                                            <TextBlock Text="{Binding dokutext}" TextWrapping="Wrap" MaxHeight="600" />
+                                            <Image Source="{Binding thumbnailFullPath}" Width="210" Height="140"/>
+                                        </StackPanel>
+                                    </ToolTip>
+                                </TextBlock.ToolTip>
+                                
+                            </TextBlock>
+                            <ComboBox x:Name="cmbHgrund" ItemsSource="{Binding}" SelectionChanged="cmbHgrund_SelectionChanged"   
+                                              Width="25" Height="40"  ToolTip="Hintergrund-Auswahl" FontSize="16" MaxDropDownHeight="823"
+                                >
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <ListBoxItem Content="{Binding titel}" ToolTipService.ShowDuration="600000" Width="300" >
+                                            <ListBoxItem.ToolTip>
+                                                <ToolTip MaxWidth="400" MaxHeight="600" StaysOpen="True">
+                                                    <StackPanel Width="400" MaxHeight="600" >
+                                                        <TextBlock Text="{Binding dokutext}" TextWrapping="Wrap" MaxHeight="600" />
+                                                        <Image Source="{Binding thumbnailFullPath}" Width="210" Height="140"/>
+                                                    </StackPanel>
+                                                </ToolTip>
+                                            </ListBoxItem.ToolTip>
+
+                                        </ListBoxItem>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+
+
+
+                        </StackPanel>
+                    </Border>
+                    <GroupBox  Margin="0" Width="157" Height="50" Name="gbNavi">
+                        <StackPanel Orientation="Horizontal" >
+                            <Button Content=" Flst "  x:Name="btnFlstsuchen"  
+                                            Click="btnFlstsuchen_Click"    Style="{StaticResource topmenuButton}"
+                                    >
+                                <Button.ToolTip>
+                                    <StackPanel>
+                                        <TextBlock >Suchen nach Flurstücken</TextBlock>
+                                        <TextBlock >auch: Eigentümerauskunft</TextBlock>
+                                    </StackPanel>
+                                </Button.ToolTip>
+                            </Button>
+                            <Button Content=" Adr "  Style="{StaticResource topmenuButton}"  x:Name="btnAdressesuchen"
+                                    Click="btnAdressesuchen_Click" >
+                                <Button.ToolTip>
+                                    <StackPanel>
+                                        <TextBlock >Suchen nach Adresse</TextBlock>
+                                        <TextBlock >auch: Eigentümerauskunft</TextBlock>
+                                    </StackPanel>
+                                </Button.ToolTip>
+                            </Button>
+                            <Button Content=" Koo "   Style="{StaticResource topmenuButton}" ToolTip="Suchen nach UTM-Koordinate" 
+                                    Name="btnKoordinatesuchen" Click="btnKoordinatesuchen_Click" />
+                            <!--<ComboBox x:Name="cmbSuchezwei" Width="21" ToolTip="Weitere Suchmöglichkeiten" SelectionChanged="cmbSuchezwei_SelectionChanged">
+                                <ComboBoxItem Tag=""/>
+                                <ComboBoxItem Tag="koord" Content="UTM-Koordinaten"/>
+                                <ComboBoxItem Tag="gemeinden" Content="Gemeinden"/>
+                                <ComboBoxItem Tag="ot" Content="Ortsteile"/>
+                                <ComboBoxItem Tag="hll" Content="HLL"/>
+                            </ComboBox>-->
+                            <!--<GroupBox Header="Objekte" FontSize="9">-->
+
+
+                            <xctk:DropDownButton  Width="48"   Margin="1" Name="btnOSdropdown" 
+                                                  ToolTip="Suche nach Objekten in den Themen (Objektsuche)" 
+                                                  FontSize="16" Visibility="Collapsed"   Content="Obj" Height="35">
+                                <xctk:DropDownButton.DropDownContent>
+                                    <StackPanel Width="500" Background="{StaticResource flaechenBackground}">
+                                        <TextBlock Text="Objektsuche-Vorauswahl"/>
+                                        <TextBlock Text="Wählen Sie das Thema in dem gesucht werden soll:"/>
+                                        <StackPanel Orientation="Horizontal">
+                                            <StackPanel  VerticalAlignment="Center">
+                                                <TextBox Text="natur" Name="tbOSfilter" TextChanged="tbOSfilter_TextChanged" Width="100"></TextBox>
+                                            </StackPanel>
+                                            <DataGrid  x:Name="dgOSliste"  ItemsSource="{Binding }"   Height="330"
+                                       Width="400" 
+                                         SelectionChanged ="dgOSliste_SelectionChanged"
+                                  CanUserAddRows="False"  AutoGenerateColumns="False"
+                                  SelectionMode="Single" 
+                                  SelectionUnit="FullRow"                                             
+                                  ColumnHeaderStyle="{StaticResource dgHeaderStyle}"  
+                                   FontWeight="Normal"  
+                                      >
+                                                <DataGrid.Columns>
+
+                                                    <DataGridTextColumn Header="Klicken zum Sortieren" MaxWidth="250"    Binding="{Binding titel}" />
+                                                    <!--<DataGridTextColumn Header="Klicken zum Sortieren"   Binding="{Binding aid}" />-->
+
+                                                </DataGrid.Columns>
+                                            </DataGrid>
+                                        </StackPanel>
+
+                                    </StackPanel>
+
+                                </xctk:DropDownButton.DropDownContent>
+                            </xctk:DropDownButton>
+                            <!--</GroupBox>-->
+                        </StackPanel>
+                    </GroupBox>
+                    <Button   x:Name="btnzoomin2" Click="zoomin_Click"    Style="{StaticResource topmenuButton}">
+                        <Image    Source="/mgisNT;component/icons/zoomin.png" Width="32" Height="32" />
+                        <Button.ToolTip>
+                            <StackPanel>
+                                <TextBlock >HineinZoomen</TextBlock>
+                                <TextBlock >Vergrößert den Ausschnitt in der Mitte der Karte</TextBlock>
+                            </StackPanel>
+                        </Button.ToolTip>
+                    </Button>
+                    <Button   x:Name="btnzoomout2" Click="zoomout_Click"    Style="{StaticResource topmenuButton}" >
+
+                        <Image    Source="/mgisNT;component/icons/zoomout.png"  Width="32" Height="32"  />
+                        <Button.ToolTip>
+                            <StackPanel>
+                                <TextBlock >HerausZoomen</TextBlock>
+                                <TextBlock >Verkleinert den Ausschnitt in der Mitte der Karte</TextBlock>
+                            </StackPanel>
+                        </Button.ToolTip>
+                    </Button>
+                    <ToggleButton x:Name="chkBoxAusschnitt"  Click="chkBoxAusschnitt_Click" IsChecked="False"  
+                                     MouseEnter="imageMapCanvas_MouseEnter" 
+                                  Margin="1,1,1,1" Width="48" Height="40"
+                                  >
+                        <ToggleButton.ToolTip>
+                            <StackPanel>
+                                <TextBlock >Ausschnitt</TextBlock>
+                                <TextBlock >Vergrößert einen beliebigen Ausschnitt der Karte</TextBlock>
+                            </StackPanel>
+                        </ToggleButton.ToolTip>
+                        <ToggleButton.Style>
+                            <Style>
+
+                                <Setter Property="ToggleButton.Background">
+
+                                    <Setter.Value>
+                                        <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                            <GradientStop Color="LightGray" Offset="0"/>
+                                            <GradientStop Color="black" Offset="0.5"/>
+                                            <GradientStop Color="black" Offset="0.5"/>
+                                            <GradientStop Color="LightGray" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ToggleButton.Style>
+
+                        <Image    Source="/mgisNT;component/icons/auschnittNeu.png" 
+                                                                      Stretch="Fill"  Width="38" Height="38" />
+                    </ToggleButton>
+
+
+                    <Border BorderThickness="1"  Margin="2" BorderBrush="Black"  
+                            Height="40" Name="brdPan">
+                        <Border.ToolTip>
+                            <StackPanel>
+                                <TextBlock >Verschieben</TextBlock>
+                                <TextBlock >Seitlich die Karte verschieben. Rastet ein!</TextBlock>
+                            </StackPanel>
+                        </Border.ToolTip>
+                        <CheckBox x:Name="chkBoxPan"  Click="chkBoxPan_Click" Unchecked="chkBoxPan_Click" IsChecked="False" 
+                                     MouseEnter="imageMapCanvas_MouseEnter"   Margin="1,1,1,1" FontSize="5">
+                            <StackPanel  >
+                                <Image   Source="/mgisNT;component/icons/kreuz.png" Height="19" Width="19" Stretch="Fill" />
+                                <TextBlock Text="Verschieben" Padding="0,5,0,0" FontSize="8"/>
+                            </StackPanel>
+
+                        </CheckBox>
+                    </Border>
+
+
+                    <Border BorderThickness="1" Margin="2" BorderBrush="Black" Height="40">
+                        <Border.ToolTip>
+                            <StackPanel>
+                                <TextBlock >Bildschirmmaßstab</TextBlock>
+                                <TextBlock >Wählen Sie hier einen anderen Bildschirmmasstab</TextBlock>
+                                <TextBlock > (Mausrad-sensibel)</TextBlock>
+                            </StackPanel>
+                        </Border.ToolTip>
+                        <StackPanel Orientation="Horizontal" Height="40">
+                            <TextBlock x:Name="tbMasstab" Text="1 : 10.000" Margin="0,0,0,0" TextWrapping="Wrap" 
+                                        Width="46" TextAlignment="Center" Height="40"
+                                               MouseDown="tbMasstab_MouseDown"    MouseEnter="imageMapCanvas_MouseEnter"   />
+                            <ComboBox x:Name="cmbMasstab" SelectionChanged="cmbMasstab_SelectionChanged"  
+                                              Width="20" Height="40" VerticalAlignment="Bottom"    
+                                              
+                                               ItemsSource="{Binding}" 
+                                                                DisplayMemberPath="displayVal" 
+                                                                SelectedValuePath="tagVal"
+                                              />
+                        </StackPanel>
+                    </Border>
+                    <!--<Button   x:Name="btnrefresh" Click="btnrefresh_Click" Width="29" ToolTip="Karte auffrischen" 
+                              Foreground="Green"  Style="{StaticResource topmenuButton}">
+                    </Button>-->
+                    <Image    Source="/mgisNT;component/icons/refresh.png"  MouseDown="btnrefresh_Click" Width="25" ToolTip="Karte auffrischen" />
+
+
+
+                    <Button   x:Name="rbfit2" Click="rbfit_Click" Width="29" ToolTip="Auschnitt wird an die Raumbezüge angepasst"
+                              Content="R"  Style="{StaticResource topmenuButton}"/>
+                    <!--<ToggleButton Grid.Column="3" Grid.Row="3" x:Name="btnAusschnitt" Click="btnAuschnitt_Click" Width="29" 
+                                              ToolTip="Auschnitt frei wählen">
+                                <Image    Source="/mgis;component/icons/ausschnitt.png"  ></Image>
+                            </ToggleButton>-->
+
+
+
+
+                    <Border BorderThickness="1"  Margin="1" BorderBrush="Black" Height="40" >
+                        <Border.ToolTip>
+                            <StackPanel>
+                                <TextBlock >Messen</TextBlock>
+                                <TextBlock >Strecken, Flächen, Koordinaten, Kreislinien</TextBlock>
+                                <TextBlock > (Mausrad-sensibel)</TextBlock>
+                            </StackPanel>
+                        </Border.ToolTip>
+                        <StackPanel Orientation="Horizontal" Height="40">
+                            <TextBlock Text="Messen" Padding="5,8,2,0" Height="40"/>
+                            <ComboBox Width="20" x:Name="cmbMessen"  Padding="2,9,0,0" Text="Messen" 
+                                      SelectionChanged="cmbMessen_SelectionChanged"
+                                      FontSize="16">
+                                <!--<ComboBoxItem IsSelected="True" Tag="messen" Content="Messen" />-->
+                                <ComboBoxItem Tag="Koordinate" Content="UTM-Koordinate abfragen"/>
+                                <ComboBoxItem  Tag="Fläche" Content="Fläche messen"/>
+                                <ComboBoxItem  Tag="Strecke" Content="Strecke messen"/>
+                                <ComboBoxItem  Tag="kreis" Content="Kreislinie im Abstand"/>
+                                <ComboBoxItem  Tag="windrose" Content="Windrose (vorherrschende Windrichtungen)"/>
+                                <ComboBoxItem  Tag="leer" Content="leer" Visibility="Collapsed"/>
+                            </ComboBox>
+
+                            <xctk:DropDownButton  Width="1"   Margin="1" Name="btnMessen" ToolTip="" 
+                                                  FontSize="10"     IsOpen="False" Height="38" >
+                                <xctk:DropDownButton.DropDownContent>
+                                    <StackPanel Orientation="Horizontal" Width="350" Background="{StaticResource flaechenBackground}"  Margin="5">
+                                        <StackPanel>
+                                            <TextBlock Text=""  FontSize="10"  FontWeight="Normal" Height="80" Width="100" Name="tbmessenhinweis" HorizontalAlignment="Left" TextWrapping="Wrap"/>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Button Name="btnNeueMessung" Click="btnNeueMessung_Click"    
+                                                    Content="Neue Messung"   HorizontalAlignment="Left"/>
+                                                <Button Name="btnKoordUmrechner" Click="btnKoordUmrechner_Click"   ToolTip="Übergibt die Koordinaten an einen Externen Umrechner." 
+                                                    Content="Koord.Umrechner"    />
+                                                <Button Name="btnNachParadigma" Click="btnNachParadigma_Click"   ToolTip="Übergibt den Raumbezug an Paradigma" 
+                                                    Content="nach Paradigma"    />
+                                            </StackPanel>
+                                        </StackPanel>
+
+                                        <StackPanel Width="250">
+                                            <Button Name="btnMessenSchliessen" Click="btnMessenSchliessen_Click"   Style="{StaticResource lessButton}"
+                                                    Content=" X " Width="30"  Foreground="Wheat" Background="Black" FontWeight="Bold"  FontSize="10" HorizontalAlignment="Right"/>
+                                            <Button x:Name="btnGetFlaecheEnde" Click="btnGetFlaecheEnde_Click"  Width="200" 
+                                                    ToolTip="Messergebnis anzeigen" HorizontalAlignment="Left"   >
+                                                <StackPanel>
+                                                    <TextBlock Text="Messergebnis anzeigen" FontSize="10"/>
+                                                </StackPanel>
+                                            </Button>
+
+                                            <StackPanel Orientation="Horizontal" Margin="5" Width="490">
+                                                <StackPanel>
+                                                    <TextBlock Text="Messergebnis:" FontWeight="Bold"/>
+                                                    <TextBox x:Name="tbzwischenwert" Width="225"   Visibility="Visible" Text="letztes Segment"    FontSize="10" />
+                                                    <TextBox x:Name="tbMinimapCoordinate2" Width="225"   Visibility="Visible"    FontSize="10" Text="Summe bisher (ohne letztes Segment)" />
+                                                </StackPanel>
+
+
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </StackPanel>
+
+                                </xctk:DropDownButton.DropDownContent>
+                                <!--<TextBlock Text="Messen " Width="60"  FontSize="12" Padding="2,2,0,0"/>-->
+
+                            </xctk:DropDownButton>
+                        </StackPanel>
+                    </Border>
+
+                    <Button  x:Name="btnPdf"  Click="btnPdf_Click" Style="{StaticResource topmenuButton}"
+                                 Visibility="Visible"  Content="PDF" ToolTip="Ausgabe der Karte ins PDF-Format"/>
+                    <Button  x:Name="btnSchnelldruck"  Click="btnSchnelldruck_Click" Style="{StaticResource topmenuButton}"
+                                 Visibility="Visible"   ToolTip="Ausgabe der Karte sofort auf den Drucker">
+                        <Image    Source="/mgisNT;component/icons/schnelldruck.png"  Width="28" Height="28"  />
+                    </Button>
+
+                    <Button   x:Name="globalfit2" Click="globalfit_Click"  Visibility="Visible" Style="{StaticResource topmenuButton}" Width="48" 
+                              ToolTip="Kreisansicht. Klicken Sie auf den gewünschten Zielpunkt."
+                         >
+                        <Image    Source="/mgisNT;component/icons/kreisof.png"  />
+                    </Button>
+
+                    <Button Name="btnKreisuiebersicht" Click="BtnKreisuiebersicht_Click"  Style="{StaticResource lessButton}"
+                                    Content="Teleport" Margin="5,0,5,0" ToolTip="Klicken Sie in die folgende Übersicht um schnell den Ort zu wechseln"/>
+
+
+
+
+                    <Button Name="btnHandbuch" Click="btnHandbuch_Click"  Style="{StaticResource topmenuButton}" ToolTip="Handbuch">
+                        <Image    Source="/mgisNT;component/icons/handbuch.png"  Width="28" Height="28"  />
+                    </Button>
+
+                    <Button   x:Name="btnTools" Click="btnTools_Click" Style="{StaticResource topmenuButton}" ToolTip="Werkzeuge"  >
+                        <Image    Source="/mgisNT;component/icons/tool.png"  Width="32" Height="32"  />
+                    </Button>
+
+                    <Button x:Name="btnOptionen" Click="btnOptionen_Click"  Style="{StaticResource topmenuButton}"
+                            MouseEnter="imageMapCanvas_MouseEnter" ToolTip="Optionen / Einstellungen">
+                        <Image    Source="/mgisNT;component/icons/optionen.png"  Width="28" Height="28"  />
+                    </Button>
+                    <Button x:Name="btnSelection" Click="btnSelection_Click"  Style="{StaticResource topmenuButton}" Width="68"
+                            MouseEnter="imageMapCanvas_MouseEnter" ToolTip="Auswahl unterhalb der Layerebene" Background="LightGreen" Foreground="Black">
+                        Natis-Arten
+                        </Button>
+                    <!--<xctk:DropDownButton  Width="50"   Margin="1" Name="btnHGSlider" ToolTip="Transparenz von Vordergrund und Hintergrund lassen sich hier getrennt einstellen. Gilt nicht fürs PDF. Windows-Snip empfohlen." 
+                                                  FontSize="16"     IsOpen="False" Height="38" >
+                        <xctk:DropDownButton.DropDownContent>
+                            <StackPanel Width="300" Background="{StaticResource flaechenBackground}">
+                                <StackPanel Orientation="Horizontal" Margin="5" Width="300">
+                                    <TextBlock Text="Hintergrund Helligkeit"/>
+                                    <Button Name="btnSliderSchliessen" Click="btnSliderSchliessen_Click"   Style="{StaticResource lessButton}"
+                                                  Content=" X " Width="30" Foreground="Wheat" Background="Black" FontWeight="Bold" FontSize="10" 
+                                            HorizontalAlignment="Right" Margin="40,0,0,0"/>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <StackPanel  VerticalAlignment="Center" Width="300">
+                                        <StackPanel VerticalAlignment="Center" Margin="10" Orientation="Horizontal">
+                                            <TextBlock  Text="0%" />
+                                            <Slider Name="sldHgrundOpac" Maximum="255" TickPlacement="BottomRight" TickFrequency="10"  Width="200" 
+                                                              ValueChanged="sldHgrundOpac_ValueChanged" 
+                                                          />
+                                            <TextBlock  Text="100%" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="5" Width="300">
+                                    <TextBlock Text="Vordergrund Undurchsichtigkeit "/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <StackPanel  VerticalAlignment="Center" Width="300">
+                                        <StackPanel VerticalAlignment="Center" Margin="10" Orientation="Horizontal">
+                                            <TextBlock  Text="0%" />
+                                            <Slider Name="sldVGrundOpac" Maximum="1" TickPlacement="BottomRight" TickFrequency="10" Value="1" Width="200" 
+                                                        ValueChanged="sldVGrundOpac_ValueChanged" 
+                                                          />
+                                            <TextBlock  Text="100%" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </StackPanel>
+                            </StackPanel>
+                        </xctk:DropDownButton.DropDownContent>
+                        <TextBlock Text=" T " FontWeight="Bold" FontSize="24" Padding="0"/>
+
+                    </xctk:DropDownButton>-->
+
+                </StackPanel>
+
+            </DockPanel>
+            <Grid x:Name="dockMap" Panel.ZIndex="0" d:IsHidden="True">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0*"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button Name="btnMinMax" Content=" &lt;&gt; " Click="btnMinMax_Click" HorizontalAlignment="Left"  Style="{StaticResource lessButton}"
+                        VerticalAlignment="Top" Panel.ZIndex="499" Grid.ColumnSpan="2" Width="49" d:IsHidden="False"/>
+                <TextBlock Name="tbinfohgrund" Text=" ... Lade und prüfe Geodaten - Bitte warten" HorizontalAlignment="Left"   
+                           Visibility="Collapsed" Background="Green" Foreground="White" Opacity="10" 
+                           FontSize="20"
+                        VerticalAlignment="Top" Panel.ZIndex="499" Grid.ColumnSpan="4" Width="699" d:IsHidden="False"/>
+                <!--<TextBlock Name="tbinfoVGrund" Text="-" HorizontalAlignment="Left"    Visibility="Visible" Background="Green" Foreground="White"
+                        VerticalAlignment="Top" Panel.ZIndex="499" Grid.ColumnSpan="4" Width="199" d:IsHidden="False"/>-->
+                <Canvas  x:Name="cv0"  Panel.ZIndex="0"  Background="White"  Margin="0,0,0,0"  
+                              VerticalAlignment="Top" HorizontalAlignment="Left"
+                         Grid.ColumnSpan="2" d:IsHidden="True"   />
+                <!--<Canvas  x:Name="HGabdecker"  Panel.ZIndex="0"   Background="Transparent" 
+                              VerticalAlignment="Top" HorizontalAlignment="Left"
+                         Margin="0,0,0,0"  Grid.ColumnSpan="2" d:IsHidden="True"  />-->
+
+                <Canvas  x:Name="cv1"  Panel.ZIndex="0"   Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"  Grid.ColumnSpan="2" Width="10" Height="11" d:IsHidden="True" />
+                <Canvas  x:Name="cv2"  Panel.ZIndex="0"   Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"  Grid.ColumnSpan="2" Width="10" Height="11" d:IsHidden="True" />
+                <Canvas  x:Name="cv3"  Panel.ZIndex="0"   Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"  Grid.ColumnSpan="2" Width="10" Height="11" d:IsHidden="True" />
+                <Canvas  x:Name="cv4"  Panel.ZIndex="0"   Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"  Grid.ColumnSpan="2" Width="10" Height="11" d:IsHidden="True" />
+                <Canvas  x:Name="cv5"  Panel.ZIndex="0"   Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"  Grid.ColumnSpan="2" Width="10" Height="11" d:IsHidden="True" />
+                <Canvas  x:Name="cv6"  Panel.ZIndex="0"   Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"  Grid.ColumnSpan="2" Width="10" Height="11" d:IsHidden="True" />
+                <Canvas  x:Name="cv7"  Panel.ZIndex="0"   Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"  Grid.ColumnSpan="2" Width="10" Height="11" d:IsHidden="True" />
+                <Canvas  x:Name="cv8"  Panel.ZIndex="0"   Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"  Grid.ColumnSpan="2" Width="10" Height="11" d:IsHidden="True" />
+                <Canvas  x:Name="cv9"  Panel.ZIndex="0"   Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"  Grid.ColumnSpan="2" Width="10" Height="11" d:IsHidden="True" />
+                <Canvas  x:Name="cv10"  Panel.ZIndex="0"   Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"  Grid.ColumnSpan="2" Width="10" Height="11" d:IsHidden="True" />
+                <Canvas  x:Name="cv11"  Panel.ZIndex="0"   Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"  Grid.ColumnSpan="2" Width="10" Height="11" d:IsHidden="True" />
+                <Canvas  x:Name="cv12"  Panel.ZIndex="0"   Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"  Grid.ColumnSpan="2" Width="10" Height="11" d:IsHidden="True" />
+                <Canvas  x:Name="cv13"  Panel.ZIndex="0"   Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"  Grid.ColumnSpan="2" Width="10" Height="11" d:IsHidden="True" />
+                <Canvas  x:Name="cv14"  Panel.ZIndex="0"   Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"  Grid.ColumnSpan="2" Width="10" Height="11" d:IsHidden="True" />
+                <Canvas  x:Name="cv15"  Panel.ZIndex="0"   Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"  Grid.ColumnSpan="2" Width="10" Height="11" d:IsHidden="True" />
+                <Canvas  x:Name="cv16"  Panel.ZIndex="0"   Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"  Grid.ColumnSpan="2" Width="10" Height="11" d:IsHidden="True" />
+                <Canvas  x:Name="cv17"  Panel.ZIndex="0"   Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"  Grid.ColumnSpan="2" Width="10" Height="11" d:IsHidden="True" />
+                <Canvas  x:Name="cv18"  Panel.ZIndex="0"   Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"  Grid.ColumnSpan="2" Width="10" Height="11" d:IsHidden="True" />
+                <Canvas  x:Name="cv19"  Panel.ZIndex="0"   Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"  Grid.ColumnSpan="2" Width="10" Height="11" d:IsHidden="True" />
+                <Canvas  x:Name="cv20"  Panel.ZIndex="0"   Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"  Grid.ColumnSpan="2" Width="10" Height="11" d:IsHidden="True" />
+                <Canvas  x:Name="cv21"  Panel.ZIndex="0"   Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"  Grid.ColumnSpan="2" Width="10" Height="11" d:IsHidden="True" />
+                <Canvas  x:Name="cv22"  Panel.ZIndex="0"   Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"  Grid.ColumnSpan="2" Width="10" Height="11" d:IsHidden="True" />
+                <Canvas  x:Name="cv23"  Panel.ZIndex="0"   Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"  Grid.ColumnSpan="2" Width="10" Height="11" d:IsHidden="True" />
+                <Canvas  x:Name="cv24"  Panel.ZIndex="0"   Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"  Grid.ColumnSpan="2" Width="10" Height="11" d:IsHidden="True" />
+                <Canvas  x:Name="cv25"  Panel.ZIndex="0"   Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"  Grid.ColumnSpan="2" Width="10" Height="11" d:IsHidden="True" />
+                <Canvas  x:Name="cv26"  Panel.ZIndex="0"   Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"  Grid.ColumnSpan="2" Width="10" Height="11" d:IsHidden="True" />
+                <Canvas  x:Name="cv27"  Panel.ZIndex="0"   Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"  Grid.ColumnSpan="2" Width="10" Height="11" d:IsHidden="True" />
+                <Canvas  x:Name="cv28"  Panel.ZIndex="0"   Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"  Grid.ColumnSpan="2" Width="10" Height="11" d:IsHidden="True" />
+                <Canvas  x:Name="cv29"  Panel.ZIndex="0"   Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"  Grid.ColumnSpan="2" Width="10" Height="11" d:IsHidden="True" />
+                <Canvas  x:Name="cv30"  Panel.ZIndex="0"   Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"  Grid.ColumnSpan="2" Width="10" Height="11" d:IsHidden="True" />
+                <Canvas  x:Name="cv31"  Panel.ZIndex="0"   Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"  Grid.ColumnSpan="2" Width="10" Height="11" d:IsHidden="True" />
+                <Canvas  x:Name="cv32"  Panel.ZIndex="0"   Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"  Grid.ColumnSpan="2" Width="10" Height="11" d:IsHidden="True" />
+                <Canvas  x:Name="cv33"  Panel.ZIndex="0"   Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"  Grid.ColumnSpan="2" Width="10" Height="11" d:IsHidden="True" />
+                <Canvas  x:Name="cv34"  Panel.ZIndex="0"   Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"  Grid.ColumnSpan="2" Width="10" Height="11" d:IsHidden="True" />
+                <Canvas  x:Name="cv35"  Panel.ZIndex="0"   Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"  Grid.ColumnSpan="2" Width="10" Height="11" d:IsHidden="True" />
+                <Canvas  x:Name="cv36"  Panel.ZIndex="0"   Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"  Grid.ColumnSpan="2" Width="10" Height="11" d:IsHidden="True" />
+                <Canvas  x:Name="cv37"  Panel.ZIndex="0"   Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"  Grid.ColumnSpan="2" Width="10" Height="11" d:IsHidden="True" />
+                <Canvas  x:Name="cv38"  Panel.ZIndex="0"   Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"  Grid.ColumnSpan="2" Width="10" Height="11" d:IsHidden="True" />
+                <Canvas  x:Name="cv39"  Panel.ZIndex="0"   Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"  Grid.ColumnSpan="2" Width="10" Height="11" d:IsHidden="True" />
+                <Canvas  x:Name="cv40"  Panel.ZIndex="0"   Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"  Grid.ColumnSpan="2" Width="10" Height="11" d:IsHidden="True" />
+                <Canvas  x:Name="cv41"  Panel.ZIndex="0"   Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"  Grid.ColumnSpan="2" Width="10" Height="11" d:IsHidden="True" />
+                <Canvas  x:Name="cv42"  Panel.ZIndex="0"   Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"  Grid.ColumnSpan="2" Width="10" Height="11" d:IsHidden="True" />
+                <Canvas  x:Name="cv43"  Panel.ZIndex="0"   Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"  Grid.ColumnSpan="2" Width="10" Height="11" d:IsHidden="True" />
+                <Canvas  x:Name="cv44"  Panel.ZIndex="0"   Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"  Grid.ColumnSpan="2" Width="10" Height="11" d:IsHidden="True" />
+                <Canvas  x:Name="cv45"  Panel.ZIndex="0"   Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"  Grid.ColumnSpan="2" Width="10" Height="11" d:IsHidden="True" />
+                <Canvas  x:Name="cv46"  Panel.ZIndex="0"   Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"  Grid.ColumnSpan="2" Width="10" Height="11" d:IsHidden="True" />
+                <Canvas  x:Name="cv47"  Panel.ZIndex="0"   Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"  Grid.ColumnSpan="2" Width="10" Height="11" d:IsHidden="True" />
+                <Canvas  x:Name="cv48"  Panel.ZIndex="0"   Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"  Grid.ColumnSpan="2" Width="10" Height="11" d:IsHidden="True" />
+                <Canvas  x:Name="cv49"  Panel.ZIndex="0"   Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"  Grid.ColumnSpan="2" Width="10" Height="11" d:IsHidden="True" />
+                <Canvas  x:Name="cv50"  Panel.ZIndex="0"   Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"  Grid.ColumnSpan="2" Width="10" Height="11" d:IsHidden="True" />
+                <Canvas  x:Name="cvtop"  Panel.ZIndex="0"   Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" 
+                         Grid.ColumnSpan="2" Width="10" Height="11" d:IsHidden="True" />
+
+                <Canvas  x:Name="OSmapCanvas"      Panel.ZIndex="0"   Margin="0,0,0,0"   Grid.ColumnSpan="2" 
+                           VerticalAlignment="Top" HorizontalAlignment="Left"
+                         d:IsHidden="True" />
+
+                <cefSharp:ChromiumWebBrowser     Width="1200" Height="900" Background="Transparent" 
+                                                 Name="WebBrowser1"
+                                                  Panel.ZIndex="1000"   Margin="-9,-10,0,0"   
+                                                 Grid.ColumnSpan="2" 
+                           VerticalAlignment="Top" HorizontalAlignment="Left" />
+                <!--<Canvas  x:Name="imageMapCanvas" Panel.ZIndex="0"    Margin="0,0,0,0"  Background="Transparent"   
+                            VerticalAlignment="Top" HorizontalAlignment="Left"
+                            MouseEnter="imageMapCanvas_MouseEnter" MouseRightButtonDown="imageMapCanvas_MouseRightButtonDown"
+                            Grid.ColumnSpan="2" Height="570"   d:IsHidden="True"    >
+                    <Image       x:Name="imgKarte"   Panel.ZIndex="0" Canvas.Left="0"  Width="1460" Height="980" 
+                                Visibility="Collapsed"                              />
+                </Canvas>-->
+                <Canvas x:Name="kreisUebersichtCanvas" Panel.ZIndex="0" Visibility="Collapsed" 
+                        ToolTip="Klicken Sie auf die gewünschte Stelle."
+                        Margin="00,0,0,0"    >
+                    <Image  
+                                x:Name="imgkreisuebersicht"   Panel.ZIndex="0" Canvas.Left="0" 
+                                Visibility="Visible" Source="{StaticResource imgKreisUebersicht}"
+                        MouseDown="kreisuebersichtMousedown"
+                             />
+                </Canvas>
+                <Canvas x:Name="suchCanvas" Panel.ZIndex="0" Visibility="Collapsed" 
+                             VerticalAlignment="Top" HorizontalAlignment="Left"
+                        Margin="0,0,0,0" d:IsHidden="True" Grid.ColumnSpan="2"/>
+
+                <Image   x:Name="imgpin"   Panel.ZIndex="0" 
+                                Visibility="Collapsed" Source="/mgisNT;component/icons/pin.png" d:IsHidden="True" Grid.Column="1" Width="30" Height="30"
+                             />
+                <StackPanel x:Name="stContext" Visibility="Collapsed" Panel.ZIndex="0"   Grid.ColumnSpan="2"
+                            Background="{StaticResource flaechenBackground}"  >
+                    <StackPanel Orientation="Horizontal" Name="stContext1" >
+                        <StackPanel x:Name="stpKnoeppeVertical" Width="110" Tag="löschen" Visibility="Collapsed">
+                            <!--<Button x:Name="btnDoku" Click="btnDoku_Click"    Margin="0,50,0,0"  Width="100"  Content="Dokumentation"/>-->
+                            <!--<Button x:Name="btnObjektsuche" Click="btnObjektsuche_Click"   Margin="0,0,0,0"  Width="100" Content="Objektsuche"/>
+                            <Button x:Name="btnLegende" Click="btnLegende_Click"    Margin="0,0,0,0"  Width="100" Height="49" d:IsHidden="True" >
+                                <StackPanel>
+                                    <TextBlock HorizontalAlignment="Center"><Run Text="freischwebende"/></TextBlock>
+                                    <TextBlock HorizontalAlignment="Center"><Run Text="Legende"/></TextBlock>
+                                </StackPanel>
+                            </Button>-->
+
+                        </StackPanel>
+                        <StackPanel Name="stContext2" Margin="20">
+                            <StackPanel Name="stContext3"  >
+                                <StackPanel x:Name="stpDokuUndLegende"  HorizontalAlignment="Left"   Width="900"
+                                    VerticalAlignment="Center" Orientation="Horizontal" Background="{StaticResource flaechenBackground}" d:IsHidden="True">
+
+                                    <StackPanel  Width="550"    HorizontalAlignment="Center"    Margin="0"  VerticalAlignment="Top"
+                                                 x:Name="stpDoku" >
+
+                                        <StackPanel Orientation="Horizontal" >
+                                            <TextBlock Text="Dokumentation" FontStyle="Normal" 
+                                               Padding="9" Margin="0,0,10,0" FontSize="19" HorizontalAlignment="Left" />
+                                            <Button Content="Doku in die Zwischenablage kopieren" Padding="5" x:Name="btnKopieInClipboard"
+                                            Click="btnKopieInClipboard_Click" Margin="0,0,10,0"
+                                                 HorizontalAlignment="Right"
+                                                />
+                                            <!--<Button Content=" x " Padding="5" Name="btncloseDoku" Click="btncloseDoku_Click" 
+                                                FontSize="19" HorizontalAlignment="Right"
+                                                Background="Gray"  Foreground="Red" />-->
+                                            <StackPanel Orientation="Horizontal" >
+
+                                            </StackPanel>
+                                        </StackPanel>
+                                        <RichTextBox AcceptsReturn="True" AcceptsTab="True"
+                                              Background="{StaticResource flaechenBackground}"
+                                                              x:Name="richTextBoxDoku"  VerticalAlignment="Top" Height="400"
+                                             HorizontalAlignment="Left"/>
+
+                                    </StackPanel>
+                                    <!--<StackPanel  Width="150" x:Name="stpLegende" Visibility="Collapsed">
+                                        -->
+                                    <!--<StackPanel Orientation="Horizontal" >                                      
+                                            <Button Content="zurück zur Karte2" Padding="5"   Click="btncloseDoku_Click" 
+                                                FontSize="12" HorizontalAlignment="Right"
+                                                Background="White"  Foreground="Red"
+                                        />
+                                        </StackPanel>-->
+                                    <!--<RichTextBox AcceptsReturn="True" AcceptsTab="True" x:Name="richTextBoxLeg" Background="White"
+                                             Width="600" VerticalAlignment="Top" Height="400"  
+                                             ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                             HorizontalAlignment="Left"       />-->
+                                    <!--
+                                    </StackPanel>-->
+
+                                </StackPanel>
+                                <StackPanel x:Name="stpPDFliste" Background="{StaticResource flaechenBackground}" Width="1200" d:IsHidden="True">
+                                    <TextBlock Name="tbHinweisausPDFDateien" FontSize="18" FontWeight="Black" Background="LightCoral" 
+                                               Margin="20" />
+                                    <DataGrid  x:Name="dgPDFliste"   ItemsSource="{Binding ''}" Margin="20"  Height="300"                                       
+                                         SelectionChanged ="dgPDFliste_SelectionChanged"
+                                  CanUserAddRows="False"  AutoGenerateColumns="False"
+                                  SelectionMode="Single" 
+                                  SelectionUnit="FullRow"                                             
+                                  ColumnHeaderStyle="{StaticResource dgHeaderStyle}"   
+                                   FontWeight="Normal"  HorizontalAlignment="Left"
+                                      >
+                                        <DataGrid.Columns>
+                                            <!--<DataGridCheckBoxColumn Header=""    Binding="{Binding auswahl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"    x:Name="auswahlspalte"/>-->
+                                            <!--<DataGridTemplateColumn    x:Name="auswahlspalte"  >
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding Path=auswahl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>-->
+
+                                            <DataGridTextColumn Header="Klicken zum Sortieren" MaxWidth="450" Binding="{Binding titelspalte1}" />
+                                            <DataGridTextColumn Header="Klicken zum Sortieren"   Binding="{Binding titelspalte2}" />
+                                            <!--<DataGridTextColumn Header="root" MaxWidth="35" Binding="{Binding rootdir}" />
+                                <DataGridTextColumn Header="datei" MaxWidth="35" Binding="{Binding dateispalte}" />
+                                <DataGridTextColumn Header="sid" MaxWidth="35" Binding="{Binding sid}" />
+                                <DataGridTextColumn Header="aid" MaxWidth="35" Binding="{Binding aid}" />-->
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel x:Name="stpObjektsuche" Background="{StaticResource flaechenBackground}"   VerticalAlignment="Top" 
+                                        HorizontalAlignment="Left" Width="1400">
+                                <!--<StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
+                                    <Button Content="zurück zur Karte" Padding="5" x:Name="btncloseOS" Click="btncloseOS_Click" 
+                                                  FontSize="12" HorizontalAlignment="Right"
+                                                Background="White"  Foreground="Red" /> 
+                                </StackPanel>-->
+                                <StackPanel Orientation="Horizontal" Width="{Binding Path=Width, ElementName=stpObjektsuche}">
+                                    <TextBlock Name="tbHinweisObjektsuche" FontSize="18" FontWeight="Black"  
+                                   Margin="10" Text="Objektsuche" d:IsHidden="False"  Height="25" />
+                                    <Button Name="btnOsZurDokuLegende" Click="btnOsZurDokuLegende_Click" Margin="10" Content=" [Dokumentation]"/>
+                                    <Button Content="zurück zur Karte" Padding="5"   Click="btncloseDoku_Click"  Margin="190,10,10,10" 
+                                                FontSize="12" HorizontalAlignment="Right"
+                                                Background="White"  Foreground="Red"
+                                        />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Name="btnOS2CSV" Click="btnOS2CSV_Click" Content="Tabelle nach Excel" Margin="5" 
+                                            FontStyle="Normal"  FontSize="12"   d:IsHidden="False" />
+                                    <ComboBox x:Name="cmbOSKat" SelectionChanged="cmbOSKat_SelectionChanged"  Margin="5"
+                                                ToolTip="Filter nach Kategorie" MaxDropDownHeight="600"
+                                                Width="200" VerticalAlignment="Center"
+                                                Height="24"                                                  
+                                                ItemsSource="{Binding}" 
+                                              />
+                                    <TextBlock Text="Textfilter: " Margin="5" Padding="5" VerticalAlignment="Center"/>
+                                    <TextBox Name="tbOSTextfilter" Width="250" Height="25" ToolTip="bitte nur EIN Wort/Silbe" Margin="5" Text=""/>
+                                    <Button Name="btnOSTextfilterStart" Content="Suchen" Click="btnOSTextfilterStart_Click" Height="25"  Margin="5"/>
+                                    <TextBlock Text="result" Margin="10" Name="tbOS_Result" FontStyle="Normal"  FontSize="12"
+                                           d:IsHidden="False" />
+                                </StackPanel>
+
+                                <ScrollViewer CanContentScroll="True" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Auto" >
+                                    <DataGrid  x:Name="dgObjektsuche"   ItemsSource="{Binding ''}" Margin="5"  Height="600"   VerticalScrollBarVisibility="Auto"                                    
+                                         SelectionChanged ="dgObjektsuche_SelectionChanged" Width="910" HorizontalScrollBarVisibility="Auto"
+                                  CanUserAddRows="False"  AutoGenerateColumns="False" HorizontalAlignment="Left"
+                                  SelectionMode="Single" 
+                                  SelectionUnit="FullRow"                                             
+                                  ColumnHeaderStyle="{StaticResource dgHeaderStyle}"   
+                                   FontWeight="Normal"  
+                                      >
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Header="gid" Binding="{Binding [0]}" Width="Auto"/>
+                                            <DataGridTextColumn  Binding="{Binding [1]}"/>
+                                            <DataGridTextColumn  Binding="{Binding [2]}"/>
+                                            <DataGridTextColumn  Binding="{Binding [3]}"/>
+                                            <DataGridTextColumn  Binding="{Binding [4]}"/>
+                                            <DataGridTextColumn  Binding="{Binding [5]}"/>
+                                            <DataGridTextColumn  Binding="{Binding [6]}"/>
+                                            <DataGridTextColumn  Binding="{Binding [7]}"/>
+                                            <DataGridTextColumn  Binding="{Binding [8]}"/>
+                                            <DataGridTextColumn  Binding="{Binding [9]}"/>
+                                            <DataGridTextColumn  Binding="{Binding [10]}"/>
+                                            <DataGridTextColumn  Binding="{Binding [11]}"/>
+                                            <DataGridTextColumn  Binding="{Binding [12]}"/>
+                                            <DataGridTextColumn  Binding="{Binding [13]}"/>
+                                            <DataGridTextColumn  Binding="{Binding [14]}"/>
+                                            <DataGridTextColumn  Binding="{Binding [15]}"/>
+                                            <DataGridTextColumn  Binding="{Binding [16]}"/>
+                                            <DataGridTextColumn  Binding="{Binding [17]}"/>
+                                            <DataGridTextColumn  Binding="{Binding [18]}"/>
+                                            <DataGridTextColumn  Binding="{Binding [19]}"/>
+                                            <DataGridTextColumn  Binding="{Binding [20]}"/>
+                                            <!--<DataGridTextColumn Header="Klicken zum Sortieren" MaxWidth="450" Binding="{Binding titelspalte1}" />
+                                <DataGridTextColumn Header="Klicken zum Sortieren"   Binding="{Binding titelspalte2}" />-->
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+
+                                </ScrollViewer>
+
+                            </StackPanel>
+
+                        </StackPanel>
+                    </StackPanel>
+
+                </StackPanel>
+
+                <StackPanel x:Name="stckBalken"  Panel.ZIndex="0" Width="200" Height="25" 
+                                   HorizontalAlignment="Right" VerticalAlignment="Bottom" d:IsHidden="True" Grid.Column="1">
+                    <Button x:Name="btnBalken" Width="200" Height="25"   Opacity="0.5"  Click="btnBalken_Click" Content="400 m" Background="Black" Foreground="Gold"/>
+                </StackPanel>
+                <Canvas Visibility="Visible" x:Name="cvPDFrechteck" Panel.ZIndex="0"   Margin="0,0,0,0"
+                                Background="Transparent" d:IsHidden="True" Grid.Column="1"
+                               />
+                <StackPanel  x:Name="stwinthemen" Panel.ZIndex="0"    Margin="0,0,0,0" Width="550"
+                                    HorizontalAlignment="Left"   VerticalAlignment="Top" Visibility="Collapsed"
+                                     Orientation="Horizontal" Background="{StaticResource flaechenBackground}" Grid.ColumnSpan="2" 
+                             Height="600"  >
+
+
+                    <StackPanel  Panel.ZIndex="0">
+                        <StackPanel x:Name="stSachgebiete" Margin="0" Panel.ZIndex="0">
+                            <TextBlock Text="Vordergrundebenen in Kategorien aufgeteilt"  FontSize="16"  Margin="10,20,0,0" FontWeight="Bold"
+                                          Background="LightGray"/>
+
+                            <TreeView Name="tv1" HorizontalAlignment="Left"
+                                    Height="900"
+                                    Margin="10,0,0,0"
+                                    VerticalAlignment="Top"
+                                    Width="400"
+                                  FontSize="14" FontFamily="courier"
+                                    SelectedItemChanged="TreeView_SelectedItemChanged"
+                                  Background="LightGray" >
+
+                                <TreeView.Resources>
+                                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}"
+                      Color="Transparent" />
+                                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}"
+                      Color="Black" />
+                                    <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}"
+                      Color="Transparent" />
+                                    <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}"
+                      Color="Black" />
+                                </TreeView.Resources>
+                                <TreeView.ItemContainerStyle>
+
+                                    <!--Expand each TreeViewItem in the first level and 
+          set its foreground to Green.-->
+                                    <Style TargetType="TreeViewItem">
+                                        <Setter Property="IsExpanded" Value="True"/>
+                                        <!--<Setter Property="Foreground" Value="Green"/>-->
+                                    </Style>
+                                </TreeView.ItemContainerStyle>
+
+                                <TreeViewItem Header="Allgemein" Tag="allgemein" FontWeight="Bold"/>
+                                <TreeViewItem Header="Boden / Abfall" Tag="Boden"  FontWeight="Bold"></TreeViewItem>
+                                <TreeViewItem Header="Grenzen" Tag="Grenzen"  FontWeight="Bold"></TreeViewItem>
+                                <TreeViewItem Header="Klima Luft Lärm" Tag="Klima"  FontWeight="Bold"></TreeViewItem>
+                                <TreeViewItem Header="Historisches" Tag="Flurkarte"  FontWeight="Bold">
+                                    <TreeViewItem Header="Flurkarten" Tag="Flurkarte"  FontWeight="Normal" />
+                                    <TreeViewItem Header="Landschaftsschutzgebiete AD" Tag="h_landschaftsschutz"  FontWeight="Normal"/>
+                                    <TreeViewItem Header="Luftbilder" Tag="h_luftbild"  FontWeight="Normal"/>
+                                    <TreeViewItem Header="Regionalplan 2002-2011" Tag="h_regionalplan"  FontWeight="Normal"/>
+                                    <TreeViewItem Header="Topographische Karten" Tag="h_topkarte"  FontWeight="Normal"/>
+                                    <TreeViewItem Header="Verschiedenes" Tag="h_verschiedenes" FontWeight="Normal" />
+                                </TreeViewItem>
+                                <TreeViewItem Header="Liegenschaften" Tag="kreisoffenbach"   FontWeight="Bold" >
+                                    <TreeViewItem Header="Kreis Offenbach" Tag="kreisoffenbach"  FontWeight="Normal"/>
+                                    <TreeViewItem Header="Gemeinden" Tag="gemeinden" FontWeight="Normal" />
+                                    <TreeViewItem Header="Kreishaus" Tag="kreishaus" FontWeight="Normal" />
+                                </TreeViewItem>
+                                <TreeViewItem Header="Natur und Landschaft"  FontWeight="Bold"  Tag="arten"  >
+                                    <TreeViewItem Header="Arten und Biotope" Tag="arten" FontWeight="Normal" />
+                                    <TreeViewItem Header="Förderflächen etc." Tag="foerder" FontWeight="Normal" />
+                                    <TreeViewItem Header="Natur" Tag="natur"  FontWeight="Normal"/>
+                                    <TreeViewItem Header="Schutzgebiete" Tag="schutzgebiete"  FontWeight="Normal"/>
+                                    <TreeViewItem Header="Paradigma" Tag="Paradigma"  FontWeight="Normal"/>
+                                </TreeViewItem>
+                                <TreeViewItem Header="Landschaftsplanung"    FontWeight="Bold" Tag="lp_bestandserfassung" >
+                                    <TreeViewItem Header="Bestandserfassung" Tag="lp_bestandserfassung"  FontWeight="Normal"/>
+                                    <TreeViewItem Header="Bewertung" Tag="lp_bewertung1" FontWeight="Normal" />
+                                    <TreeViewItem Header="Zusammenfassung" Tag="lp_bewertung2"  FontWeight="Normal"/>
+                                    <TreeViewItem Header="Leitbild" Tag="lp_leitbild" FontWeight="Normal" />
+                                    <TreeViewItem Header="Entwicklung" Tag="lp_entwicklung"  FontWeight="Normal"/>
+                                </TreeViewItem>
+                                <TreeViewItem Header="Planung und Bauen"   FontWeight="Bold" Tag="planung" >
+                                    <TreeViewItem Header="Planung" Tag="planung"  FontWeight="Normal"/>
+                                    <TreeViewItem Header="Regionaler FNP" Tag="regfnp"  FontWeight="Normal"/>
+                                    <TreeViewItem Header="Denkmalschutz" Tag="denkmalschutz" FontWeight="Normal" />
+                                </TreeViewItem>
+                                <TreeViewItem Header="Verkehr"   FontWeight="Bold" Tag="verkehr"  >
+                                    <TreeViewItem Header="Strasse und Schiene" Tag="verkehr" FontWeight="Normal" />
+                                    <TreeViewItem Header="Radverkehr" Tag="verkehr_rad" FontWeight="Normal" />
+                                </TreeViewItem>
+                                <TreeViewItem Header="Sicherheit und Ordnung"   FontWeight="Bold" Tag="sicherheit" >
+                                    <TreeViewItem Header="Katastrophenschutz" Tag="sicherheit"  FontWeight="Normal"/>
+                                    <TreeViewItem Header="Hochwasserschutz" Tag="hochwasserschutz" FontWeight="Normal" />
+                                    <TreeViewItem Header="Waffenwesen" Tag="waffenwesen" FontWeight="Normal" />
+                                </TreeViewItem>
+                                <TreeViewItem Header="Soziales" Tag="soziales"   FontWeight="Bold"/>
+                                <TreeViewItem Header="Freizeit und Tourismus" Tag="Tourismus"   FontWeight="Bold"/>
+                                <TreeViewItem Header="Wasser" Tag="Wasser"   FontWeight="Bold"/>
+                                <TreeViewItem Header="Wirtschaft" Tag="Wirtschaft"   FontWeight="Bold"/>
+
+                            </TreeView>
+
+                        </StackPanel>
+
+                    </StackPanel>
+                    <StackPanel>
+
+                        <!--<StackPanel  VerticalAlignment="Center" Visibility="Collapsed">
+                            <Button x:Name="nachLinks" Click="nachLinks_Click" Content=" &lt;&lt;" Margin="5" VerticalAlignment="Center" ToolTip="alles nach links kopieren"/>
+                            <Button x:Name="nachRechts" Click="nachRechts_Click" Content=" &gt;&gt;" Margin="5" VerticalAlignment="Center"/>
+
+                        </StackPanel>-->
+
+                        <StackPanel  Visibility="Visible" Margin="0"  >
+                            <Button Content="zur Karte" Padding="5" x:Name="btnclosesuchform" Click="btnclosesuchform_Click" 
+                                                  FontSize="12" HorizontalAlignment="Right"
+                                                Background="White"  Foreground="Red" />
+
+                            <TextBlock Text="  Volltextsuche"  FontSize="16"  Margin="20,0,20,0" FontWeight="Bold"/>
+                            <TextBlock Text="    hier max 4 Stichworte eingeben, durch Leerzeichen trennen" FontStyle="Italic" 
+                                       Margin="20,0,20,0" />
+                            <TextBlock   FontStyle="Normal" />
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBlock Padding="5" FontSize="14" ToolTip="hier max 4 Stichworte eingeben, duch Leerzeichen trennen">
+                                        <Run Text="Suchen:"/></TextBlock>
+                                <!--<TextBox x:Name="tbStichwort" Width="100"  Padding="5" Background="White" FontSize="15" Text="Natur"/>-->
+                                <xctk:WatermarkTextBox Watermark="hier max 4 Stichworte eingeben, duch Leerzeichen trennen" 
+                                                       x:Name="tbStichwort" Width="340" />
+                                <Button x:Name="btnStichwort" Click="btnStichwort_Click" IsDefault="True" Width="56" ToolTip="adelante!"
+                                 >
+                                    <TextBlock Text="start"/>
+                                    <!--<Image  x:Name="myimagerefresh" Source="/mgis;component/icons/suche.png"  />-->
+                                </Button>
+                            </StackPanel>
+                            <TextBlock Padding="5" x:Name="tbtreffer"
+                                           Text="-"  />
+
+                        </StackPanel>
+                        <TextBlock Padding="5" x:Name="tbKategorie"
+                                           Text="-" FontSize="14" FontWeight="Bold"/>
+                        <DataGrid  x:Name="dgErgebnis"   ItemsSource="{Binding ''}"   HorizontalAlignment="Left"
+                                    Width="550" FontSize="14" MinHeight="600" MaxHeight="1000"
+                                         SelectionChanged ="dgErgebnis_SelectionChanged"
+                                  CanUserAddRows="False"  AutoGenerateColumns="False" GridLinesVisibility="None"
+                                  SelectionMode="Single"     RowStyle="{StaticResource dgRowStyleTreffer}" 
+                                  SelectionUnit="FullRow"                                             
+                                  ColumnHeaderStyle="{StaticResource dgHeaderStyle}"  
+                                   FontWeight="Normal"  
+                                      >
+                            <DataGrid.Columns>
+                                <!--<DataGridCheckBoxColumn Header=""    Binding="{Binding auswahl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"    x:Name="auswahlspalte"/>-->
+                                <!--<DataGridTextColumn Header="FC" Width="60"  Binding="{Binding etikett}" />-->
+                                <!--<DataGridTemplateColumn    x:Name="auswahlspalte"  >
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding Path=auswahl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>-->
+
+                                <DataGridTextColumn Header="Gefunden" Width="450"   Binding="{Binding titel}" >
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="TextWrapping" Value="NoWrap"/>
+                                            <Setter Property="ToolTip" Value="{Binding tultipp}"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <TextBlock Name="tbebenenauswahlinfo" Visibility="Hidden"
+                                   Text="Klicken Sie auf den Namen der Ebene um sie zur Karte hinzuzufügen" Margin="20"/>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </DockPanel>
+
+
+        <DockPanel x:Name="dpvogel" Visibility="Collapsed">
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" HorizontalAlignment="Right"   VerticalAlignment="Top">
+                <Button Click="AddTicket"   HorizontalAlignment="right" Style="{StaticResource lessButton}"  VerticalAlignment="Top"  Margin="20,5,5,5">Vogelpersp. auffrischen</Button>
+
+                <Button x:Name="btnzurueckZumGis" Click="btnzurueckZumGis_Click" Content="zurück zum GIS" 
+                            Width="100" Height="30"   VerticalAlignment="Top" HorizontalAlignment="Right" Margin="20,5,5,5"/>
+
+
+            </StackPanel>
+
+            <TabControl Name="tcVOGEL">
+                <TabItem Name="tivogel" Header="GoogleMap Luftbilder aus 4 Himmelsrichtungen"
+                         MouseDown="Tivogel_MouseDown" >
+                    <!--<TabItem.Template>
+                        <ControlTemplate>
+                            <Border Name="PART_Header" Margin="4,0,1,1">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock> GoogleMap Luftbilder aus 4 Himmelsrichtungen </TextBlock>
+                                <Button Click="AddTicket" Background="Beige">refresh</Button>  
+                                </StackPanel>
+                              
+                            </Border>
+                        </ControlTemplate>
+                    </TabItem.Template>-->
+                    <DockPanel  Name="dpVogel2">
+
+                    </DockPanel >
+                    <!--<WebBrowser x:Name="webBrowserControlVogel"   />-->
+                </TabItem>
+                <TabItem  Name="ti3D" Header="GoogleMaps 3D"                               >
+                    <DockPanel  Name="tiGOogle3D">
+
+                    </DockPanel >
+                </TabItem>
+                <TabItem Name="tiWindrose" Header="Windrose (aktivieren über 'Messen')" >
+
+                    <WebBrowser x:Name="webBrowserControlWindrose"   />
+                </TabItem>
+            </TabControl>
+
+
+        </DockPanel>
+
+
+    </DockPanel>
+</Window>

@@ -1,0 +1,66 @@
+﻿<Window x:Class="winWerkzeuge"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:bgm"
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen" Background="LightGray"
+        Title="Werkzeuge" Height="450" Width="800">
+    <DockPanel>
+        <StackPanel Orientation="Horizontal">
+            
+        <StackPanel Width="400" HorizontalAlignment="Left">
+            <Border BorderBrush="Black" BorderThickness="1" Margin="5">
+                <StackPanel Orientation="Horizontal" Margin="15">
+
+
+                    <StackPanel>
+                        <TextBlock Padding="5" Width="250"> für alle TIFFS die PDFs neu erzeugen:</TextBlock>
+                        <TextBox Name="tbPDFPfad" Padding="5" Width="250">\\\</TextBox>
+
+                    </StackPanel>
+                    <Button Content="PDF-Tool" Name="btnPDFtool" Width="100" Click="btnPDFtool_Click" Margin="5"/>
+                </StackPanel>
+            </Border>
+            <Border BorderBrush="Black" BorderThickness="1" Margin="5">
+
+                <StackPanel Orientation="Horizontal" Margin="15"  >
+                    <TextBlock Padding="5" Width="250">liest die GIS-DB und schaut of TIFF existiert:</TextBlock>
+                    <!--<Button Content="PDF-Tool" Name="btn" Click="btnPDFtool_Click" Margin="5"/>-->
+                    <Button Name="btnPruefung1" Click="btnPruefung1_Click" Width="100" Content="start" IsEnabled="True" Margin="5"/>
+
+                </StackPanel>
+            </Border>
+            <Border BorderBrush="Black" BorderThickness="1" Margin="5">
+                <StackPanel Orientation="Horizontal" Margin="15">
+                    <TextBlock Padding="5" Width="250">findet kaputte ProBauG-Einträge:</TextBlock>
+                    <!--<Button Content="PDF-Tool" Name="btn" Click="btnPDFtool_Click" Margin="5"/>-->
+                    <Button Name="btnPruefung2" Click="btnPruefung2_Click" Width="100" Content="start" IsEnabled="True" Margin="5"/>
+
+                </StackPanel>
+            </Border>
+            <Border BorderBrush="Black" BorderThickness="1" Margin="5">
+                <StackPanel Orientation="Horizontal" Margin="15">
+                    <TextBlock Padding="5" Width="250">findet fehlende Flurstücke für ProBauG:</TextBlock>
+                    <!--<Button Content="PDF-Tool" Name="btn" Click="btnPDFtool_Click" Margin="5"/>-->
+                    <Button Name="btnPruefung3" Click="btnPruefung3_Click" Width="100" Content="start" IsEnabled="True" Margin="5"/>
+
+                </StackPanel>
+            </Border>
+        </StackPanel>
+            <StackPanel Width="400" HorizontalAlignment="Right">
+                <Border BorderBrush="Black" BorderThickness="1" Margin="5">
+                    <StackPanel Orientation="Horizontal" Margin="15">
+
+ 
+                            <TextBlock Padding="9" Width="250"> Mehrfache Einträge im GIS:</TextBlock>
+                            <!--<TextBox Name="tbPDFPfad" Padding="5" Width="250">\\\</TextBox>-->
+ 
+                        <Button Content="mehrfach im GIS" Name="btndoppeltimgis" Width="100" 
+                                Click="btndoppeltimgis_Click" Margin="5"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </StackPanel>
+    </DockPanel>
+</Window>

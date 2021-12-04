@@ -1,0 +1,335 @@
+﻿<Window x:Class="winDetailAdressSuche"
+    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    Title="AdressSuche" Height="819" Width="798.205"  
+    WindowStartupLocation="CenterScreen"  
+        >
+    <Window.Resources>
+        <XmlDataProvider x:Key="XMLSourceComboBoxgemeinden" />
+        <XmlDataProvider x:Key="XMLSourceComboBoxRBfunktion" />
+        <Style x:Key="tbBackground" TargetType="Button">
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="HorizontalContentAlignment" Value="Left" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver"  Value="True">
+                    <Setter Property="FontWeight" Value="Bold" />
+                    <Setter Property="Background" Value="Black" />
+                </Trigger>
+                <DataTrigger Binding="{Binding marker}" Value="0">
+                    <Setter Property="Foreground" Value="Blue" />
+                    <!--<Setter Property="ToolTip" Value="Diese Straße hat keine Adressen. Sie wird nur vollflächig angezeigt." />-->
+                </DataTrigger>
+                <DataTrigger Binding="{Binding marker}" Value="3">
+                    <Setter Property="Foreground" Value="Green" />
+                    <!--<Setter Property="ToolTip" Value="Diese Straße hat keine Adressen. Sie wird nur vollflächig angezeigt." />-->
+                </DataTrigger>
+                <!--<DataTrigger Binding="{Binding marker}" Value="1">
+                    <Setter Property="Foreground" Value="Red" />
+                </DataTrigger>-->
+            </Style.Triggers>
+
+            
+        </Style>
+
+        <DataTemplate x:Key="lvGemarkungsTemplate">
+   
+                <Button   Content="{Binding displayText}"  Tag="{Binding displayText}" Uid="{Binding id}" x:Name="txtitel"
+                                   Margin="10,0,0,0"     Width="200"
+                         Click="txGemarkungs_MouseDown"       HorizontalAlignment="Left" 
+                             Background="Beige"   Style="{StaticResource lessButton}" 
+                                  >
+            </Button>
+          
+        </DataTemplate>
+        <DataTemplate x:Key="lvStrassenTemplate">
+            <Button     Content="{Binding displayText}"  Tag="{Binding displayText}" Uid="{Binding id}" x:Name="txtitel"
+                                   Margin="10,0,0,0"     Width="200" FontSize="11" Height="20"
+                                 Click="txStrassen_MouseDown"  HorizontalAlignment="Left" 
+                           Background="Beige"   Style="{StaticResource tbBackground}" >
+  
+                     
+           
+               
+            </Button>
+        </DataTemplate>
+        <DataTemplate x:Key="lvhausnrnTemplate">
+            <Button   Content="{Binding displayText}"  Tag="{Binding nenner}" Uid="{Binding id}" x:Name="txtitel"
+                                 Margin="0,0,0,0"     Width="30"
+                                 Click="txhausnr_MouseDown"  HorizontalAlignment="Center" 
+                              Background="Beige"   Style="{StaticResource lessButton}" 
+                                  >
+            </Button>
+        </DataTemplate>
+    </Window.Resources>
+    <TabControl>
+        <TabItem Header="Scharf" >
+            <StackPanel  Background="{StaticResource flaechenBackground}">
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel Margin="5">
+                        <StackPanel Orientation="Horizontal" Width="205"  HorizontalAlignment="Left" >
+                            <CheckBox Name="ckFormNichtSchliessen" Checked="ckFormNichtSchliessen_Checked" Margin="2"
+                                    
+                           >
+                                <TextBlock Text="Formular im Anschluss nicht schliessen" TextWrapping="Wrap"    Width="199"/>
+
+                            </CheckBox>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" >
+                            <TextBlock Text="Gemeinde" Name="tbGemeinde" Margin="5,0,0,0" Padding="5" Width="90" HorizontalAlignment="Left"></TextBlock>
+                            <ComboBox Name="cmbgemeinde"   
+                                       DataContext="{Binding Source={StaticResource XMLSourceComboBoxgemeinden}, XPath=/Variablen/Variable}"
+                                                                ItemsSource="{Binding}" 
+                                                                DisplayMemberPath="@Name" 
+                                                                SelectedValuePath="@ID"
+                                                                SelectedValue="{Binding Path=ID}" 
+                                                              SelectionChanged="cmbgemeinde_SelectionChanged"
+                                      Width="20" Grid.Column="2"   />
+                        </StackPanel>
+                        <ListView  Background ="AliceBlue"    MaxHeight="400"  Width="245"  
+                                Cursor="Arrow" Height="400"
+                                x:Name="lvGemarkungen"  
+                                BorderBrush="#FFCCCCCC" 
+                                BorderThickness="1,1,1,1" 
+                                FontFamily="Arial" 
+                                FontSize="11"     HorizontalAlignment="Left"                 
+                                Margin="0"                            
+                                ItemTemplate="{StaticResource lvGemarkungsTemplate}"  >
+                            <!--<ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Width="230"      />
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>-->
+                        </ListView>
+                     
+                        <StackPanel Name="spAlleBuchstaben">
+                        <StackPanel x:Name="stckBuchstaben1" Orientation="Horizontal" 
+                                    ToolTip=" Auf der Tastatur die Taste drücken !"
+                                    IsEnabled="True"  >
+                                <TextBlock Text="Strasse:" Name="tbStrasse"  Margin="5,0,0,0"  Padding="5" Width="157" HorizontalAlignment="Left"></TextBlock>
+                                <TextBlock Text="Filter:" HorizontalAlignment="Center" Padding="5"/>
+                                <TextBox Name="tbfilter" Width="39" Text=""  Margin="5,0,0,0" Background="White" TextChanged="tbfilter_TextChanged"/>
+                                <!--<Button Content="a"    Click="btnstreet"  Style="{StaticResource lessButton}"   Width="17" Height="22"/>
+                            <Button Content="b"    Click="btnstreet"  Style="{StaticResource lessButton}"   Width="17" Height="22"/>
+                            <Button Content="c"    Click="btnstreet"  Style="{StaticResource lessButton}"   Width="17" Height="22"/>
+                            <Button Content="d"    Click="btnstreet"  Style="{StaticResource lessButton}"   Width="17" Height="22"/>
+                            <Button Content="e"    Click="btnstreet"  Style="{StaticResource lessButton}"   Width="17" Height="22"/>
+                            <Button Content="f"    Click="btnstreet"  Style="{StaticResource lessButton}"   Width="17" Height="22"/>
+                            <Button Content="g"    Click="btnstreet"  Style="{StaticResource lessButton}"   Width="17" Height="22"/>
+                            <Button Content="h"    Click="btnstreet"  Style="{StaticResource lessButton}"   Width="17" Height="22"/>
+                            <Button Content="i"    Click="btnstreet"  Style="{StaticResource lessButton}"   Width="17" Height="22"/>
+                            <Button Content="j"    Click="btnstreet"  Style="{StaticResource lessButton}"   Width="17" Height="22"/>
+                            <Button Content="k"    Click="btnstreet"  Style="{StaticResource lessButton}"   Width="17" Height="22"/>
+                            <Button Content="l"    Click="btnstreet"  Style="{StaticResource lessButton}"  Width="17" Height="22"/>
+                            <Button Content="m"    Click="btnstreet"  Style="{StaticResource lessButton}"   Width="17" Height="22"/>
+                            <Button Content="n"    Click="btnstreet"  Style="{StaticResource lessButton}"   Width="17" Height="22"/>
+                            <Button Content="o"    Click="btnstreet"  Style="{StaticResource lessButton}"   Width="17" Height="22"/>-->
+                        </StackPanel>
+
+                        <!--<StackPanel x:Name="stckBuchstaben2" Orientation="Horizontal"  Grid.Column="1"
+                                    Grid.Row="10" IsEnabled="True" 
+                                    Grid.ColumnSpan="3"> 
+                            <Button Content="p"    Click="btnstreet"  Style="{StaticResource lessButton}"   Width="17" Height="22"/>
+                            <Button Content="q"    Click="btnstreet"  Style="{StaticResource lessButton}"   Width="17" Height="22"/>
+                            <Button Content="r"    Click="btnstreet"  Style="{StaticResource lessButton}"   Width="17" Height="22"/>
+                            <Button Content="s"    Click="btnstreet"  Style="{StaticResource lessButton}"   Width="17" Height="22"/>
+                            <Button Content="t"    Click="btnstreet"  Style="{StaticResource lessButton}"   Width="17" Height="22"/>
+                            <Button Content="u"    Click="btnstreet"  Style="{StaticResource lessButton}"   Width="17" Height="22"/>
+                            <Button Content="v"    Click="btnstreet"  Style="{StaticResource lessButton}"   Width="17" Height="22"/>
+                            <Button Content="w"    Click="btnstreet"  Style="{StaticResource lessButton}"   Width="17" Height="22"/>
+                            <Button Content="x"    Click="btnstreet"  Style="{StaticResource lessButton}"   Width="17" Height="22"/>
+                            <Button Content="y"    Click="btnstreet"  Style="{StaticResource lessButton}"   Width="17" Height="22"/>
+                            <Button Content="z"    Click="btnstreet"  Style="{StaticResource lessButton}"   Width="17" Height="22"/>
+                            <Button Content="ä"    Click="btnstreet"  Style="{StaticResource lessButton}"   Width="17" Height="22"/>
+                            <Button Content="ö"    Click="btnstreet"  Style="{StaticResource lessButton}"   Width="17" Height="22"/>
+                            <Button Content="ü"    Click="btnstreet"  Style="{StaticResource lessButton}"   Width="17" Height="22"/>
+                            <Button Content=" "    Click="btnstreet"  Style="{StaticResource lessButton}"   Width="17" Height="22"/>
+                        </StackPanel>-->
+                        </StackPanel>
+                        <ListView  Background ="AliceBlue"    MaxHeight="300"  Width="245"   
+                                Cursor="Arrow"   HorizontalAlignment="Left"
+                                x:Name="lvStrassen"  
+                                BorderBrush="#FFCCCCCC" 
+                                BorderThickness="1,1,1,1" 
+                                FontFamily="Arial" 
+                                FontSize="12"                    
+                                Margin="0"                     
+                                ItemTemplate="{StaticResource lvStrassenTemplate}"  >
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Width="230"    HorizontalAlignment="Left"    />
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+                        </ListView>
+                        <StackPanel Orientation="Horizontal"  >
+                            <TextBlock Text="Hausnr:" Name="tbHausnr"  Margin="5,0,0,0"  Padding="5" Width="90" HorizontalAlignment="Left"></TextBlock>
+                            <!--<ComboBox Name="cmbHausnr" ItemsSource="{Binding}" 
+                                      SelectionChanged="cmbHausnr_SelectionChanged"   
+                                              Width="20"    MaxDropDownHeight="823"
+                                       DisplayMemberPath="hausnrkombi"  SelectedValuePath="hausnrkombi"  
+                                      Grid.Column="2"    Grid.Row="1">
+                            </ComboBox>-->
+                        </StackPanel>
+                        <ListView  Background ="AliceBlue"    MaxHeight="350"  Width="245"   
+                                    Cursor="Arrow"  
+                                    x:Name="lvHausnr"  
+                                    BorderBrush="#FFCCCCCC" 
+                                    BorderThickness="1,1,1,1" 
+                                    FontFamily="Arial" 
+                                    FontSize="12"                    
+                                    Margin="0"                            
+                                    ItemTemplate="{StaticResource lvhausnrnTemplate}"  >
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel Width="230"      />
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+                        </ListView>
+                        <StackPanel Orientation="Horizontal" Name="spNachnenner">
+                            <Button Name="btnDossier" Content="Dossier" Click="btnDossier_Click" 
+                                    Width="60" Style="{StaticResource newButton}" HorizontalAlignment="Left" Margin="5"/>
+                            
+                        </StackPanel>
+                        <TextBox Name="tbFSTINFO" Height="200"   TextWrapping="Wrap" Width="130"  
+                                 AcceptsReturn="True" />
+
+                    </StackPanel>
+                    
+                    <StackPanel> 
+                        <GroupBox Header="Eigentümer" Name="gbEigentuemer" Margin="5,5,0,0" Width="420" HorizontalAlignment="Left" IsEnabled="False" >
+                            <StackPanel Background="AliceBlue">
+                                <StackPanel Orientation="Horizontal">
+                                    <!--<TextBlock  Text="Grund (Az.):" Padding="5"/>-->
+                                    <TextBlock Text="Aktenzeichen" Padding="5" Width="100"/>
+                                    <!--<TextBox     Background="Pink"   Width="130"   Text="Aktenzeichen"
+                 x:Name="tbGrund" ToolTip="Geben Sie hier eine Begründung für den Zugriff an. Z.B. das Aktenzeichen."/>-->
+                                    <xctk:WatermarkTextBox    Background="Pink"  x:Name="tbGrund" Watermark="hier Aktenzeichen eingeben"  Width="200"
+                                                           ToolTip="Geben Sie hier eine Begründung für den Zugriff an. Z.B. das Aktenzeichen."/>
+                                    <StackPanel Orientation="Horizontal" Visibility="Collapsed">
+                                        <TextBlock Text="Schnellabfrage in Kurzform" Padding="10"/>
+                                        <CheckBox Name="cbSchnellEigentuemer" IsChecked="True"   Margin="10"/>
+                                    </StackPanel>
+
+                                </StackPanel>
+                                <Button Name="btnEigentuemer" Click="btnEigentuemer_Click" Content="Start" HorizontalAlignment="Left" Margin="100,10,0,0" Width="200"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBox    Padding="5" Name="tbWeitergabeVerbot" TextWrapping="Wrap" Width="300" HorizontalAlignment="Left" Margin="100,10,0,0"      />
+                                    <Button Name="btnSchnellNachPDF" Click="btnSchnellNachPDF_Click" Content="PDF" Visibility="Collapsed">
+                                    </Button>
+                                </StackPanel>
+                                <StackPanel   Name="spEigentNotizUebernehmen">
+                                    <TextBlock Text="Eigentümer-Notiz in den Paradigma-Vorgang übernehmen: "/>
+                                    <Button Name="btnEigentuemerNachParadigma" Click="btnEigentuemerNachParadigma_Click" Content="starte Übernahme" HorizontalAlignment="Left" Margin="100,10,0,0" Width="200"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </GroupBox>
+                        <GroupBox Header="Paradigma-Vorgang" Name="gbFSTaradigma"  Margin="10" Background="AntiqueWhite">
+                            <StackPanel>
+                                <!--<CheckBox Name="cbEigentuemernachParadigma" Content="Eigentümer-Notiz in den Paradigma-Vorgang übernehmen " 
+                                                          IsChecked="False" Margin="10,10"/>-->
+                                <TextBlock Name="btnADRnachParadigma" Text="Adresse als Raumbezug in den ParadigmaVorgang übernehmen " 
+                                                            Margin="10,10"/>
+                                <StackPanel Orientation="Horizontal" Margin="5">
+                                    <TextBlock Text="Funktion:" Width="50"  ToolTip="Funktion oder Charakteristik dieser Adresse. In der Karte entspricht dies dem Etikett des Punktes."/>
+                                    <TextBox Name="tbname" Width="274"></TextBox>
+                                    <ComboBox Grid.Row="6"  Grid.Column="2"  x:Name="cmbFunktionsvorschlaege"   MaxDropDownHeight="800" Width="25"
+                      DataContext="{Binding Source={StaticResource XMLSourceComboBoxRBfunktion}, XPath=/Variablen/Variable}"
+                                                                ItemsSource="{Binding}" 
+                                                                DisplayMemberPath="@Name" 
+                                                                SelectedValuePath="@ID"
+                                                                SelectedValue="{Binding Path=ID}" 
+                                                              SelectionChanged="cmbFunktionsvorschlaege_SelectionChanged"
+                      />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="5">
+                                    <TextBlock Text="Freitext: " Width="50"/>
+                                    <TextBox Name="tbFreitext" Width="300"></TextBox>
+                                </StackPanel>
+                                <Button Name="btnAdresseNachParadigma" Click="btnAdresseNachParadigma_Click" Width="200" Content="starte Übernahme" Margin="5"/>
+
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                    <Button Name="btnabbruch"     Width="60" IsCancel="True" ToolTip="Schliessen und zur Karte"
+                            VerticalAlignment="Top" HorizontalAlignment="Right" Margin="15"
+                            Click="btnabbruch_Click" Content="Abbruch"  Style="{StaticResource lessButton}" />
+                </StackPanel>
+
+            </StackPanel>
+        </TabItem>
+        <TabItem Header="Unscharf"  ToolTip="Basierend auf den amtlichen Daten des Katasteramtes">
+            <StackPanel Margin="10,10,0,10" Width="324" HorizontalAlignment="Left"  Background="{StaticResource flaechenBackground}">
+                <TextBlock >Baustelle</TextBlock>
+                <StackPanel Orientation="Horizontal" Width="150">
+                    <CheckBox Name="ckFormNichtSchliessen2" Checked="ckFormNichtSchliessen2_Checked" Margin="15"                            />
+                    <TextBlock Text="Formular im Anschluss nicht schliessen" TextWrapping="Wrap"  Height="60" Width="99"/>
+                </StackPanel>
+                <Border BorderThickness="1" BorderBrush="Black" Margin="5">
+                    <StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Margin="5,25">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Gemeinde" Name="tbGemeinde2" Margin="5,0,0,0" Padding="5" Width="90" HorizontalAlignment="Left"></TextBlock>
+
+
+                                <ComboBox Name="cmbgemeinde2"   
+                                       DataContext="{Binding Source={StaticResource XMLSourceComboBoxgemeinden}, XPath=/Variablen/Variable}"
+                                                                ItemsSource="{Binding}" 
+                                                                DisplayMemberPath="@Name" 
+                                                                SelectedValuePath="@ID"
+                                                                SelectedValue="{Binding Path=ID}" 
+                                                              SelectionChanged="cmbgemeinde2_SelectionChanged"
+                                      Width="20" Grid.Column="2"   />
+                                <CheckBox   Name="cbOhneGemeinde" IsChecked="False" Content="alle Gemeinden durchsuchen" Margin="5"/>
+                            </StackPanel>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal"  Margin="5,25">
+                            <TextBlock Text="Filter:" Padding="5"/>
+                            <TextBox Text="" Name="tbStrasse2"  Margin="5,0,0,0"  Padding="5" Width="90"
+                             HorizontalAlignment="Left"></TextBox>
+                            <Button Name="btnUnscharfSuchen" Click="btnUnscharfSuchen_Click" Content="Strasse suchen"/>
+                        </StackPanel>
+                        <StackPanel>
+                            <TextBlock Text="Gefilterte Strassen:" Padding="5"/>
+                            <ComboBox Name="cmbStrasse2" ItemsSource="{Binding}" SelectionChanged="cmbStrasse2_SelectionChanged"   MaxDropDownHeight="823" 
+                                      DisplayMemberPath="sname"  SelectedValuePath="strcode" Margin="10,0,0,0"    />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="5,25" >
+                            <TextBlock Text="Hausnr:" Name="tbHausnr2"  Margin="5,0,0,0"  Padding="5" Width="90" HorizontalAlignment="Left"></TextBlock>
+                            <ComboBox Name="cmbHausnr2" ItemsSource="{Binding}" SelectionChanged="cmbHausnr2_SelectionChanged"   
+                                              Width="42"    MaxDropDownHeight="823"
+                                       DisplayMemberPath="hausnrkombi"  SelectedValuePath="hausnrkombi"  Grid.Column="2"    Grid.Row="1">
+                            </ComboBox>
+                        </StackPanel>
+
+                    </StackPanel>
+                </Border>
+
+
+            </StackPanel>
+        </TabItem>
+        <TabItem Header="Auf Google-Basis" >
+
+            <DockPanel>
+                <!--<TextBlock >Baustelle</TextBlock>-->
+                <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Background="{StaticResource flaechenBackground}">
+                    <!--<TextBox x:Name="tbGoogleEingabe" Width="300" Height="30"  Margin="50,50,50,50"  > Dreieich, Frankfurter 23
+                        </TextBox>-->
+
+                    <xctk:WatermarkTextBox      x:Name="tbGoogleEingabe" Watermark="Dreieich, Frankfurter 23" 
+                                              Width="300" Height="30"  Margin="50,50,50,50" 
+                               ToolTip="Geben Sie hier die Adresse so ein, wie Sie es von GoogleMaps gewohnt sind. Die Koordiaten werden aus der Google Datenbank geholt, aber im GIS dargestellt."/>
+
+
+
+
+                    <Button Name="btnGoogleStrassensuche" Click="btnGoogleStrassensuche_Click" Content="Start" Width="100" Height="30"/>
+                </StackPanel>
+
+
+
+            </DockPanel>
+
+        </TabItem>
+    </TabControl>
+</Window>

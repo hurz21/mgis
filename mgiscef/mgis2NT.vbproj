@@ -1,0 +1,678 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="packages\CefSharp.Wpf.71.0.0\build\CefSharp.Wpf.props" Condition="Exists('packages\CefSharp.Wpf.71.0.0\build\CefSharp.Wpf.props')" />
+  <Import Project="packages\CefSharp.Common.71.0.0\build\CefSharp.Common.props" Condition="Exists('packages\CefSharp.Common.71.0.0\build\CefSharp.Common.props')" />
+  <Import Project="packages\cef.redist.x86.3.3578.1863\build\cef.redist.x86.props" Condition="Exists('packages\cef.redist.x86.3.3578.1863\build\cef.redist.x86.props')" />
+  <Import Project="packages\cef.redist.x64.3.3578.1863\build\cef.redist.x64.props" Condition="Exists('packages\cef.redist.x64.3.3578.1863\build\cef.redist.x64.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProjectGuid>{3FAB66F3-5D42-48F4-B3D7-49D9CCCA3DEB}</ProjectGuid>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{F184B08F-C81C-45F6-A57F-5ABD9991F28F}</ProjectTypeGuids>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>mgis</RootNamespace>
+    <AssemblyName>mgisNT</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <MyType>Custom</MyType>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationVersion>1.24.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <IncrementalBuild>true</IncrementalBuild>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>mgisNT.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42314</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <IncrementalBuild>false</IncrementalBuild>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>mgisNT.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42314</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>ConcurrencyRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisIgnoreGeneratedCode>false</CodeAnalysisIgnoreGeneratedCode>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>On</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DocumentationFile>mgisNT.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42314</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DocumentationFile>mgisNT.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42314</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>74DE1950E28619E45BC028EBB9191F92974851EC</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>mgis_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>false</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>giskarten.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>mgisNT.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42314</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>mgisNT.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42314</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CefSharp, Version=71.0.0.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\CefSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="CefSharp.Core, Version=71.0.0.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\CefSharp.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="CefSharp.Wpf, Version=71.0.0.0, Culture=neutral, PublicKeyToken=40c4b6fc221f4138, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\CefSharp.Wpf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Devart.Data, Version=5.0.1313.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL" />
+    <Reference Include="Devart.Data.Oracle, Version=8.5.521.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL" />
+    <Reference Include="itextsharp, Version=4.1.6.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>packages\Mono.Cecil.0.9.6.1\lib\net45\Mono.Cecil.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Mdb, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>packages\Mono.Cecil.0.9.6.1\lib\net45\Mono.Cecil.Mdb.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Pdb, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>packages\Mono.Cecil.0.9.6.1\lib\net45\Mono.Cecil.Pdb.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Rocks, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>packages\Mono.Cecil.0.9.6.1\lib\net45\Mono.Cecil.Rocks.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Security, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\Mono.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Npgsql, Version=2.2.0.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\Npgsql.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="Xceed.Wpf.Toolkit, Version=3.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="Application.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="bookmark\bmTools.vb" />
+    <Compile Include="bookmark\clsBookmark.vb" />
+    <Compile Include="bookmark\winBM.xaml.vb">
+      <DependentUpon>winBM.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="bookmark\winBMedit.xaml.vb">
+      <DependentUpon>winBMedit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="dbabfrage\clsauswahlTreffer.vb" />
+    <Compile Include="dbabfrage\clsColumnsNames.vb" />
+    <Compile Include="dbabfrage\clsCreateHtmlTable.vb" />
+    <Compile Include="dbabfrage\clsJavascript.vb" />
+    <Compile Include="dbabfrage\clsSachdatentools.vb" />
+    <Compile Include="dbabfrage\ModsachdatenTools.vb" />
+    <Compile Include="gisstart\BoundObject.vb" />
+    <Compile Include="gisstart\clsGetComputerID.vb" />
+    <Compile Include="gisstart\clsUpdate.vb" />
+    <Compile Include="gisstart\test.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GlobalSuppressions.vb" />
+    <Compile Include="layerManage\clsLayerHelper.vb" />
+    <Compile Include="Pocos\clsUniversal.vb" />
+    <Compile Include="selection\selectionTools.vb" />
+    <Compile Include="selection\winSelection.xaml.vb">
+      <DependentUpon>winSelection.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="sendEmail\clsSendmailTools.vb" />
+    <Compile Include="sendEmail\winSendEmail.xaml.vb">
+      <DependentUpon>winSendEmail.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WMS\clsRegfnp.vb" />
+    <Compile Include="WMS\clsTrinkwasser.vb" />
+    <Compile Include="WMS\clsRegFNPWMSclass.vb" />
+    <Compile Include="dbabfrage\winDBabfrage.xaml.vb">
+      <DependentUpon>winDBabfrage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="dbabfrage\winGIDauswahl.xaml.vb">
+      <DependentUpon>winGIDauswahl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="dbabfrage\winImapMenue.xaml.vb">
+      <DependentUpon>winImapMenue.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="dokumente\clsDokumente.vb" />
+    <Compile Include="emaillog\modEmailLog.vb" />
+    <Compile Include="favorite\clsLastrange.vb" />
+    <Compile Include="gisstart\clsControlling.vb" />
+    <Compile Include="gisstart\clsGisstartPolitik.vb" />
+    <Compile Include="gisstart\clsInitStrings.vb" />
+    <Compile Include="gisstart\clsRangehistory.vb" />
+    <Compile Include="gisstart\clsStartup.vb" />
+    <Compile Include="gisstart\clsToolsAllg.vb" />
+    <Compile Include="gisstart\clsTooltipps.vb" />
+    <Compile Include="gisstart\strGlobals.vb" />
+    <Compile Include="legende\clsLegendenTools.vb" />
+    <Compile Include="linx\clsDatenbankZugriff.vb" />
+    <Compile Include="linx\clsDBspecMSSQL.vb" />
+    <Compile Include="linx\clsDBspecOracle.vb" />
+    <Compile Include="linx\clsDBtools.vb" />
+    <Compile Include="linx\HistoryKookie.vb" />
+    <Compile Include="linx\IDB_grundfunktionen.vb" />
+    <Compile Include="linx\modgetdt4sql.vb" />
+    <Compile Include="linx\oracle\Class1.vb" />
+    <Compile Include="modSettings.vb" />
+    <Compile Include="ParadigmaLight\modPLUser.vb" />
+    <Compile Include="Paradigma\ORACLE\clsOracleInsert.vb" />
+    <Compile Include="Paradigma\ORACLE\modOracleTools.vb" />
+    <Compile Include="db\ParaPunkt.vb" />
+    <Compile Include="eigentuemer\winEigentuemer4Polygon.xaml.vb">
+      <DependentUpon>winEigentuemer4Polygon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="gisstart\ADtools.vb" />
+    <Compile Include="gisstart\clsActiveDir.vb" />
+    <Compile Include="clsGISfunctions.vb" />
+    <Compile Include="gisstart\clsINIDatei.vb" />
+    <Compile Include="PROBAUG\clsProbaug.vb" />
+    <Compile Include="gisstart\clsProbaugAdressSuche.vb" />
+    <Compile Include="layerManage\clsLayer.vb" />
+    <Compile Include="layerManage\clsLayerPres.vb" />
+    <Compile Include="clsWebgisPGtools.vb" />
+    <Compile Include="favorite\clsFavorit.vb" />
+    <Compile Include="favorite\favoTools.vb" />
+    <Compile Include="GMtemplates.vb" />
+    <Compile Include="layerManage\modLayer.vb" />
+    <Compile Include="legende\modEW.vb" />
+    <Compile Include="masstab\clsMasstab.vb" />
+    <Compile Include="masstab\masstabtools.vb" />
+    <Compile Include="minimap\Module1.vb" />
+    <Compile Include="minimap\polygonparser.vb" />
+    <Compile Include="modKoordTrans.vb" />
+    <Compile Include="myglobalz.vb" />
+    <Compile Include="Paradigma\ORACLE\clsParadigmaDBOracle.vb" />
+    <Compile Include="optionen\clsOptionTools.vb" />
+    <Compile Include="optionen\clsPolygonVerschn.vb" />
+    <Compile Include="optionen\winOption.xaml.vb">
+      <DependentUpon>winOption.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Paradigma\clsVorgang.vb" />
+    <Compile Include="Paradigma\modCUI.vb" />
+    <Compile Include="Paradigma\modParadigma.vb" />
+    <Compile Include="Paradigma\SQLS\modSQLsTools.vb" />
+    <Compile Include="pdf\createPDF.vb" />
+    <Compile Include="pdf\wrapItextSharp.vb" />
+    <Compile Include="PROBAUG\winFSTvorschlaege.xaml.vb">
+      <DependentUpon>winFSTvorschlaege.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PROBAUG\winProbaugAdressVorschlaege.xaml.vb">
+      <DependentUpon>winProbaugAdressVorschlaege.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="raubezuegeParadigma\clsAdress.vb" />
+    <Compile Include="db\clsDBspecPG.vb" />
+    <Compile Include="Paradigma\SQLS\clsEigentuemerSQLS.vb" />
+    <Compile Include="raubezuegeParadigma\clsFlurstueck.vb" />
+    <Compile Include="raubezuegeParadigma\clsGemarkungsParams.vb" />
+    <Compile Include="clsScalierung.vb" />
+    <Compile Include="raubezuegeParadigma\clsEigentuemerschnell.vb" />
+    <Compile Include="raubezuegeParadigma\clsParaLinie.vb" />
+    <Compile Include="raubezuegeParadigma\clsParapolygon.vb" />
+    <Compile Include="raubezuegeParadigma\iRaumbezug.vb" />
+    <Compile Include="raubezuegeParadigma\PolygonTools.vb" />
+    <Compile Include="dbabfrage\rtf.vb" />
+    <Compile Include="dbabfrage\clsSachdaten.vb" />
+    <Compile Include="masstab\scaleScreen.vb" />
+    <Compile Include="slot\clsSlot.vb" />
+    <Compile Include="slot\SlotTools.vb" />
+    <Compile Include="suchen\objektsuche\modOStools.vb" />
+    <Compile Include="suchen\objektsuche\winboxOS.xaml.vb">
+      <DependentUpon>winboxOS.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="suchen\sucheadress\adressTyp.vb" />
+    <Compile Include="suchen\sucheadress\clsAdr2Fst.vb" />
+    <Compile Include="suchen\sucheadress\clsADRtools.vb" />
+    <Compile Include="suchen\sucheadress\clsStrasseUnschaftSuchen.vb" />
+    <Compile Include="suchen\sucheadress\ParaAdresse.vb" />
+    <Compile Include="suchen\sucheadress\winDetailAdressSuche.xaml.vb" />
+    <Compile Include="suchen\sucheFst\clsFlurauswahl.vb" />
+    <Compile Include="suchen\sucheFst\clsFSTtools.vb" />
+    <Compile Include="suchen\sucheFst\Module2.vb" />
+    <Compile Include="suchen\sucheFst\ParaFlurstueck.vb" />
+    <Compile Include="suchen\suchekoordinate\sucheUtm32.xaml.vb">
+      <DependentUpon>sucheUtm32.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="tools.vb" />
+    <Compile Include="suchen\sucheFst\WinDetailSucheFST.xaml.vb" />
+    <Compile Include="legende\winLeg.xaml.vb">
+      <DependentUpon>winLeg.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="windrose\clsWindrose.vb" />
+    <Compile Include="wkt\modWKT.vb" />
+    <Compile Include="WMS\clsTrinkwasserClass.vb" />
+    <Compile Include="WMS\clsWMStools.vb" />
+    <Compile Include="WMS\winWMShtmlDB.xaml.vb">
+      <DependentUpon>winWMShtmlDB.xaml</DependentUpon>
+    </Compile>
+    <Page Include="bookmark\winBM.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="bookmark\winBMedit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="dbabfrage\winDBabfrage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="dbabfrage\winGIDauswahl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="dbabfrage\winImapMenue.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dictionary1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="eigentuemer\winEigentuemer4Polygon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="gisstart\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="Application.xaml.vb">
+      <DependentUpon>Application.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="minimap\clsMiniMapTools.vb" />
+    <Compile Include="lib\clsAufrufgenerator.vb" />
+    <Compile Include="lib\clsMapCrendentials.vb" />
+    <Compile Include="lib\clsMapSpec.vb" />
+    <Compile Include="lib\RaumbezugsTyp.vb" />
+    <Compile Include="lib\tools.vb" />
+    <Compile Include="gisstart\MainWindow.xaml.vb">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="optionen\winOption.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PROBAUG\winFSTvorschlaege.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PROBAUG\winProbaugAdressVorschlaege.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="selection\winSelection.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="sendEmail\winSendEmail.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="suchen\objektsuche\winboxOS.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="suchen\sucheadress\winDetailAdressSuche.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="suchen\sucheFst\WinDetailSucheFST.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="suchen\suchekoordinate\sucheUtm32.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="legende\winLeg.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WMS\winWMShtmlDB.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Windows" />
+    <Import Include="System.Windows.Controls" />
+    <Import Include="System.Windows.Data" />
+    <Import Include="System.Windows.Documents" />
+    <Import Include="System.Windows.Input" />
+    <Import Include="System.Windows.Shapes" />
+    <Import Include="System.Windows.Media" />
+    <Import Include="System.Windows.Media.Imaging" />
+    <Import Include="System.Windows.Navigation" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="modImagemapDisp.vb" />
+    <Compile Include="pgisTools.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="My Project\MyExtensions\MyWpfExtension.vb">
+      <VBMyExtensionTemplateID>Microsoft.VisualBasic.WPF.MyExtension</VBMyExtensionTemplateID>
+      <VBMyExtensionTemplateVersion>1.0.0.0</VBMyExtensionTemplateVersion>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="licenses.licx" />
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>PublicVbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <Content Include="giskarten.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="giskarten.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="guide\datenschutz.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="icons\Mozilla Thunderbird.lnk" />
+    <None Include="icons\TeamViewer 13.lnk" />
+    <None Include="mgis_TemporaryKey.pfx" />
+    <None Include="My Project\app.manifest" />
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <AppDesigner Include="My Project\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="combos\gemarkungen.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="combos\gemeinden.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="combos\RBfunktion.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="icons\ge3.ico" />
+    <Resource Include="icons\ge3.png" />
+    <Content Include="icons\giskarten.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="icons\lesezeichen.png" />
+    <Content Include="mgis_version.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="templates\186.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="templates\418.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="templates\dbtemplate.htm">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="templates\default.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="templates\imaptemplate.htm">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="templates\Infowindow.htm">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="icons\doc.png" />
+    <Resource Include="icons\giskarten.ico" />
+    <Resource Include="icons\favicon.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Content Include="lib\msvcp110.dll" />
+    <Content Include="lib\msvcp140.dll" />
+    <Content Include="lib\msvcr110.dll" />
+    <Content Include="lib\msvcr120.dll" />
+    <Content Include="lib\vccorlib110.dll" />
+    <Content Include="lib\vccorlib120.dll" />
+    <Content Include="lib\vccorlib140.dll" />
+    <Content Include="lib\vcruntime140.dll" />
+    <Resource Include="icons\auschnittNeu.png" />
+    <Resource Include="icons\bwh.png" />
+    <Resource Include="icons\bwv.png" />
+    <Resource Include="icons\Cursor1.cur" />
+    <Resource Include="icons\diskette2.png" />
+    <Resource Include="icons\einzelperson.ico" />
+    <Resource Include="icons\gis.png" />
+    <Resource Include="icons\gis2.png" />
+    <Resource Include="icons\giskarten_30.ico" />
+    <Resource Include="icons\gruppe1.ico" />
+    <Resource Include="icons\gruppe1.png" />
+    <Resource Include="icons\handbuch.png" />
+    <Resource Include="icons\handtransp.png" />
+    <Resource Include="icons\herz.png" />
+    <Resource Include="icons\kreisof.png" />
+    <Resource Include="icons\kreisuebersicht.png" />
+    <Resource Include="icons\kreuz.png" />
+    <Resource Include="icons\meineSpeichern.ico" />
+    <Resource Include="icons\meineSpeichern.png" />
+    <Resource Include="icons\muell.png" />
+    <Resource Include="icons\optionen.png" />
+    <Resource Include="icons\pin.png" />
+    <Resource Include="icons\redx.png" />
+    <Resource Include="icons\refresh.png" />
+    <Resource Include="icons\schnelldruck.png" />
+    <Resource Include="icons\slider.ico" />
+    <Resource Include="icons\stift.png" />
+    <Resource Include="icons\suche.png" />
+    <Resource Include="icons\suchobjekt.png" />
+    <Resource Include="icons\tool.png" />
+    <Resource Include="icons\zoomin.png" />
+    <Resource Include="icons\zoomout.png" />
+    <Resource Include="icons\leer.png" />
+    <Content Include="imaptemplate.htm" />
+    <Content Include="itextsharp.dll" />
+    <None Include="packages.config" />
+    <None Include="WMS\trinkwasser.json" />
+    <None Include="Xceed.Wpf.DataGrid.dll" />
+    <None Include="Xceed.Wpf.Toolkit.dll" />
+    <None Include="dll\Devart.Data.dll" />
+    <None Include="dll\Devart.Data.Oracle.dll" />
+    <Content Include="Infowindow.htm" />
+    <None Include="dll\Mono.Security.dll" />
+    <None Include="dll\Npgsql.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\Release\" />
+    <Folder Include="linx\gisdok\" />
+    <Folder Include="linx\libdb\" />
+    <Folder Include="linx\sqls\" />
+    <Folder Include="paradigmahistory\" />
+    <Folder Include="resouirces\" />
+    <Folder Include="sachdaten\" />
+    <Folder Include="winthemen\" />
+  </ItemGroup>
+  <Import Project="..\shared\sharedGis_Dossier.projitems" Label="Shared" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>if /I "$(ConfigurationName)" == "Release" Eazfuscator.NET.exe "$(TargetPath)" --msbuild-project-path "$(ProjectPath)" --msbuild-project-configuration "$(ConfigurationName)" --msbuild-project-platform "$(PlatformName)" --msbuild-solution-path "$(SolutionPath)" -n --newline-flush -v 2020.3
+
+if $(ConfigurationName) == Release (
+rem  copy $(targetfilename) C:\kreisoffenbach\mgis\mgis.exe
+rem  copy $(targetfilename) C:\kreisoffenbach\mgis\mgis.exe
+  copy $(targetfilename) l:\apps\mgis\mgisnt.exe
+ copy $(targetfilename) l:\apps\mgis\mgis.exe
+)</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>echo %25date%25 %25time%25  &gt; "$(ProjectDir)\resouirces\BuildDate.txt"
+rem echo %25date%25 %25time%25  &gt; "$(ProjectDir)\mgis_version.txt"
+
+</PreBuildEvent>
+  </PropertyGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\cef.redist.x64.3.3578.1863\build\cef.redist.x64.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\cef.redist.x64.3.3578.1863\build\cef.redist.x64.props'))" />
+    <Error Condition="!Exists('packages\cef.redist.x86.3.3578.1863\build\cef.redist.x86.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\cef.redist.x86.3.3578.1863\build\cef.redist.x86.props'))" />
+    <Error Condition="!Exists('packages\CefSharp.Common.71.0.0\build\CefSharp.Common.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\CefSharp.Common.71.0.0\build\CefSharp.Common.props'))" />
+    <Error Condition="!Exists('packages\CefSharp.Common.71.0.0\build\CefSharp.Common.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\CefSharp.Common.71.0.0\build\CefSharp.Common.targets'))" />
+    <Error Condition="!Exists('packages\CefSharp.Wpf.71.0.0\build\CefSharp.Wpf.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\CefSharp.Wpf.71.0.0\build\CefSharp.Wpf.props'))" />
+    <Error Condition="!Exists('packages\CefSharp.Wpf.71.0.0\build\CefSharp.Wpf.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\CefSharp.Wpf.71.0.0\build\CefSharp.Wpf.targets'))" />
+  </Target>
+  <Import Project="packages\CefSharp.Common.71.0.0\build\CefSharp.Common.targets" Condition="Exists('packages\CefSharp.Common.71.0.0\build\CefSharp.Common.targets')" />
+  <Import Project="packages\CefSharp.Wpf.71.0.0\build\CefSharp.Wpf.targets" Condition="Exists('packages\CefSharp.Wpf.71.0.0\build\CefSharp.Wpf.targets')" />
+</Project>

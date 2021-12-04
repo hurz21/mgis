@@ -1,0 +1,100 @@
+﻿<Window x:Class="winBM"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:mgis" WindowStartupLocation="CenterScreen"
+        mc:Ignorable="d" Background="{StaticResource flaechenBackground}" 
+        Title="Lesezeichen" Height="700" Width="800">
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Top">
+            <Button Name="btnBMneuanlegen" Click="btnBMneuanlegen_Click" Content="Neues Lesezeichen anlegen" Width="200" Margin="10"/>
+        </StackPanel>
+        <TabControl >
+            <TabItem Header="Meine privaten Lesezeichen" Name="tibmprivat">
+                <DockPanel>
+                 
+                    <DataGrid  x:Name="dgBMliste"  ItemsSource="{Binding }"     DockPanel.Dock="Top"                                    
+                                         SelectionChanged ="dgBMliste_SelectionChanged" Height="500"
+                                     MouseRightButtonUp="dgBMliste_MouseRightButtonUp"   
+                                  CanUserAddRows="False"  AutoGenerateColumns="False"
+                                  SelectionMode="Single" SelectionUnit="FullRow"    
+                               ToolTip="Rechte Maustaste zum Ändern, Linke Maustaste zum aufrufen"
+                                  ColumnHeaderStyle="{StaticResource dgHeaderStyle}"  
+                                   FontWeight="Normal"  
+                                      >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="id"     Binding="{Binding id}" />
+                            <DataGridTextColumn Header="Datum"     Binding="{Binding datum}" />
+                            <DataGridTextColumn Header="Titel"     Binding="{Binding titel}" />
+                            <DataGridTextColumn Header="Gruppe"     Binding="{Binding user.ADgruppenname}" /> 
+                            <DataGridCheckBoxColumn Header="frei"    Binding="{Binding free4mygruppe}" /> 
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <StackPanel Orientation="Horizontal" MinHeight="100" HorizontalAlignment="Center"> 
+                        <Button Name="btnAbbruch" Click="btnAbbruch_Click" IsCancel="True" Margin="10" Width="100" HorizontalAlignment="Center">Abbruch</Button>
+                    </StackPanel>
+                </DockPanel>
+            </TabItem>
+            <TabItem Header="Freigaben von mir für meine Gruppe" Name="ti4Gruppe">
+                <DockPanel>
+                    <DataGrid  x:Name="dgBM4gruppe"  ItemsSource="{Binding }"     DockPanel.Dock="Top"                                    
+                                         SelectionChanged ="dgBM4gruppe_SelectionChanged" Height="400"
+                                         MouseRightButtonUp="dgBM4gruppe_MouseRightButtonUp"   
+                                  CanUserAddRows="False"  AutoGenerateColumns="False"
+                                  SelectionMode="Single" SelectionUnit="FullRow"  
+                               ToolTip="Rechte Maustaste zum Ändern, Linke Maustaste zum aufrufen"
+                                  ColumnHeaderStyle="{StaticResource dgHeaderStyle}"  
+                                   FontWeight="Normal"  
+                                      >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="id"     Binding="{Binding id}" />
+                            <DataGridTextColumn Header="Datum"     Binding="{Binding datum}" />
+                            <DataGridTextColumn Header="Titel"     Binding="{Binding titel}" />
+                            <DataGridTextColumn Header="Gruppe"     Binding="{Binding user.ADgruppenname}" />
+
+   
+
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <StackPanel Orientation="Horizontal" MinHeight="100">
+                        <Button Name="btnAbbruch2" Click="btnAbbruch_Click" Margin="10">Abbruch</Button>
+                    </StackPanel>
+                </DockPanel>
+            </TabItem>
+            <TabItem Header="Freigaben von meiner Gruppe" Name="tVONgruppe">
+                <DockPanel>
+                    <StackPanel DockPanel.Dock="Top" >
+                        <ComboBox Name="comboUserfilter" Text="Filter nach Anwendername" ToolTip="Filtern nach Anwendern"
+                                  Width="300">
+
+                        </ComboBox>
+                    </StackPanel>
+                    <DataGrid  x:Name="dgBMvongruppe"  ItemsSource="{Binding }"     DockPanel.Dock="Top"                                    
+                                         SelectionChanged ="dgBMvongruppe_SelectionChanged" Height="400" 
+                                  CanUserAddRows="False"  AutoGenerateColumns="False"
+                                  SelectionMode="Single" SelectionUnit="FullRow"                                             
+                                  ColumnHeaderStyle="{StaticResource dgHeaderStyle}"  
+                                   FontWeight="Normal"  
+                                      >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="id"     Binding="{Binding id}" />
+                            <DataGridTextColumn Header="Datum"     Binding="{Binding datum}" />
+                            <DataGridTextColumn Header="Titel"     Binding="{Binding titel}" />
+                            <DataGridTextColumn Header="von"     Binding="{Binding user.ADgruppenname}" />
+                            <DataGridTextColumn Header="Gruppe"     Binding="{Binding user_gruppe}" />
+
+
+                
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <StackPanel Orientation="Horizontal" MinHeight="100">
+                        <Button Name="btnAbbruch3" Click="btnAbbruch_Click" Margin="10">Abbruch</Button>
+                    </StackPanel>
+                </DockPanel>
+            </TabItem>
+
+        </TabControl>
+
+    </DockPanel>
+</Window>

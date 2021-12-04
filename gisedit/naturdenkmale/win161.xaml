@@ -1,0 +1,189 @@
+﻿<Window x:Class="win161"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:gisEdit"
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen"
+        Title="Paradigma ND-Manager" Height="600" Width="1258"  Background="DarkGray">
+    <Window.Resources>
+        <local:MyFormatter x:Key="myformattjf" />
+        <XmlDataProvider x:Key="XMLSourceComboBoxgemeinden" />
+        <Style x:Key="dgRowStyleLOK" TargetType="DataGridRow" BasedOn="{StaticResource dgRowStyle}">
+            <Style.Triggers>
+            
+                <DataTrigger Binding="{Binding   ZusatzInfo.verkehrssicher}" Value="False">
+                    <Setter Property="Background" Value="red" />
+                </DataTrigger>
+        
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <TabControl Name="tc1">
+        <TabItem Header="Alle ND-Individuen">
+            <DockPanel>
+                <StackPanel DockPanel.Dock="Top">
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <TextBlock Text="Gemeinde" Name="tbGemeindefilterI" Margin="5" Padding="5" Width="100" HorizontalAlignment="Left"></TextBlock>
+                        <ComboBox Name="cmbgemeindeI"    Margin="5"
+                                       DataContext="{Binding Source={StaticResource XMLSourceComboBoxgemeinden}, XPath=/Variablen/Variable}"
+                                                                ItemsSource="{Binding}" 
+                                                                DisplayMemberPath="@Name" 
+                                                                SelectedValuePath="@ID"
+                                                                SelectedValue="{Binding Path=ID}" 
+                                                              SelectionChanged="cmbgemeindeI_SelectionChanged"
+                                      Width="20" Grid.Column="2"   />
+                        <TextBlock Text="Anzahl Treffer: " Padding="5" Margin="5"/>
+                        <TextBlock Text="_" Padding="5" Name="tbAnzahli" Margin="5"/>
+                        <Border BorderBrush="Black" BorderThickness="1" >
+                            <StackPanel Orientation="Horizontal" Margin="5">
+                                <TextBlock Text="Textfilter:" Padding="5"/>
+                                <TextBox Name="tbTextfilteri" Width="80" Text="" Padding="5" />
+                                <Button Name="btnTextfilteri" Content="start" Click="btnTextfilteri_Click" Width="100" IsDefault="True"/>
+                            </StackPanel>
+
+
+                        </Border>
+                        <Button Name="btnNDindividuen2excel" Click="btnNDindividuen2excel_Click" Content="nach Excel ausgeben" Width="200" Background="Green" Foreground="White"/>
+
+                    </StackPanel>
+                                </StackPanel>
+                <DataGrid  x:Name="dgNDindividuen"  ItemsSource="{Binding }"    
+                                         SelectionChanged ="dgNDindividuen_SelectionChanged"
+                                  CanUserAddRows="False"  AutoGenerateColumns="false"
+                                  SelectionMode="Single"    RowStyle="{StaticResource dgRowStyleLOK}" 
+                                  SelectionUnit="FullRow" 
+                                   FontWeight="Normal"  
+                                      >
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Nr." MaxWidth="250"    Binding="{Binding gid}" >
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="TextWrapping" Value="Wrap"/>
+                                    <Setter Property="ToolTip" Value="IndividualID"/>
+                                    <Setter Property="ToolTipService.ShowDuration" Value="20000"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="ND-ID" MaxWidth="250"    Binding="{Binding aid}" >
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="TextWrapping" Value="Wrap"/>
+                                    <Setter Property="ToolTip" Value="GruppenID"/>
+                                    <Setter Property="ToolTipService.ShowDuration" Value="20000"/>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Plakette" MaxWidth="250"    Binding="{Binding plakette}" />
+
+                        <DataGridTextColumn Header="Indiv." MaxWidth="250"    Binding="{Binding lfd_nr}" />
+                        <DataGridTextColumn Header="Gemeinde" MaxWidth="250"    Binding="{Binding gemeinde}" />
+                        <DataGridTextColumn Header="Gemarkung" MaxWidth="250"    Binding="{Binding gemarkung}" />
+
+                        <DataGridTextColumn Header="radius" MaxWidth="250"    Binding="{Binding radius}" />
+                        <DataGridTextColumn Header="Name" MaxWidth="250"    Binding="{Binding name}" />
+                        <!--<DataGridTextColumn Header="Beschreibung"   MaxWidth="250"  Binding="{Binding beschreibung}" />-->
+
+                        <DataGridTextColumn Header="P-ID"    MaxWidth="250"  Binding="{Binding vid}" >
+
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Regelkontrolle"   MaxWidth="250"  Binding="{Binding Path=ZusatzInfo.regelkontrolle,  Converter={StaticResource myformattjf}, ConverterParameter='dd.MM.yyyy'}" />
+                        <DataGridTextColumn Header="InAugenScheinnahme"   MaxWidth="250"  Binding="{Binding Path=ZusatzInfo.auge,  Converter={StaticResource myformattjf}, ConverterParameter='dd.MM.yyyy'}" />
+
+                        <DataGridTextColumn Header="E.-Untersuchung"   MaxWidth="250"  Binding="{Binding Path=ZusatzInfo.untersuchung,  Converter={StaticResource myformattjf}, ConverterParameter='dd.MM.yyyy'}" />
+
+                        <DataGridCheckBoxColumn Header="Kronen-S."  ToolTipService.ToolTip="Kronensicherung vorhanden?"   
+                                                Binding="{Binding Path=ZusatzInfo.kronensicherung}" />
+                        <DataGridCheckBoxColumn Header=" V !"  ToolTipService.ToolTip="Verkehrssicher?"   Binding="{Binding Path=ZusatzInfo.verkehrssicher}" />
+                        <DataGridTextColumn Header="Ablauf-KS"   MaxWidth="250"  Binding="{Binding Path=ZusatzInfo.ablaufdatumks,  Converter={StaticResource myformattjf}, ConverterParameter='dd.MM.yyyy'}" />
+
+                        <DataGridTextColumn Header="Bemerkung" MinWidth="450"    MaxWidth="750"   Binding="{Binding Path=ZusatzInfo.bemerkung}" />
+
+                    </DataGrid.Columns>
+                </DataGrid>
+            </DockPanel>
+
+        </TabItem>
+        <TabItem Header="Alle ND-Gruppen">
+            <DockPanel>
+                <StackPanel DockPanel.Dock="Top" Margin="5">
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <TextBlock Text="Gemeinde" Name="tbGemeindefilter" Margin="5" Padding="5" Width="100" HorizontalAlignment="Left"></TextBlock>
+                        <ComboBox Name="cmbgemeinde"    Margin="5"
+                                       DataContext="{Binding Source={StaticResource XMLSourceComboBoxgemeinden}, XPath=/Variablen/Variable}"
+                                                                ItemsSource="{Binding}" 
+                                                                DisplayMemberPath="@Name" 
+                                                                SelectedValuePath="@ID"
+                                                                SelectedValue="{Binding Path=ID}" 
+                                                              SelectionChanged="cmbgemeinde_SelectionChanged"
+                                      Width="20" Grid.Column="2"   />
+                        <TextBlock Text="Anzahl Treffer: " Padding="5" Margin="5"/>
+                        <TextBlock Text="_" Padding="5" Name="tbAnzahl" Margin="5"/>
+                        <Border BorderBrush="Black" BorderThickness="1" >
+                            <StackPanel Orientation="Horizontal" Margin="5">
+                                <TextBlock Text="Textfilter:" Padding="5"/>
+                                <TextBox Name="tbTextfilter" Width="80" Text="" Padding="5" />
+                                <Button Name="btnTextfilter" Content="start" Click="btnTextfilter_Click" Width="100" IsDefault="True"/>
+                            </StackPanel>
+
+
+                        </Border>
+                        <Button Name="btnNDgruppen2excel" Click="btnNDgruppen2excel_Click"
+                                Content="nach Excel ausgeben" Width="200"    Margin="5"/>
+                    </StackPanel>
+
+                </StackPanel>
+                <DataGrid  x:Name="dgNDgruppen"  ItemsSource="{Binding }"    Margin="5"
+                                         SelectionChanged ="dgNDgruppen_SelectionChanged"
+                                  CanUserAddRows="False"  AutoGenerateColumns="false"
+                                  SelectionMode="Single" 
+                                  SelectionUnit="FullRow" 
+                                   FontWeight="Normal"  
+                                      >
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Gruppen-ID" MaxWidth="250"    Binding="{Binding aid}" />
+                        <DataGridTextColumn Header="Gemeinde" MaxWidth="250"    Binding="{Binding gemeinde}" />
+                        <DataGridTextColumn Header="Gemarkung" MaxWidth="250"    Binding="{Binding gemarkung}" />
+                        <DataGridTextColumn Header="Name" MaxWidth="250"    Binding="{Binding name}" />
+                        <DataGridTextColumn Header="Radius"   Width="SizeToCells"  Binding="{Binding radius}"   />
+
+                        <DataGridTextColumn Header="Beschreibung"     Binding="{Binding beschreibung}" />
+
+          
+                    </DataGrid.Columns>
+                </DataGrid>
+            </DockPanel>
+        </TabItem>
+
+        <TabItem Header="Gelöschte ND-Gruppen">
+            <DockPanel>
+                <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+                    <TextBlock Text="Anzahl: "></TextBlock>
+                    <TextBlock   Name="tbAnzahlerloschen"></TextBlock>
+                </StackPanel>
+             
+
+                <DataGrid  x:Name="dgNDerloschen"  ItemsSource="{Binding }"    Margin="5"
+                                         SelectionChanged ="dgNDerloschen_SelectionChanged"
+                                  CanUserAddRows="False"  AutoGenerateColumns="False"
+                                  SelectionMode="Single" 
+                                  SelectionUnit="FullRow" 
+                                   FontWeight="Normal"  
+                                      >
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Gruppen-ID" MaxWidth="250"    Binding="{Binding aid}" />
+                        <DataGridTextColumn Header="Gemeinde" MaxWidth="250"    Binding="{Binding gemeinde}" />
+                        <DataGridTextColumn Header="Gemarkung" MaxWidth="250"    Binding="{Binding gemarkung}" />
+                        <DataGridTextColumn Header="Name" MaxWidth="250"    Binding="{Binding name}" />
+                        <DataGridTextColumn Header="Radius"   Width="SizeToCells"  Binding="{Binding radius}"   />
+
+                        <DataGridTextColumn Header="Beschreibung"     Binding="{Binding beschreibung}" />
+
+
+                    </DataGrid.Columns>
+                </DataGrid>
+            </DockPanel>
+        </TabItem>
+
+    </TabControl>
+</Window>

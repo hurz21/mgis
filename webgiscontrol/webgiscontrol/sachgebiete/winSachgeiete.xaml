@@ -1,0 +1,26 @@
+﻿<Window x:Class="winSachgeiete"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:webgiscontrol" WindowStartupLocation="CenterScreen"
+        mc:Ignorable="d"
+        Title="winSachgeiete" Height="600" Width="700">
+    <DockPanel  >
+        <StackPanel DockPanel.Dock="Top">
+
+            <StackPanel Orientation="Horizontal">
+                     <DataGrid  Background="AntiqueWhite" Name="dgDatentabelle" AutoGenerateColumns="True"  ItemsSource="{Binding}"  Height="400" Width="300"
+                   SelectionChanged="dgSG_SelectionChanged" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible">
+            </DataGrid>
+                <StackPanel Margin="20">
+                    <Button Name="btnAdd" Click="btnAdd_Click" Content="Hinzu" Margin="10"/>
+                    <Button Name="btnremove" Click="btnremove_Click" Content="Löschen" Margin="10"/>
+                    <Button Name="btnNeuerTitel" Click="btnNeuerTitel_Click" Content="umbenennen" Margin="10"/>
+                    <Button Name="btnRefresh" Content="Refresh " Click="btnRefresh_Click"/>
+                </StackPanel>
+            </StackPanel>
+       
+        </StackPanel>
+    </DockPanel>
+</Window>

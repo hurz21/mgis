@@ -1,0 +1,91 @@
+﻿<Window x:Class="winLeg"
+            xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:mgis"
+        mc:Ignorable="d" Loaded="winLeg_Loaded"
+        Title="winLeg" Height="800" Width="900" WindowStartupLocation="CenterScreen">
+    <DockPanel>
+
+        <StackPanel Orientation="Horizontal">
+            <StackPanel Width="900" Name="spDB">
+                <!--<StackPanel Orientation="Vertical" DockPanel.Dock="Top" >
+                        <StackPanel Orientation="Horizontal" Name="spDBObjToolbar" Margin="5">
+                            <Button Name="btnpuffern" Click="btnpuffern_Click" Content="Objekt puffern" Width="93"/>
+                            <TextBox Name="tbpufferinmeter" Width="90" Margin="0,0,0,0"/>
+
+                            <TextBlock Text="[m]" Padding="5" Margin="0,0,20,0"/>
+                            <Button Name="btnLoeschen" Click="btnLoeschen_Click" Content="Objekt löschen"/>
+                        </StackPanel>
+                    </StackPanel>-->
+                <ScrollViewer CanContentScroll="True" Background="{StaticResource flaechenBackground}">
+                    <TabControl Name="tc1" >
+                        <TabItem Header="Legende">
+                            <StackPanel CanVerticallyScroll="True" ScrollViewer.CanContentScroll="True" 
+                                           CanHorizontallyScroll="True"  >
+                                <StackPanel Orientation="Horizontal" Background="{StaticResource flaechenBackground}" >
+                                    <!--<Button Name="btnRTFdatei2Word" Click="btnRTFdatei2Word_Click"  Margin="9"
+                                    ToolTip="Die Legende wird in Word geladen und kann dann ausgedruckt werden.">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Drucken über Word-Datei:"  Padding="5"/>
+                                            <Image    Source="/mgisNT;component/icons/doc.png"  Width="27" Height="28"  />
+                                        </StackPanel> 
+                                    </Button>-->
+                                    <Image  Name="btnRTFdatei2Word"  Source="/mgisNT;component/icons/doc.png"  Width="50" Height="50"   Margin="5" 
+                                                          Cursor="Hand"
+                                      MouseDown="btnRTFdatei2Word_Click"    
+                                            ToolTip="Die Datei wird in Word geladen und kann dann ausgedruckt werden."/>
+                                    <Button Name="btnClipboard" Visibility="Collapsed" Content="Als Word -Text in Zwischenablage kopieren" Click="Button_Click" Margin="10"
+                                 Style="{StaticResource lessButton}"></Button>
+                                    <Button Name="btnabbruch" Click="btnabbruch_Click" Content="Abbruch (Esc)"  Width="200"   Margin="250,0" IsCancel="True"/>
+                                </StackPanel>
+                                <WebBrowser Name="wbleg" Height="650"       VerticalAlignment="Top" 
+                                             HorizontalAlignment="Left"></WebBrowser>
+                                <RichTextBox Name="freiLegende" AcceptsReturn="True" AcceptsTab="True"   
+                                            ScrollViewer.VerticalScrollBarVisibility="Visible" Height="650"
+                                            VerticalAlignment="Top"  Visibility="Collapsed"
+                                            HorizontalAlignment="Left">
+                                </RichTextBox>
+                            </StackPanel>
+                        </TabItem>
+                        <TabItem Header="Dokumentation" Name="tidok">
+                            <StackPanel CanVerticallyScroll="True" ScrollViewer.CanContentScroll="True" 
+                                           CanHorizontallyScroll="True"  >
+                                <StackPanel Orientation="Horizontal" Background="{StaticResource flaechenBackground}" >
+                                    <!--<Button Name="btnDOKdatei2Word" Click="btnDOKdatei2Word_Click"   Margin="9"
+                                    ToolTip="Die Legende wird in Word geladen und kann dann ausgedruckt werden.">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Drucken über Word-Datei:"   Padding="5"/>
+                                            <Image    Source="/mgisNT;component/icons/doc.png"  Width="27" Height="28"  />
+                                        </StackPanel>
+
+                                    </Button>-->
+                                    <Image  Name="btnDOKdatei2Word"  Source="/mgisNT;component/icons/doc.png"  Width="50" Height="50"   Margin="5" 
+                                                          Cursor="Hand"
+                                      MouseDown="btnDOKdatei2Word_Click"    
+                                            ToolTip="Die Datei wird in Word geladen und kann dann ausgedruckt werden."/>
+                                    <Button Name="btnabbruch2" Click="btnabbruch_Click" Content="Abbruch (Esc)"  Width="200"   Margin="250,0" IsCancel="True"/>
+
+                                </StackPanel>
+                                <WebBrowser Name="wbdok" Height="650"       VerticalAlignment="Top" 
+                                             HorizontalAlignment="Left"></WebBrowser>
+                            </StackPanel>
+                            
+                     
+                        </TabItem>
+                      
+                    </TabControl>
+
+                </ScrollViewer>
+            </StackPanel>
+            <!--#region rechts-->
+
+            <!--#endregion-->
+
+        </StackPanel>
+
+
+    </DockPanel>
+</Window>

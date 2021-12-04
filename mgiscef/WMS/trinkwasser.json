@@ -1,0 +1,34 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": null,
+      "properties": {
+        "OBJECTID": "492",
+        "SHAPE": "Polygon",
+        "WSG_ID": "412-004",
+        "ZONE": "Schutzzone IIIB",
+        "WSG_KURZNAME": "WSG Stadtwaldwasserwerk , Hessenwasser",
+        "WSG_ART": "Trinkwasserschutzgebiet",
+        "STATUS_RPU": "Festgesetzt",
+        "KREIS_MASSGEBLICH_NAME": "Frankfurt am Main",
+        "KREIS_MASSGEBLICH_NR": "412",
+        "KREISE": "Landkreis Offenbach; Landkreis Groﬂ-Gerau; Frankfurt am Main; Offenbach am Main",
+        "TK25_BEZEICHNUNGEN": "5918 - Neu-Isenburg; 5917 - Kelsterbach",
+        "ARCHIV_HLNUG": "5917-327",
+        "RPU": "F     ",
+        "STAATSANZEIGER": "18/98 S.1246",
+        "STAATSANZEIGER_AENDER": "24/98 S.1668",
+        "VERORDNUNGDATUM": "17.11.1997",
+        "WSG_KEY": "1414",
+        "ZONE_KEY": "4",
+        "SHAPE_Length": "37663,479566",
+        "SHAPE_Area": "40063062,044818"
+      },
+      "layerName": "TWS_HQS_TK25"
+    }
+  ]
+}{
+
+}

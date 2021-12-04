@@ -1,0 +1,280 @@
+﻿<Window x:Class="WinDetailSucheFST"
+              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    Title="GIS Flurstückssuche" Height="809" Width="907"  Top="100" Left="500"
+         WindowStartupLocation="CenterScreen" >
+    <Window.Resources>
+        <XmlDataProvider x:Key="XMLSourceComboBoxgemarkungen" />
+        <XmlDataProvider x:Key="XMLSourceComboBoxRBfunktion" />
+        <Style x:Key="tbBackground" TargetType="Button">
+            <!--<Setter Property="Background" Value="Beige" />-->
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver"  Value="True">
+                    <Setter Property="Foreground" Value="AliceBlue" />
+                    <Setter Property="Background" Value="Black" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <DataTemplate x:Key="lvGemarkungsTemplate">
+            <Button   Content="{Binding displayText}"  Tag="{Binding displayText}" Uid="{Binding id}" x:Name="txtitel"
+                                  Margin="0"     Width="110" Height="20"
+                                 Click="txGemarkungs_MouseDown"  HorizontalAlignment="Center" 
+                           Background="Beige"   Style="{StaticResource lessButton}" 
+                                  >
+            </Button>
+        </DataTemplate>
+        <!--_txFlur_MouseDown"-->
+        <DataTemplate x:Key="lvFlureTemplate">
+            <Button   Content="{Binding displayText}"  Tag="{Binding displayText}" Uid="{Binding id}" x:Name="txtitel"
+                                 Margin="0"       Width="40"
+                                Click="txFlur_MouseDown" 
+                      HorizontalAlignment="Center"
+                                  Style="{StaticResource lessButton}"   
+                                  >
+            </Button>
+        </DataTemplate>
+        <DataTemplate x:Key="lvFstkombiTemplate">
+            <Button   Content="{Binding displayText}"  Tag="{Binding nenner}" Uid="{Binding id}" x:Name="txtitel"
+                                  Margin="0"        Style="{StaticResource lessButton}" Width="50"
+                              Click   ="txfst_MouseDown"  HorizontalAlignment="Center"   
+                                  >
+            </Button>
+        </DataTemplate>
+
+    </Window.Resources>
+    <StackPanel Margin="0,0,0,0" Orientation="Horizontal" Background="{StaticResource flaechenBackground}">
+
+        <StackPanel Orientation="Horizontal" Margin="5,5,0,0">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal" Width="205"  HorizontalAlignment="Left" Margin="5,0,0,0">
+                    <CheckBox Name="ckFormNichtSchliessen" Checked="ckFormNichtSchliessen_Checked" Margin="0"
+                                    
+                           >
+                        <TextBlock Text="Formular im Anschluss nicht schliessen" TextWrapping="Wrap"    Width="199"/>
+
+                    </CheckBox>
+                </StackPanel>
+                <CheckBox x:Name="cbFSTHist" Content="historische Flurstücke verwenden" Margin="5,0,0,0" Click="cbFSTHist_Click" HorizontalAlignment="Left"
+                              ToolTip="Suche in historischen Flurstücken. Suche dauert mind. 1-2 min. Nur nutzen wenn sinnvoll !" 
+                              Width="200"/>
+                <StackPanel Orientation="Vertical" Margin="5">
+                    <TextBlock Text="Ausgewählt: "/>
+                    <TextBlock Name="tbresult" FontWeight="Black"/>
+                </StackPanel>
+                <StackPanel Orientation="Vertical" >
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <TextBlock Text="Gemarkung:" Name="tbGemarkung" Margin="5,0,0,0" Padding="0" Width="70" HorizontalAlignment="Left" FontWeight="normal"></TextBlock>
+                        <ComboBox Name="cmbgemarkung" MaxDropDownHeight="523" Width="25"
+                                       DataContext="{Binding Source={StaticResource XMLSourceComboBoxgemarkungen}, XPath=/Variablen/Variable}"
+                                                                ItemsSource="{Binding}" 
+                                                                DisplayMemberPath="@Name" 
+                                                                SelectedValuePath="@ID"
+                                                                SelectedValue="{Binding Path=ID}" 
+                                                              SelectionChanged="cmbgemarkung_SelectionChanged"  Margin="5,0,0,0" />
+
+                    </StackPanel>
+                    <ListView  Background ="AliceBlue"    Width="255"
+                        Cursor="Arrow" Height="400"
+                        x:Name="lvGemarkungen"  
+                        BorderBrush="#FFCCCCCC" 
+                        BorderThickness="1,1,1,1" 
+                        FontFamily="Arial" 
+                        FontSize="11"                    
+                        Margin="0"                            
+                        ItemTemplate="{StaticResource lvGemarkungsTemplate}"
+                    >
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Width="240"      />
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                    </ListView>
+
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" ToolTip="In historischen Flurstücken suchen" >
+
+                    <!--<ComboBox Name="cmbFlur" ItemsSource="{Binding}"  MaxDropDownHeight="723" Width="25"
+                                      DisplayMemberPath="flur"  SelectedValuePath="flur"   Margin="1,0,9,0"  
+                              SelectionChanged="cmbFlur_SelectionChanged"/>-->
+
+
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="5" Name="tbFlurnrWaelen">
+
+
+
+                    <TextBlock Text="Flurnummer wählen: "/>
+                    <!--<TextBlock Text=" " Name="tbFlur"  Margin="9,0,0,0"  Padding="0" Width="20" HorizontalAlignment="Left" FontWeight="Bold"> </TextBlock>-->
+                </StackPanel>
+                <!--<ScrollViewer Name="svMainScrollviewer" CanContentScroll="True"  VerticalScrollBarVisibility="Hidden"
+                              HorizontalScrollBarVisibility="Hidden"
+                                  Background="{StaticResource flaechenBackground}" 
+                                Height="50" MaxHeight="300"  Width="200">-->
+                <ListView  Background ="AliceBlue"    MaxHeight="300"   
+                        Cursor="Arrow" 
+                        x:Name="lvFlure"  
+                        BorderBrush="#FFCCCCCC" 
+                        BorderThickness="1,1,1,1" 
+                        FontFamily="Arial" 
+                        FontSize="12"                    
+                        Margin="0"                           
+             
+                        ItemTemplate="{StaticResource lvFlureTemplate}"
+                    >
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Width="240"      />
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+                </ListView>
+                <StackPanel Orientation="Horizontal"  Margin="5" Name="spFST">
+                    <StackPanel Orientation="Vertical" Margin="5">
+                        <TextBlock Text="Flurstück wählen" Margin="0"/>
+                        <!--<TextBlock Text=" " Margin="0"/>-->
+                  
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="15,5,0,0">
+                        <TextBlock Text="Filter:" HorizontalAlignment="Center"/>
+                        <TextBox Name="tbfilter" Width="39" Text=""  Margin="15,0,0,0" Background="White" TextChanged="tbfilter_TextChanged"/>
+                        <!--<StackPanel x:Name="stckBuchstaben1" Orientation="Horizontal" HorizontalAlignment="Center"
+                                    ToolTip="Tipp: statt die Taste in Mühsal zu mausen, einfach auf der Tastatur die Taste drücken !"
+                                    IsEnabled="True"  >
+                            <Button Content="1"    Click="btnstreet"     Width="17" Height="22"/>
+                            <Button Content="2"    Click="btnstreet"     Width="17" Height="22"/>
+                            <Button Content="3"    Click="btnstreet"     Width="17" Height="22"/>
+                            <Button Content="4"    Click="btnstreet"     Width="17" Height="22"/>
+                            <Button Content="5"    Click="btnstreet"     Width="17" Height="22"/>
+                            <Button Content="6"    Click="btnstreet"     Width="17" Height="22"/>
+                            <Button Content="7"    Click="btnstreet"     Width="17" Height="22"/>
+                            <Button Content="8"    Click="btnstreet"     Width="17" Height="22"/>
+                            <Button Content="9"    Click="btnstreet"     Width="17" Height="22"/>
+                            <Button Content="alle"    Click="btnstreet"     Width="37" Height="22"/>
+
+                        </StackPanel>-->
+                    </StackPanel>
+                </StackPanel>
+                <ScrollViewer Name="svMainScrollviewer" CanContentScroll="True"  VerticalScrollBarVisibility="Hidden"
+                              HorizontalScrollBarVisibility="Hidden"
+                                  Background="{StaticResource flaechenBackground}" 
+                                 MaxHeight="300"   >
+                    <ListView  Background ="AliceBlue"    MaxHeight="300"   
+                        Cursor="Arrow"  
+                        x:Name="lvFstkombi"  
+                        BorderBrush="#FFCCCCCC" 
+                        BorderThickness="1,1,1,1" 
+                        FontFamily="Arial" 
+                        FontSize="12"                    
+                        Margin="0"                           
+                        SelectionChanged="lvFstkombi_SelectionChanged"
+                        ItemTemplate="{StaticResource lvFstkombiTemplate}"
+                    >
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Width="240"      />
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                    </ListView>
+                </ScrollViewer>
+                <!--<StackPanel Orientation="Horizontal"  ToolTip="In historischen Flurstücken suchen">
+                    <TextBlock Text="Zähler:" Name="tbZaehler"  Margin="5,0,0,0"  Padding="5" Width="90" HorizontalAlignment="Left"></TextBlock>
+                    <ComboBox Name="cmbZaehler" ItemsSource="{Binding}" SelectionChanged="cmbZaehler_SelectionChanged"  MaxDropDownHeight="723" Width="25"
+                                      DisplayMemberPath="zaehler"  SelectedValuePath="zaehler"   Margin="1,0,9,0"  />
+                    <TextBlock Text="Zähler:" Padding="5" Name="hist1" Width="50"/>
+                    <ComboBox Name="cmbZaehlerHist" ItemsSource="{Binding}" SelectionChanged="cmbZaehlerHist_SelectionChanged"  MaxDropDownHeight="723" Width="25"
+                                      DisplayMemberPath="zaehler"  SelectedValuePath="zaehler"   Margin="1,0,9,0"  Visibility="Visible"/>
+
+                </StackPanel>-->
+                <!--<StackPanel Orientation="Horizontal"  ToolTip="In historischen Flurstücken suchen">
+                    <TextBlock Text="Nenner:" Name="tbNenner"  Margin="5,0,0,0"  Padding="5" Width="90" HorizontalAlignment="Left"></TextBlock>
+                    <ComboBox Name="cmbNenner" ItemsSource="{Binding}" 
+                                      DisplayMemberPath="nenner"  SelectedValuePath="nenner"    Margin="1,0,9,0"   Width="25"
+                                      SelectionChanged="cmbNenner_SelectionChanged"   MaxDropDownHeight="723"/>
+                    <TextBlock Text="Nenner:" Name="hist2" Padding="5" Width="50"/>
+                    <ComboBox Name="cmbNennerHist" ItemsSource="{Binding}" 
+                                      DisplayMemberPath="nenner"  SelectedValuePath="nenner"    Margin="1,0,9,0"   Width="25"
+                                      SelectionChanged="cmbNennerHist_SelectionChanged"   MaxDropDownHeight="723"/>
+                </StackPanel>-->
+       
+
+                <StackPanel Orientation="Horizontal"  >
+                    <Button Name="btnDossier" Content="Dossier" Click="btnDossier_Click" HorizontalAlignment="Left"
+                                    Width="60" Style="{StaticResource newButton}"   Margin="5"/>
+               
+                </StackPanel>
+            </StackPanel>
+
+        </StackPanel>
+        <StackPanel>
+            <GroupBox Header="Eigentümer" Name="gbEigentuemer" Margin="5,5,0,0" Width="520" 
+                      HorizontalAlignment="Left" IsEnabled="False">
+                <StackPanel Background="AliceBlue">
+                    <StackPanel Orientation="Horizontal">
+                        <!--<TextBlock  Text="Grund (Az.):" Padding="5"/>-->
+                        <TextBlock Text="Aktenzeichen" Padding="5" Width="100"/>
+                        <!--<TextBox     Background="Pink"   Width="130"   Text="Aktenzeichen"
+                 x:Name="tbGrund" ToolTip="Geben Sie hier eine Begründung für den Zugriff an. Z.B. das Aktenzeichen."/>-->
+                        <xctk:WatermarkTextBox    Background="Pink"  x:Name="tbGrund" Watermark="hier Aktenzeichen eingeben"  Width="200"
+                                                           ToolTip="Geben Sie hier eine Begründung für den Zugriff an. Z.B. das Aktenzeichen."/>
+                        <StackPanel Orientation="Horizontal" Visibility="Collapsed">
+                            <TextBlock Text="Schnellabfrage in Kurzform" Padding="10"/>
+                            <CheckBox Name="cbSchnellEigentuemer" IsChecked="True"   Margin="10"/>
+                        </StackPanel>
+
+                    </StackPanel>
+                    <Button Name="btnEigentuemer" Click="btnEigentuemer_Click" Content="Start"   Width="200" HorizontalAlignment="Left" Margin="100,10,10,10"/>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox    Padding="5" Name="tbWeitergabeVerbot" TextWrapping="Wrap" Width="300" HorizontalAlignment="Left" Margin="100,10,10,10"      />
+                        <Button Name="btnSchnellNachPDF" Click="btnSchnellNachPDF_Click" Content="PDF" Visibility="Collapsed">
+
+                        </Button>
+                    </StackPanel>
+                    <StackPanel   Name="spEigentNotizUebernehmen" IsEnabled="False" >
+                        <TextBlock Text="Eigentümer-Notiz in den Paradigma-Vorgang übernehmen: "/>
+
+                        <Button Name="btnEigentuemerNachParadigma" Click="btnEigentuemerNachParadigma_Click" 
+                                Content="starte Übernahme" HorizontalAlignment="Left" Margin="100,10,0,0" Width="200"/>
+
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Header="Paradigma-Vorgang" Name="gbFSTaradigma" IsEnabled="False"  Margin="5,5,0,0" Width="520" HorizontalAlignment="Left">
+                <StackPanel>
+
+                    <StackPanel Background="AntiqueWhite">
+                        <!--<CheckBox Name="cbEigentuemernachParadigma" Content="Eigentümer-Notiz in den Paradigma-Vorgang übernehmen " 
+                                                          IsChecked="False" Margin="10,10"/>-->
+                        <TextBlock Name="btnADRnachParadigma" Text="Flurstueck als Raumbezug in den Paradigma-Vorgang übernehmen " 
+                                                            Margin="10,10"/>
+                        <StackPanel Orientation="Horizontal" Margin="5">
+                            <TextBlock Text="Funktion:" Width="50"  ToolTip="Funktion oder Charakteristik dieser Adresse. In der Karte entspreicht dies dem Etikett des Punktes."/>
+                            <TextBox Name="tbKurz" Width="274"></TextBox>
+                            <ComboBox     x:Name="cmbFunktionsvorschlaege"   MaxDropDownHeight="800" Width="25"
+                      DataContext="{Binding Source={StaticResource XMLSourceComboBoxRBfunktion}, XPath=/Variablen/Variable}"
+                                                                ItemsSource="{Binding}" 
+                                                                DisplayMemberPath="@Name" 
+                                                                SelectedValuePath="@ID"
+                                                                SelectedValue="{Binding Path=ID}" 
+                                                              SelectionChanged="cmbFunktionsvorschlaege_SelectionChanged"
+                      />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="5">
+                            <TextBlock Text="Freitext: " Width="50"/>
+                            <TextBox Name="tbFreitext" Width="300"></TextBox>
+                        </StackPanel>
+
+                        <Button Name="btnFlurstueckNachParadigma" Click="btnFlurstueckNachParadigma_Click" Content="starte Übernahme" Margin="5"
+                                Width="200"/>
+
+                    </StackPanel>
+                </StackPanel>
+
+            </GroupBox>
+        </StackPanel>
+        <Button Name="btnabbruch"     Width="60" IsCancel="True" ToolTip="Schliessen und zur Karte" 
+                HorizontalAlignment="Right" VerticalAlignment="Top"
+                            Click="btnabbruch_Click" Content="Abbruch"  Style="{StaticResource lessButton}" Margin="15"/>
+    </StackPanel>
+</Window>

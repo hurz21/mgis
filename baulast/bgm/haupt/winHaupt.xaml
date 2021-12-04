@@ -1,0 +1,31 @@
+﻿<Window x:Class="winHaupt"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:bgm" AllowDrop="True"
+        mc:Ignorable="d" Left="1" WindowStyle="ToolWindow"    Drop="Window_Drop"
+        Title="BGM" Height="239.952" Width="154.302" Background="Beige" >
+    <DockPanel Margin="5">
+        <StackPanel Margin="5">
+            <Button Name="btnNeu" Click="btnNeu_Click" Content="Neu" Margin="5" 
+                    IsEnabled="False" Visibility="Collapsed"/>
+            <GroupBox>
+                <StackPanel>
+
+                    <Button Name="btnEdit" Click="btnEdit_Click" Content="zu Baulast" 
+                            IsDefault="True" Margin="5"
+                             Drop="Window_Drop" AllowDrop="True"/>
+                    <TextBox x:Name="tbblnr" HorizontalAlignment="Center" Width="70">
+                   
+                    </TextBox>
+
+                </StackPanel>
+            </GroupBox>
+            <Button Name="btnBestand" Click="btnBestand_Click" Content="Bestandsliste" IsEnabled="True" Margin="5"/>
+            <Button x:Name="btnPDFTool" Click="btnPDFTool_Click" Content="Werkzeuge" IsEnabled="True" Margin="5"/>
+            <Button Name="btnGIS" Click="btnGIS_Click" Content="GIS" Margin="5"/>
+
+        </StackPanel>
+    </DockPanel>
+</Window>

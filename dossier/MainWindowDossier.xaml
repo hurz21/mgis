@@ -1,0 +1,238 @@
+﻿<Window x:Class="MainWindowDossier"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:gisDossier" Background="{StaticResource flaechenBackground}"
+        mc:Ignorable="d"   Title="Dossier zu Punkt - Koordinate" Height="880" Width="1200"
+        >
+    <DockPanel>
+
+        <StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <ScrollViewer  Name="svDossier" Height="850" CanContentScroll="True" VerticalScrollBarVisibility="Auto" VerticalAlignment="Top">
+                    <StackPanel Name="spDossier"  Height="850" Width="450"  VerticalAlignment="Top">
+                        <StackPanel >
+                            <StackPanel Orientation="Horizontal" Margin="2">
+                                <TextBlock Text="GIS Dossier" Margin="2" Padding="5" Width="100" FontWeight="Black"/>
+                                <CheckBox Name="cbkompaktansicht" IsChecked="False" Click="cbkompaktansicht_Click"  
+                                          Content="Kompakt" Margin="5"
+                                          ToolTip="Die kompakte Ansicht zeigt nur die Trefferebenen an!"/>
+                                <CheckBox Name="cbFSmodus" IsChecked="False" Content="Flurstücksmodus" 
+                                          Click="cbFSmodus_Click" Margin="5" IsEnabled="true"
+                             ToolTip="Im Flurstückmodus wird nicht der angeklickte Punkt analysiert, sondern das Flurstück auf dem der angeklickte Punkt liegt!!!"
+                                          />
+                                <Button   x:Name="btnrefresh" Click="btnrefresh_Click" Height="25"  Width="29"
+                                         Background="Black" IsEnabled="False"
+                                          ToolTip="Karte auffrischen"   >
+                                    <Image    Source="/gisDossier;component/icons/refresh.png" Height="10" Width="10"  />
+                                </Button>
+
+
+
+                                <!--<Button x:Name="btnAlleTexte" Click="btnAlleTexte_Click" Width="150"      Style="{StaticResource lessButton}" Margin="2" Content="Alle Texte darstellen" ToolTip="Fasst alle Texte zusammmen"/>-->
+                                <Button x:Name="btnDossierKonfig" Click="btnDossierKonfig_Click"      
+                                        Style="{StaticResource lessButton}" Margin="2"  Width="100" Content="Einstellungen" 
+                                        ToolTip="Festlegen welche Analysen durchgeführt werden"/>
+                            </StackPanel>
+                        </StackPanel>
+
+
+                       
+
+                        <StackPanel Orientation="Horizontal" x:Name="spEigentuemer">
+                            <TextBlock x:Name="tbEigentuemer" Width="200" Text="Eigentümer" Padding="5" ToolTip="Eigentümerauskunft" />
+                            <Button x:Name="btnEigentuemerPDF" Width="106" Content="PDF" IsEnabled="False" Click="btnEigentuemerPDF_Click" Margin="2" />
+                            <Button x:Name="btnEigentuemertext" Click="btnEigentuemertext_Click" Width="25" Content=" T " IsEnabled="False" Margin="2" ToolTip="Text getrennt anzeigen"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" x:Name="spbplan">
+                            <TextBlock x:Name="tbbplangueltig" Width="200" Text="BPlan ?" Padding="9" />
+                            <Button x:Name="btnbplanaufruf" Width="106" Content="zum B-Plan" IsEnabled="False" Click="btnbplanaufruf_Click" Margin="2" />
+                            <Button x:Name="btnbplan1text" Click="btnbplan1text_Click" Width="25" Content=" T " IsEnabled="False" Margin="2" ToolTip="Text getrennt anzeigen"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" x:Name="sp2bplan">
+                            <TextBlock x:Name="tbbplangueltig2" Width="200" Text="BPlan ?" Padding="9" />
+                            <Button x:Name="btnbplanaufruf2" Width="106" Content="zum B-Plan" IsEnabled="False" Click="btnbplanaufruf2_Click" Margin="2" />
+                            <Button x:Name="btnbplan2text" Click="btnbplan1text_Click" Width="25" Content=" T " IsEnabled="False" Margin="2" ToolTip="Text getrennt anzeigen"/>
+                        </StackPanel>
+                        <DataGrid  x:Name="dgZusatzinfo"  ItemsSource="{Binding ''}"   Visibility="Visible"
+                                  SelectionChanged ="dgZusatzinfo_SelectionChanged"
+                                  CanUserAddRows="False"  AutoGenerateColumns="False"
+                                  SelectionMode="Single" 
+                                  SelectionUnit="FullRow"                                             
+                                  ColumnHeaderStyle="{StaticResource dgHeaderStyle}"  
+                                  FontWeight="Normal" >
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header= "Nr"     Binding="{Binding verordnung}" />
+                                <DataGridTextColumn Header= " B-Plan-Begleitdokumente"     Binding="{Binding etikett}" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                  
+                        <StackPanel Orientation="Horizontal" x:Name="spKompensation">
+                            <TextBlock x:Name="tbKompensation" Width="310" Text="Kompensationsflächen" Padding="5" ToolTip="Kompensation" />
+                            <Button x:Name="btnKompensationtext" Click="btnKompensationtext_Click" Width="25" Content=" T " IsEnabled="False" Margin="2" ToolTip="Text getrennt anzeigen"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" x:Name="spKehrbezirk">
+                            <TextBlock x:Name="tbKehrbezirk" Width="200" Text="Kehrbezirk" Padding="5" ToolTip="Schornsteinfeger-Kehrbezirke" />
+                            <Button x:Name="btnKehrbezirk" Width="106" Content="PDF" IsEnabled="False" Click="btnEigentuemerPDF_Click" Margin="2" Visibility="Hidden" />
+                            <Button x:Name="btnKehrbezirktext" Click="btnKehrbezirktext_Click" Width="25" Content=" T " IsEnabled="False" Margin="2" ToolTip="Text getrennt anzeigen"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" x:Name="spNSG">
+                            <TextBlock x:Name="tbNSG" Width="200" Text="NSG" Padding="5" ToolTip="Naturschutzgebiete" />
+                            <Button x:Name="btnNSG" Width="106" Content="Verordnung" IsEnabled="False" Click="btnNSG_Click" Margin="2" Visibility="Visible" />
+                            <Button x:Name="btnNSGtext" Click="btnNSGtext_Click" Width="25" Content=" T " IsEnabled="False" Margin="2" ToolTip="Text getrennt anzeigen"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" x:Name="spND">
+                            <TextBlock x:Name="tbND" Width="200" Text="Naturdenkmale" Padding="5" ToolTip="Naturdenkmale" />
+                            <Button x:Name="btnNDeditor" Width="50" Content="Editor" IsEnabled="False" Click="btnNDeditor_Click" Margin="2" Visibility="Visible" />
+                            <Button x:Name="btnND" Width="52" Content="Verordn." IsEnabled="False" Click="btnND_Click" Margin="2" Visibility="Visible" />
+
+                            <Button x:Name="btnNDtext" Click="btnNDtext_Click" Width="25" Content=" T " IsEnabled="False" Margin="2" ToolTip="Text getrennt anzeigen"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" x:Name="spLSG">
+                            <TextBlock x:Name="tbLSG" Width="200" Text="LSG" Padding="5" ToolTip="Landschaftsschutzgebiete"/>
+                            <Button x:Name="btnLSG" Width="106" Content="Verordnung" IsEnabled="False" Click="btnLSG_Click" Margin="2" Visibility="Visible" />
+                            <Button x:Name="btnLSGtext" Click="btnLSGtext_Click" Width="25" Content=" T " IsEnabled="False" Margin="2" ToolTip="Text getrennt anzeigen"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" x:Name="spFFH">
+                            <TextBlock x:Name="tbFFH" Width="200" Text="FFH" Padding="5" ToolTip="Fauna Flora Habitate"/>
+                            <Button x:Name="btnFFH" Width="56" Content="Verordn." IsEnabled="False" Click="btnFFH_Click" Margin="2" Visibility="Visible" />
+                            <Button x:Name="btnFFHAnlage" Width="46" Content="Anlg." IsEnabled="False" Click="btnFFHAnlage_Click" Margin="2" Visibility="Visible" />
+                            <Button x:Name="btnFFHtext" Click="btnFFHtext_Click" Width="25" Content=" T " IsEnabled="False" Margin="2" ToolTip="Text getrennt anzeigen"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" x:Name="spHbiotope">
+                            <TextBlock x:Name="tbHbiotope" Width="310" Text="Hess. Biotope" Padding="5" ToolTip="Hessische Biotopkartierung 1995 - Biotope"/>
+                            <Button x:Name="btnHbiotopetext" Click="btnHbiotopetext_Click" Width="25" Content=" T " IsEnabled="False" Margin="2" ToolTip="Text getrennt anzeigen"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" x:Name="spHkomplexe">
+                            <TextBlock x:Name="tbHkomplexe" Width="310" Text="Hess. Komplexe" Padding="5" ToolTip="Hessische Biotopkartierung 1995 - Komplexe"/>
+                            <Button x:Name="btnHkomplexetext" Click="btnHkomplexetext_Click" Width="25" Content=" T " IsEnabled="False" Margin="2" ToolTip="Text getrennt anzeigen"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" x:Name="spAmph">
+                            <TextBlock x:Name="tbAmph" Width="200" Text="Amphibienkartierung" Padding="5" ToolTip="Amphibien und Gewässerkartierung 1992"/>
+                            <Button x:Name="btnAmph" Width="106" Content="Vollständige Info" IsEnabled="False" Click="btnAmph_Click" Margin="2" Visibility="Visible" />
+
+                            <Button x:Name="btnAmphtext" Click="btnAmphtext_Click" Width="25" Content=" T " IsEnabled="False" Margin="2" ToolTip="Text getrennt anzeigen"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" x:Name="spFoerder">
+                            <TextBlock x:Name="tbFoerder" Width="310" Text="Förderflächen" Padding="5" ToolTip="intern"   />
+                            <Button x:Name="btnFoerdertext" Click="btnFoerdertext_Click" Width="25" Content=" T " IsEnabled="False" Margin="2" ToolTip="Text getrennt anzeigen"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" x:Name="spOEKOKO">
+                            <TextBlock x:Name="tbOEKOKO" Width="310" Text="Ökokonto" Padding="5" ToolTip="intern"   />
+                            <Button x:Name="btnOEKOKOtext" Click="btnOEKOKOtext_Click" Width="25" Content=" T " IsEnabled="False" Margin="2" ToolTip="Text getrennt anzeigen"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" x:Name="spSchwalben">
+                            <TextBlock x:Name="tbSchwalben" Width="200" Text="Schwalben" Padding="5" ToolTip="Schwalben" />
+                            <Button x:Name="btnSchwalben" Width="106" Content="Ergebnis" Visibility="Hidden" 
+                                    IsEnabled="True"  Margin="2"   ToolTip="Vollständiges Ergebnis" />
+                            <Button x:Name="btnSchwalbenleuterung" Width="40" Content="Erl." IsEnabled="True"  Margin="2" Visibility="Collapsed" ToolTip="Schwalben" />
+                            <Button x:Name="btnSchwalbentext" Click="btnSchwalbentext_Click" Width="25" Content=" T " IsEnabled="False" Margin="2" ToolTip="Text getrennt anzeigen"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" x:Name="spBSE">
+                            <TextBlock x:Name="tbBSE" Width="310" Text="Bann-SE Wald" Padding="5" ToolTip="Bann - Schutz und Erholungswald"   />
+                            <Button x:Name="btnBSEtext" Click="btnBSEtext_Click" Width="25" Content=" T " IsEnabled="False" Margin="2" ToolTip="Text getrennt anzeigen"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" x:Name="spWSG">
+                            <TextBlock x:Name="tbWSG" Width="206" Text="WSG" Padding="5" ToolTip="Wasserschutzgebiete" />
+                            <Button x:Name="btnWSG" Width="100" Content="Verordnung(en)" IsEnabled="False" Click="btnWSG_Click" Margin="2" Visibility="Visible" />
+                            <Button x:Name="btnWSGtext" Click="btnWSGtext_Click" Width="25" Content=" T " IsEnabled="False" Margin="2" ToolTip="Text getrennt anzeigen"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" x:Name="spwsgHNUGwms">
+                            <TextBlock x:Name="tbwsgHNUGwms" Width="310" Text="Wsg von HLNUG" Padding="5" ToolTip="WSG Dienst des HLNUG (WMS-Service)" />
+                            <Button x:Name="btnwsgHNUGwmstext" Click="btnwsgHNUGwmstext_Click" Width="25" Content=" T " IsEnabled="False" Margin="2" ToolTip="Text getrennt anzeigen"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" x:Name="spaltlast">
+                            <TextBlock x:Name="tbaltlast" Width="206" Text="Altlast-Hinweis" Padding="5" ToolTip="Altlast-Hinweisfläche" />
+                            <Button x:Name="btnaltlast" Width="100" Content="Verordnung(en)" IsEnabled="False" Click="btnaltlast_Click" Margin="2" Visibility="Hidden" />
+                            <Button x:Name="btnaltlasttext" Click="btnaltlasttext_Click" Width="25" Content=" T " IsEnabled="False" Margin="2" ToolTip="Text getrennt anzeigen"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" x:Name="spIllegale">
+                            <TextBlock x:Name="tbIllegale" Width="206" Text="Illegale Bauten (neu)" Padding="5" ToolTip="Illegale Bauten im Aussenbereich - die aktuell gehaltenen Daten" />
+                            <Button x:Name="btnIllegale" Width="100" Content="Vorgang" IsEnabled="False" Click="btnIllegale_Click" Margin="2" Visibility="Visible" ToolTip="Vorgang in Paradigma aufrufen"/>
+                            <Button x:Name="btnIllegaletext" Click="btnIllegaletext_Click" Width="25" Content=" T " IsEnabled="False" Margin="2" ToolTip="Text getrennt anzeigen"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" x:Name="spIllegaleALT">
+                            <TextBlock x:Name="tbIllegaleALT" Width="206" Text="Illegale Bauten (ALT)" Padding="5" ToolTip="Illegale Bauten im Aussenbereich - die Daten bis 2004" />
+                            <Button x:Name="btnIllegaleALT" Width="100" Content="Vorgang" IsEnabled="False" Click="btnIllegaleALT_Click" Margin="2" Visibility="Hidden" ToolTip="Vorgang in Paradigma aufrufen"/>
+                            <Button x:Name="btnIllegaleALTtext" Click="btnIllegaleALTtext_Click" Width="25" Content=" T " IsEnabled="False" Margin="2" ToolTip="Text getrennt anzeigen"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" x:Name="spboris">
+                            <TextBlock x:Name="tbboris" Width="200" Text="Bodenrichtwert" Padding="5" ToolTip="Bodenrichtwert" />
+                            <Button x:Name="btnboris" Width="63" Content="Ergebnis" IsEnabled="True" Click="btnboris_Click" Margin="2" Visibility="Visible" ToolTip="Vollständiges Ergebnis" />
+                            <Button x:Name="btnborisERleuterung" Width="40" Content="Erl." IsEnabled="True" Click="btnborisERleuterung_Click" Margin="2" Visibility="Visible" ToolTip="Erläuterung zu den Bodenrichtwerten / Umrechnungskoeffizienten" />
+                            <Button x:Name="btnboristtext" Click="btnboristtext_Click" Width="25" Content=" T " IsEnabled="False" Margin="2" ToolTip="Text getrennt anzeigen"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" x:Name="spBaulasten">
+                            <TextBlock x:Name="tbBaulasten" Width="200" Text="Baulasten" Padding="5"
+                                   ToolTip="Baulasten" />
+                            <Button x:Name="btnBaulasten" Width="106" Content="Baulast" IsEnabled="False" Click="btnBaulasten_Click" Margin="2" Visibility="Visible" ToolTip="Baulasten"/>
+                            <Button x:Name="btnBaulastentext" Click="btnBaulastentext_Click" Width="25" Content=" T " IsEnabled="False" Margin="2" ToolTip="Text getrennt anzeigen"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" x:Name="spparadigma">
+                            <TextBlock x:Name="tbparadigma" Width="200" Text="Paradigma Vorgänge" Padding="5" ToolTip="paradigma" />
+                            <ComboBox Name="cmbParadigma" SelectionChanged="cmbParadigma_SelectionChanged"  Width="106"
+                                                  ItemsSource="{Binding}" 
+                                                                DisplayMemberPath="titel" 
+                                                                SelectedValuePath="vid" 
+                                      ToolTip="{Binding tipp}"
+                                      />
+                            <Button x:Name="btnparadigmaleuterung" Width="40" Content="Erl." IsEnabled="True" Click="btnparadigma_Click" Margin="2" Visibility="Collapsed" ToolTip="Paradigma Vorgänge" />
+                            <Button x:Name="btnparadigmatext" Click="btnparadigmatext_Click" Width="25" Content=" T " IsEnabled="False" Margin="2" ToolTip="Text getrennt anzeigen"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" x:Name="spUEB">
+                            <TextBlock x:Name="tbUEB" Width="200" Text="Überschwemmungsgebiete HLUG" Padding="5" ToolTip="HWQ 100/200" />
+                            <Button x:Name="btnUEB" Width="106" Content="Ergebnis" IsEnabled="True" Click="btnUEB_Click" Margin="2" Visibility="Visible" ToolTip="Vollständiges Ergebnis" />
+                            <Button x:Name="btnUEBERleuterung" Width="40" Content="Erl." IsEnabled="True" Click="btnUEB_Click" Margin="2" Visibility="Collapsed" ToolTip="Erläuterung Überschwemmungsgebieten" />
+                            <Button x:Name="btnUEBttext" Click="btnUEBtext_Click" Width="25" Content=" T " IsEnabled="False" Margin="2" ToolTip="Text getrennt anzeigen"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" x:Name="spUEBKROF">
+                            <TextBlock x:Name="tbUEBKROF" Width="200" Text="Überschwemmungsgebiete KrOf" Padding="5" ToolTip="HWQ 100" />
+                            <Button x:Name="btnUEBKROF" Width="106" Content="Ergebnis" IsEnabled="True" Click="btnUEBKROF_Click" Margin="2" Visibility="Visible" ToolTip="Vollständiges Ergebnis" />
+                            <Button x:Name="btnUEBKROFleuterung" Width="40" Content="Erl." IsEnabled="True" Click="btnUEBKROF_Click" Margin="2" Visibility="Collapsed" ToolTip="Erläuterung Überschwemmungsgebiete" />
+                            <Button x:Name="btnUEBKROFtext" Click="btnUEBKROFtext_Click" Width="25" Content=" T " IsEnabled="False" Margin="2" ToolTip="Text getrennt anzeigen"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" x:Name="spaltis16">
+                            <TextBlock x:Name="tbaltis16" Width="200" Text="Altis 2016" Padding="5" ToolTip="HWQ 100" />
+                            <Button x:Name="btnaltis16" Width="106" Content="Ergebnis" Visibility="Hidden" 
+                                    IsEnabled="True"  Margin="2"   ToolTip="Vollständiges Ergebnis" />
+                            <Button x:Name="btnaltis16leuterung" Width="40" Content="Erl." IsEnabled="True"  Margin="2" Visibility="Collapsed" ToolTip="Altis 2016" />
+                            <Button x:Name="btnaltis16text" Click="btnaltis16text_Click" Width="25" Content=" T " IsEnabled="False" Margin="2" ToolTip="Text getrennt anzeigen"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" x:Name="spAltstadtsatzung">
+                            <TextBlock x:Name="tbAltstadtsatzung" Width="200" Text="Altstadtsatzung" Padding="5" ToolTip="Altstadtsatzung" />
+                            <Button x:Name="btnAltstadtsatzung" Width="106" Content="Satzungen" IsEnabled="False" Click="btnAltstadtsatzung_Click" Margin="2" Visibility="visible" />
+                            <Button x:Name="btnAltstadtsatzungtext" Click="btnAltstadtsatzungtext_Click" Width="25" Content=" T " IsEnabled="False" Margin="2" ToolTip="Text getrennt anzeigen"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" x:Name="spstandorttypisierung">
+                            <TextBlock x:Name="tbStandorttypisierung" Width="310" Text="Standorttypisierung" Padding="5" ToolTip="Standorttypisierung" />
+                            <Button x:Name="btnStandorttypisierungtext" Click="btnStandorttypisierungtext_Click" Width="25" Content=" T " IsEnabled="False" Margin="2" ToolTip="Text getrennt anzeigen"/>
+                        </StackPanel>
+                    
+                    </StackPanel>
+                </ScrollViewer>
+                <StackPanel x:Name="spProtokoll">
+                    <StackPanel Orientation="Horizontal" Width="600" Margin="2" HorizontalAlignment="Left">
+                        <TextBlock Name="tbProtokolltitel"  Text="Protokoll:" FontWeight="Black" Margin="2" Padding="5"  />
+                        <Button Name="btnprotokollPDF" Content=" als PDF" Click="btnprotokollPDF_Click" Margin="2"
+                                Width="100" Style="{StaticResource lessButton}"   />
+                        <Button Name="btnabbruch" Click="btnabbruch_Click" IsCancel="True" Content="Abbruch (Esc)" 
+                                Margin="5,5,5,5" Width="100" 
+                   HorizontalAlignment="Right" Style="{StaticResource lessButton}" />
+                    </StackPanel>
+
+                    <TextBox x:Name="tbInfo"  Text=" " Padding="0" Margin="2" TextWrapping="Wrap" Width="604" Height="720"
+                     AcceptsReturn="True"  ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" 
+                     ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+                </StackPanel>
+                <!--<Button x:Name="btnabbruch" Click="btnabbruch_Click" IsCancel="True" Content="." Width="0" Height="0"/>-->
+            </StackPanel>
+        </StackPanel>
+    </DockPanel>
+</Window>

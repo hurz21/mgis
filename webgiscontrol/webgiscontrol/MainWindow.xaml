@@ -1,0 +1,195 @@
+﻿<Window x:Class="MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:webgiscontrol"
+        mc:Ignorable="d"
+        Title="MainWindow" Width ="1200" Height="625" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        
+    </Window.Resources>
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Top" Height="185" Background="AliceBlue">
+            <StackPanel Orientation="Horizontal">
+                <StackPanel Margin="5">
+                    <ComboBox Name="cmbStammTab" SelectionChanged="cmbStammTab_SelectionChanged" Width="90" ToolTip="Stammdatelle auswählen">
+                        <ComboBoxItem Tag="std_stamm" IsSelected="True" >std_stamm</ComboBoxItem>
+                        <ComboBoxItem Tag="stamm" >stamm</ComboBoxItem>
+                    </ComboBox>
+                   
+                    <Button Name="btnAddNewLayer" Click="btnAddNewLayer_Click" Content="neue Ebene anl."/>
+                    <ComboBox Name="cmbServer" SelectionChanged="cmbServer_SelectionChanged" Width="90" ToolTip="Stammdatelle auswählen">
+                        <ComboBoxItem Tag="intern" IsSelected="True" >intern</ComboBoxItem>
+                        <ComboBoxItem Tag="extern" >extern</ComboBoxItem>
+                    </ComboBox>
+                </StackPanel>
+                <GroupBox Header="Filtern" Background="AntiqueWhite">
+                    <StackPanel>
+                        <Button Name="btnNurHintergrund" Content="Nur Hintergrund" Click="btnNurHintergrund_Click" Height="20" />
+                        <Button Name="btnStatus0" Content="Nur Status=false" Click="btnStatus0_Click" Height="20" />
+                        <Button Name="btnWMS" Content="Nur wms" Click="BtnWMS_Click" Height="20" />
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="nach Sachgebiet" Width="150"  Height="25"/>
+                            <ComboBox Name="cmbSachgebiet" SelectionChanged="cmbSachgebiet_SelectionChanged"  ItemsSource="{Binding}" Height="25"
+                                         DisplayMemberPath="sachgebiet"  SelectedValuePath="sachgebiet"  Width="50" HorizontalAlignment="Left"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Suchtext: " Width="50"/>
+                            <TextBox Name="tbSuchfilter" Width="100"/>
+                            <Button Name="sucheStarten" Click="sucheStarten_Click" Content="suchen" IsDefault="True" Width="49"/>
+                        </StackPanel>
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox Header="Tools für alle Ebenen">
+                    <WrapPanel Orientation="Horizontal" Width="250">
+                        <Button Name="btnalleLayerChecken" Click="btnalleLayerChecken_Click"  Margin="5" IsEnabled="True"  Width="120" Height="30">
+                            <TextBlock TextWrapping="Wrap">
+                                alle Mapfiles checken
+
+                            </TextBlock>
+                        </Button>
+
+
+                        <Button Name="chkDoku" Click="chkDoku_Click" Content="Doku checken" Margin="5"  Width="100" Height="30"/>
+                        <Button Name="chkLeg" Click="chkLeg_Click" Content="Legende checken" Margin="5"  Width="80" Height="30" />
+                        <Button Name="moveleg" Click="moveleg_Click" Content="Legende moven" Margin="5"  Width="80" Height="30" />
+                        <Button Name="btnWebgisINtranet" Click="btnWebgisINtranet_Click"  Margin="5" Width="150" Height="30" >
+                            <TextBlock TextWrapping="Wrap">
+                           Webgis Intranet starten
+                            </TextBlock>
+                        </Button>
+
+
+                    </WrapPanel>
+                </GroupBox>
+                <GroupBox Header="NeuesGis">
+                    <StackPanel Orientation="Horizontal">
+
+                        <StackPanel Margin="5">
+                            <RadioButton x:Name="rbvanilla" GroupName="rbModus" Content="Vanilla" IsChecked="True"/>
+                            <RadioButton x:Name="rbprobaug" GroupName="rbModus" Content="ProbauG"/>
+                            <RadioButton x:Name="rbparadigma" GroupName="rbModus" Content="Paradigma"/>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Vorgang: " />
+                                <TextBox Name="tbVidParadigma">9609</TextBox>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Username: " />
+                                <TextBox Name="tbStealth" Width="100"></TextBox>
+                            </StackPanel>
+                            </StackPanel>
+                        <StackPanel >
+                            <StackPanel>
+                                <CheckBox Name="rbAdressweise" IsChecked="False" Content="Adresse Aktiv"  Background="Beige"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Gemeinde" />
+                                <TextBox Name="tbGemeinde">Dietzenbach</TextBox>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Strasse" />
+                                <TextBox Name="tbStrasse" Width="99">Am Rebstock</TextBox>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Hausnr" />
+                                <TextBox Name="tbHausnr">42</TextBox>
+                            </StackPanel>
+                        </StackPanel>
+                        <StackPanel >
+                            <StackPanel>
+                                <CheckBox Name="rbKatasterweise" IsChecked="False"   Content="Kataster Aktiv"/>
+
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Gemarkung" />
+                                <TextBox Name="tbGemarkung">Dietzenbach</TextBox>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Flur" />
+                                <TextBox Name="tbFlur" Width="20">5</TextBox>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Flurstueck" />
+                                <TextBox Name="tbFlurstueck">42</TextBox>
+                            </StackPanel>
+                            <Button Name="btnStartGIS" Click="btnStartGIS_Click" Content="Gis starten" Margin="5"   />
+
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical">
+                    
+                        <Button Name="btnPGADMIN" Click="BtnPGADMIN_Click" Content="PGA3 (w2)"/>
+                            <Button Name="btnPGADMINbg" Click="BtnPGADMINbg_Click" Content="PGA3 (bg)"/>
+                        </StackPanel>
+                     
+                        <!--<Button Name="btnStartGISProbaug" Click="btnStartGISProbaug_Click" Content="Gis starten (ProbauGmodus)" Margin="5"/>-->
+                        <TextBox Name="tbAufruf" TextWrapping="Wrap" Height="90" Width="200" Margin="0,6,0,7"/>
+
+                        <StackPanel >
+
+                            <!--<Button Name="btnStartGISParadigma" Click="btnStartGISParadigma_Click" Content="Gis starten (Paradigmamodus)" Margin="5"/>-->
+                        </StackPanel>
+                        <StackPanel >
+
+                            <!--<Button Name="btnStartGISStealth" Click="btnStartGISStealth_Click" Content="Gis starten (username)" Margin="5"/>-->
+                        </StackPanel>
+                    </StackPanel>
+                </GroupBox>
+            </StackPanel>
+
+            <Border BorderBrush="DarkGreen" BorderThickness="1">
+                <StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+
+                        <GroupBox Header="Ebenenspezifisch" Name="gbEbenenspec">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Name="tbaktaid"  Margin="5"/>
+                                <Button Name="btnZumVerzeichnis" Click="btnZumVerzeichnis_Click" Content="Zum Verzeichnis" Margin="5"/>
+                                <Button Name="btnLayerMapfile" Click="btnLayerMapfile_Click" Content="layer.map" Margin="5"/>
+                                <Button Name="btnLayerMapfileTesten" Click="btnLayerMapfileTesten_Click" Content="Mapfile testen" Margin="5" IsEnabled="True"/>
+                                <Button Name="btnstammedit" Click="btnstammedit_Click" Content=" LayerDatenbank edit " Margin="5" IsEnabled="True"/>
+                                <Button Name="btnInternet" Click="btnInternet_Click" Content=" Internet/Intranet " Margin="5" IsEnabled="False"/>
+                                <Button Name="btnPDFbeiwerk" Click="btnPDFbeiwerk_Click" Content=" PDF-Beiwerk " Margin="5" IsEnabled="False"/>
+                                <Button Name="btnTiff" Click="btnTiff_Click" Content=" Tif-Beiwerk " Margin="5" IsEnabled="False"/>
+                                <Button x:Name="btnHeaderMapfile" Click="btnHeaderMapfile_Click" Content="header.map" Margin="5"/>
+                                <Button x:Name="btnFkatdir" Click="btnFkatdir_Click" Content=" altes fkat-Verz. " Margin="5"/>
+                            </StackPanel>
+                        </GroupBox>
+                        <GroupBox Header="Systemtabs">
+                            <StackPanel Orientation="Horizontal">
+                                <Button Name="btnSG" Content="Sachgebiete" Click="btnSG_Click"/>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+        <StackPanel>
+            <DataGrid  Background="AntiqueWhite" Name="dgEbenen" AutoGenerateColumns="True"  ItemsSource="{Binding}"  Height="400"
+                   SelectionChanged="dgEbenen_SelectionChanged" VerticalScrollBarVisibility="Visible"
+                        IsReadOnly="True" HorizontalScrollBarVisibility="Visible"
+                   
+                       >
+                <DataGrid.RowStyle>
+                    <Style TargetType="DataGridRow">
+               
+                        <Style.Triggers>
+  
+                            <DataTrigger Binding="{Binding   status}" Value="False">
+                                <Setter Property="Background" Value="LightCoral" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding   iswms}" Value="True">
+                                <Setter Property="Background" Value="Blue" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.RowStyle>
+            </DataGrid>
+            <TextBox Name="tbInfos" TextWrapping="Wrap">
+
+            </TextBox>
+        </StackPanel>
+
+    </DockPanel>
+</Window>

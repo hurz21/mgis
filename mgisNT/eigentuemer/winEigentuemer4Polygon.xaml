@@ -1,0 +1,38 @@
+﻿<Window x:Class="winEigentuemer4Polygon"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:mgis" WindowStartupLocation="CenterScreen" Background="{StaticResource flaechenBackground}"
+        mc:Ignorable="d"
+        Title="Werkzeuge" Height="455.61" Width="447.073">
+    <DockPanel>
+        <TabControl>
+            <TabItem Header="Eigentümerabfrage für Polygonfläche" Name="tabEigent">
+                <StackPanel>
+                    <StackPanel Margin="5">
+                        <TextBlock Text="Wichtiger Hinweis: " FontWeight="Bold"/>
+                        <TextBlock Text=" Sie müssen zuerst ein gültiges Polygon erstellen. Am besten "/>
+                        <TextBlock Text="  nutzen sie hierfür die Messen-Fläche Funktion. "/>
+                        <TextBlock Text="  Das GIS merkt sich das letzte Polygon für einige Zeit, so daß Sie  "/>
+                        <TextBlock Text="  nicht immer wieder neu eingeben müssen. "/>
+                        
+                    </StackPanel>
+                    <StackPanel>
+                        <TextBlock Text="Letztes Polygon:"/>
+                        <TextBox Name="tbtest" TextWrapping="Wrap" Height="200">huhu</TextBox>
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <TextBlock Text="Puffer in [m]:"  HorizontalAlignment="Center"/>
+                                <TextBox Name="tbPufferInMeter" Text="0" Width="40" IsEnabled="False"/>
+                            </StackPanel>
+                            <Button Name="btntest" Click="btntest_Click" Content="Eigentümer für letztes Polygon"/>
+                            <Button Name="btnInKarteanzeigen" Click="btnInKarteanzeigen_Click" Content="Karte auffrischen" HorizontalAlignment="Right"
+                                Margin="40,0,0,0"/>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+            </TabItem>
+        </TabControl>
+    </DockPanel>
+</Window>

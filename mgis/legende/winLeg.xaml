@@ -1,0 +1,52 @@
+﻿<Window x:Class="winLeg"
+            xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:mgis"
+        mc:Ignorable="d" Loaded="winLeg_Loaded"
+        Title="winLeg" Height="800" Width="900" WindowStartupLocation="CenterScreen">
+    <DockPanel>
+ 
+                <StackPanel Orientation="Horizontal">
+                <StackPanel Width="900" Name="spDB">
+                    <!--<StackPanel Orientation="Vertical" DockPanel.Dock="Top" >
+                        <StackPanel Orientation="Horizontal" Name="spDBObjToolbar" Margin="5">
+                            <Button Name="btnpuffern" Click="btnpuffern_Click" Content="Objekt puffern" Width="93"/>
+                            <TextBox Name="tbpufferinmeter" Width="90" Margin="0,0,0,0"/>
+
+                            <TextBlock Text="[m]" Padding="5" Margin="0,0,20,0"/>
+                            <Button Name="btnLoeschen" Click="btnLoeschen_Click" Content="Objekt löschen"/>
+                        </StackPanel>
+                    </StackPanel>-->
+                <ScrollViewer CanContentScroll="True" Background="{StaticResource flaechenBackground}">
+                        <StackPanel CanVerticallyScroll="True" ScrollViewer.CanContentScroll="True" 
+                    CanHorizontallyScroll="True"  >
+                        <StackPanel Orientation="Horizontal">
+                            <Button Name="btnRTFdatei2Word" Click="btnRTFdatei2Word_Click" Background="Transparent" Margin="9"
+                                    ToolTip="Die Legende wird in Word geladen und kann dann ausgedruckt werden.">
+                                <Image    Source="/mgis;component/icons/doc.jpg"  Width="28" Height="28"  />
+                            </Button>
+                                      <Button Content="Als Word -Text in Zwischenablage kopieren" Click="Button_Click" Margin="10"
+                                 Style="{StaticResource lessButton}"></Button>
+                            <Button Name="btnabbruch" Click="btnabbruch_Click" Content="." Width="0" Height="0" IsCancel="True"/>
+                        </StackPanel>
+                  
+                            <RichTextBox Name="freiLegende" AcceptsReturn="True" AcceptsTab="True"   
+                         ScrollViewer.VerticalScrollBarVisibility="Visible" Height="650"
+                          VerticalAlignment="Top" 
+                                             HorizontalAlignment="Left">
+                            </RichTextBox>
+                        </StackPanel>
+                    </ScrollViewer>
+                </StackPanel>
+                    <!--#region rechts-->
+             
+                    <!--#endregion-->
+
+                </StackPanel>
+      
+
+    </DockPanel>
+</Window>

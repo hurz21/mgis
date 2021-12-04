@@ -1,0 +1,118 @@
+﻿<Window x:Class="winOption"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:mgis" Background="{StaticResource flaechenBackground}"  
+        mc:Ignorable="d"
+        Title="Optionen" Height="500" Width="600" WindowStartupLocation="CenterScreen">
+    <DockPanel>
+
+        <TabControl Background="{StaticResource flaechenBackground}" >
+            <TabItem Header="Verschiedenes">
+                <StackPanel>
+                <GroupBox Header="Zweiter Bildschirm" Visibility="Collapsed">
+                <StackPanel Grid.Column="2" Grid.ColumnSpan="2" Margin="20">
+                    <TextBlock Text="Falls Sie einen zweiten Bildschirm haben:"/>
+                    <CheckBox Name="cbImmerAufZweitemScreen"  Margin="5" Click="cbImmerAufZweitemScreen_Click" IsChecked="False">
+                        <StackPanel  Margin="5">
+                            <TextBlock FontStyle="Italic" Width="300" TextWrapping="Wrap" Height="40">
+                             Ich möchte das GIS immer auf dem zweiten Bildschirm öffnen
+                            </TextBlock>
+                        </StackPanel>
+                    </CheckBox>
+                    <CheckBox Name="cbhauptbildschirmStehtLinks"  Margin="5" Click="cbhauptbildschirmStehtLinks_Click" IsChecked="False">
+                        <StackPanel  Margin="5">
+                            <TextBlock FontStyle="Italic" Width="300" TextWrapping="Wrap" Height="40">
+                             Der Hauptbildschirm steht links
+                            </TextBlock>
+                        </StackPanel>
+                    </CheckBox>
+
+
+                </StackPanel>
+                </GroupBox>
+                    <CheckBox Name="cbExploreralphabetisch"  Margin="5" Click="cbExploreralphabetisch_Click" IsChecked="False">
+                        <StackPanel  Margin="5">
+                            <TextBlock FontStyle="Italic" Width="300" TextWrapping="Wrap" Height="40">
+                             Die Favoriten sollen in alfabetischer Reihenfolge gelistet werden. (Neustart des GIS ist erforderlich.)
+                            </TextBlock>
+                        </StackPanel>
+                    </CheckBox>
+                    <CheckBox Name="cblayerThumbnailsAnzeigen"  Margin="5" Click="cblayerThumbnailsAnzeigen_Click" IsChecked="True">
+                        <StackPanel  Margin="5">
+                            <TextBlock FontStyle="Italic" Width="300" TextWrapping="Wrap" Height="40">
+                            Die Vorschau in der Favoritenliste ist standardmäßig eingeschaltet. Hier kann mans ausschalten.(n.y.i.)
+                            </TextBlock>
+                        </StackPanel>
+                    </CheckBox>
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="GisStart">
+
+
+                <StackPanel Grid.Column="2" Grid.ColumnSpan="2" Margin="20">
+                    <TextBlock Text="Falls schon eine Instanz des GIS läuft, was soll dann geschehen ?"/>
+                    <RadioButton Name="radNachfrage" GroupName="gisStartPolitik" Margin="5" Click="radNachfrage_Click">
+                        <StackPanel >
+                            <TextBlock FontWeight="Bold">
+                    Nachfrage:
+                            </TextBlock>
+                            <TextBlock FontStyle="Italic" Width="300" TextWrapping="Wrap" Height="40">
+                             Ich möchte immer genachfragt werden, und dabei entscheiden was zu tun ist
+                            </TextBlock>
+                        </StackPanel>
+
+                    </RadioButton>
+                    <RadioButton Name="radImmerNeustart" GroupName="gisStartPolitik" Margin="5" Click="radImmerNeustart_Click">
+                        <StackPanel >
+                            <TextBlock FontWeight="Bold">
+                          Neustart des GIS:
+                            </TextBlock>
+                            <TextBlock FontStyle="Italic" Width="300" TextWrapping="Wrap" Height="40">
+                          Die alte Instanz wird beendet, die neue Instanz wird mit dem aktuellen Vorgang gestartet
+                            </TextBlock>
+                        </StackPanel>
+                    </RadioButton>
+                    <RadioButton Name="radMultiple" GroupName="gisStartPolitik" Margin="5" IsChecked="True" Click="radMultiple_Click">
+
+                        <StackPanel >
+                            <TextBlock FontWeight="Bold">
+                          Mehrere Instanzen:
+                            </TextBlock>
+                            <TextBlock FontStyle="Italic" Width="300" TextWrapping="Wrap" Height="80">
+                      Die alte Instanz läuft weiter, es soll die Neue nur hinzukommen. Ich kann dann immer noch die alte von Hand schliessen.
+                            </TextBlock>
+                        </StackPanel>
+                    </RadioButton>
+                    <CheckBox Name="radParadigmaDominiertzuletztFavoriten" 
+                                 Margin="5" IsChecked="False" Click="radParadigmaDominiertzuletztFavoriten_Click">
+
+                        <StackPanel >
+                            <TextBlock FontWeight="Bold">
+                          Paradigma hat Vorrang vor letzter Zusammenstellung:
+                            </TextBlock>
+                            <TextBlock FontStyle="Italic" Width="300" TextWrapping="Wrap" Height="80">
+                   Wenn Haken drin ist, dominiert Paradigma und erzwingt die Gruppenfavoriten. Ansonsten wird die letzte Zusammenstellung gespeichert.
+                            </TextBlock>
+                        </StackPanel>
+                    </CheckBox>
+
+
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="Status">
+                <TextBox Name="tbStatus" TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                </TextBox>
+            </TabItem>
+            <TabItem Header="Logfile">
+                <Button Name="btnLogfileMailen" Click="btnLogfileMailen_Click" Content="Logfile an Admin  mailen"/>
+            </TabItem>
+            <TabItem Header="Einstellungen">
+                <CheckBox Name="cbNoImageMap" Click="cbNoImageMap_Click" Content="Niemals Imagemaps erzeugen" Margin="5"
+                          IsChecked="False" />
+            </TabItem>
+
+        </TabControl>
+    </DockPanel>
+</Window>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>    
+<Variablen>                                
+<Variable ID="438001"   Name="Dietzenbach"   /> 
+<Variable ID="438002"   Name="Dreieich"      /> 
+<Variable ID="438003"   Name="Egelsbach"     /> 
+<Variable ID="438004"   Name="Hainburg"     /> 
+<Variable ID="438005"   Name="Heusenstamm"     /> 
+<Variable ID="438006"   Name="Langen"   /> 
+<Variable ID="438007"   Name="Mainhausen"        /> 
+<Variable ID="438008"   Name="Mühlheim"   /> 
+<Variable ID="438009"   Name="Neu-Isenburg"     /> 
+<Variable ID="438010"   Name="Obertshausen"  /> 
+<Variable ID="438011"   Name="Rodgau"    /> 
+<Variable ID="438012"   Name="Rödermark"   /> 
+<Variable ID="438013"   Name="Seligenstadt"  /> 
+</Variablen>   

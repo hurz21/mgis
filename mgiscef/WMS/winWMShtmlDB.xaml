@@ -1,0 +1,41 @@
+﻿<Window x:Class="winWMShtmlDB"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+       xmlns:cefSharp="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"  
+        xmlns:local="clr-namespace:mgis"
+        mc:Ignorable="d"
+        Title="winWMShtmlDB" Height="650" Width="800">
+    <DockPanel>
+        <TabControl Name="tc" Margin="5">
+            <TabItem Name="ti1" Header="Datenbank">
+                <DockPanel> 
+                    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Height="50"    Width="800"    >
+                        <!--<TextBlock Name="tbTitel" Text="Titel" Margin="5,5,155,5" FontSize="14" FontWeight="Bold"/>-->
+                        <!--<Button Name="btnLegende" Click="btnLegende_Click" Content="Legende" Width="200"  />-->
+                        <Button Name="btnabbruch" Click="btnabbruch_Click" Content="Abbruch (Esc-Taste)" HorizontalAlignment="Center"
+                    IsCancel="True" Width="200"   Margin="250,0"/>
+                    </StackPanel>
+                    <!--<WebBrowser Name="wb1"   ></WebBrowser>-->
+
+                    <cefSharp:ChromiumWebBrowser     Width="1200" Height="900" Background="Transparent"  Name="wb1"
+                                                  Panel.ZIndex="1000"   Margin="-9,-10,0,0"   Grid.ColumnSpan="2" 
+                           VerticalAlignment="Top" HorizontalAlignment="Left" />
+                </DockPanel>
+            </TabItem>
+            <TabItem Name="tilegende" Header="Legende">
+                <DockPanel>
+                    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Height="50"    Width="800"    >
+                        <!--<TextBlock Name="tbTitel" Text="Titel" Margin="5,5,155,5" FontSize="14" FontWeight="Bold"/>-->
+                        <!--<Button Name="btnLegende" Click="btnLegende_Click" Content="Legende" Width="200"  />-->
+                        <Button Name="btnabbruch2" Click="btnabbruch_Click" Content="Abbruch (Esc-Taste)" HorizontalAlignment="Center"
+                    IsCancel="True" Width="200"   Margin="250,0"/>
+                    </StackPanel>
+                    <WebBrowser Name="wbleg"      VerticalAlignment="Top" 
+                                             HorizontalAlignment="Left"></WebBrowser>
+                </DockPanel>
+            </TabItem>
+        </TabControl>
+    </DockPanel>
+</Window>

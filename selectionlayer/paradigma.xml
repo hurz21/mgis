@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="iso-8859-2"?>
+    <ini>     <!-- zuhause -->
+     <Beide  
+          googlesApiKey= "ABQIAAAA0n5M-NwDxWSTJLkqMPvf4xTrsJz_-HE-qqi_DAEiCFcz66cUNxTS2uLHCvXzwo5yexnGdUyM02xApQ"
+          gisappsDir = "\\w2gis02\gdvell\apps\"
+          Mailserverintranet_standard="10.34.102.254"
+          coordZiel="UTM_google"
+          ClientCookieDir="\cookies\"  
+          GoogleMapsTemplateDir =  "\\netapp02\paradigma\test\paradigmaArchiv\div\GMapTemplates\"         
+    >     <!--
+    gisappsDir ist hier obsolet - wird nicht benutzt
+      MapStatus="nomap"  oder "mapshare"  
+      UTM_google , GK_google -->
+      </Beide>      
+    <Haupt       
+          paradigmaDateiServerRoot="O:\UMWELT\B\GISDatenEkom"
+          textmarkenUeberSichtsDatei="O:\UMWELT\B\GISDatenEkom\Vordruck_paradigma\Textmarken_fuer_Vordrucke.xls"
+          LOGFILEKOPIE =  "\div\logging\main\" 
+           LOCKINGFile =  "\\netapp02\paradigma\test\paradigmaArchiv\div\locks\" 
+          ActionLogDir = "\div\logging\main\actions\"
+          XMLserverConfigDir =   "\div\config\combos\"
+          XMLclientConfigDir =  "\config\combos\"
+          ClientUserConfigFile =   "\config\user.txt"                  
+          paradigmaServer = "ora-clu-vip-003"         
+          paradigma_user = "paradigma"
+          paradigma_PW = "luftikus12"
+          paradigmaServiceName = "paradigma.kreis-of.local"         
+          paradigmadatentyp = "mysql"
+          paradigma_schema = "paradigma"            
+          probaug_user = "probaug"
+          probaug_pw = "morrojable"            
+          Paradigma_Sachgebietsdatei =   "sachgebiet-neu-1.xml" 
+          gesamterSchriftverkehr = "O:\umwelt\gesamter schriftverkehr\"
+          ScansParadigma = "O:\UMWELT\B\Scans_paradigma"
+          miterroremail="mitmail"  
+		DruckerScannerString="oki-mb470;canon3112;3.1.12"
+    >     <!--alb erzeugung sachgebiet-neu-1.xml
+    dokArcPfad="\\w2gis02\gdvell\paradigmacache\backup\archiv" 
+      dokArcPfad="O:\UMWELT\B\GISDatenEkom\gis\gis\div\backup\archiv" 
+         dokArcPfad="\\w2gis02\gdvell\paradigmacache\backup\archiv"   
+    -->
+     </Haupt>
+        <Myglobalz              
+          dokArcPfad= "\\netapp02\paradigma\test\paradigmaArchiv\backup\archiv"
+          VorlagenRoot="O:\UMWELT\B\Vordruck_paradigma\"               
+          Paradigma_root= "\Paradigma"
+          Paradigma_checkout= "\Paradigma\Archiv_Checkout\" 
+          paradigma_archiv_temp= "\Paradigma\Archiv_temp\"  
+          flurstueckListenDateiBeispiel = "O:\UMWELT\B\GISDatenEkom\div\beispiele\fstliste.csv"
+          paradigmaHandbuchFullName = "\\w2gis02\gdvell\paradigmacache\paradigmahandbuch\Handbuch.xps"
+          paradigmaCache = "\\w2gis02\gdvell\paradigmacache\"          
+    >     <!--alb erzeugung-->
+     </Myglobalz>
+       
+     
+    <MiniMap
+          radiusAdresse="200" 
+          radiusFoto="300" 
+          radiusFlst="100" 
+          GIS_Rahmen_Fit_Xmin="470531"
+          GIS_Rahmen_Fit_Ymin="5532582"
+          GIS_Rahmen_Fit_Xmax="503699"
+          GIS_Rahmen_Fit_ymax="5553740"   
+          MapStatus="mapshare"  
+     ><!--alles zum minimap--></MiniMap>
+    <ALB
+         serverUNC = "\\w2gis02\gdvell"
+         cache = "/cache/alb/"
+         Wartezeit = "8000"
+     ><!--alles zum ALB--></ALB>
+    <GisServer
+         gisappsDir = "\\w2gis02\gdvell\apps\"
+         gisCacheDir = "\\w2gis02\gdvell\cache\gis\"
+         
+         ServerNetworkShare="\\w2gis02\gdvell\"
+         ServerHTTPdomainIntranet="http://w2gis02.kreis-of.local"
+         URLbplankataster="http://w2gis02.kreis-of.local//apps/bplan/bplan_online.htm"
+         URLlayer2shpfile="http://w2gis02.kreis-of.local/cgi-bin/apps/paradigmaex/layer2shpfile/layer2shpfile.cgi?user="
+         URLserialserver="http://w2gis02.kreis-of.local/cgi-bin/apps/paradigmaex/serialserver/pg/serialserver.cgi?user="
+         URLgetrecord="http://w2gis02.kreis-of.local/cgi-bin/apps/gis/getrecord/getrecord4template.cgi"
+         URLdmsServer="http://w2gis02.kreis-of.local/cgi-bin/apps/paradigmaex/dmsserver/dmsserver.cgi?user=" 
+         gis_serverD="\\w2gis02\gdvell" 
+         GIS_Server = "\\w2gis02"
+         GIS_WebServer = "w2gis02.kreis-of.local" 
+         webgis_user = "webgis"
+         webgis_PW = "luftikus" 
+     ><!--alles zum gis--></GisServer>
+   
+       
+     <ExterneAnwendungen
+        STR_albExe = "O:\UMWELT\B\GISDatenEkom\gis\alkis\albnas2test.exe" 
+        Application_Eigentuemer = "\\w2gis02\gdvell\apps\eigentuemer\KreisOFEigentuemerAuskunft.application"
+        Application_Stakeholder = "O:\UMWELT\B\GISDatenEkom\div\deploy\stakeholder\Stakeholder.application"
+        APPLICATION_textbaustein = "O:\UMWELT\B\GISDatenEkom\div\deploy\textbausteine\textbausteineditor.application"
+        APPLICATION_MULTIFST2CSV = "O:\UMWELT\B\GISDatenEkom\div\deploy\eigentuemerListe\multiFST2CSV.application"
+        APPLICATION_ParadigmaAdjustor = "O:\UMWELT\B\GISDatenEkom\div\deploy\ParadigmaAdjustor\ParadigmaAdjustor.application"
+        APPLICATION_KARTE = "O:\UMWELT\B\GISDatenEkom\div\deployxc\ptestkarte\debug\ParadigmaKarte.exe"
+        APPLICATION_STatistik = "\\w2gis02\gdvell\apps\krimskrams\pStatistik.application"      
+        APPLICATION_ParadigmaDetail = "c:\ptest\paradigmadetail\paradigmadetail.exe "     		
+     ><!--module die über eine shell gestartet werden--></ExterneAnwendungen>
+     
+          <EigentuemerSchnellDB
+            MySQLServer = "ora-clu-vip-003"
+            Schema = "gis"
+            ServiceName =  "gis.kreis-of.local"
+            Tabelle = "fs2eigentuemer"
+            username = "gis"
+            password = "A604l6rrpn"
+            dbtyp = "oracle"  
+     ><!--Das ist die XE version--></EigentuemerSchnellDB>
+     
+      <postgres_MYDB
+            MySQLServer = "w2gis02"
+            Schema = "postgis20"
+            ServiceName =  "dummy"
+            Tabelle = "vbplanrechsw"
+            username = "postgres"
+            password = "lkof4"
+            dbtyp = "postgres"  
+     ><!--Das ist die XE version--></postgres_MYDB>
+     <BearbeiterDB
+            MySQLServer = "ora-clu-vip-003"
+            Schema = "paradigma"
+            ServiceName =  "paradigma.kreis-of.local"
+            Tabelle = "bearbeiter"
+            username = "paradigma"
+            password = "luftikus12"
+            dbtyp = "oracle"  
+     ><!--Das ist die XE version--></BearbeiterDB>
+          <BearbeiterDB_MYSQL_ignore
+            MySQLServer = "localhost"
+            Schema = "paradigma"
+            ServiceName = ""
+            Tabelle = "bearbeiter"
+            username = "webgis"
+            password = "luftikus"
+            dbtyp = "mysql"  
+     ><!--wird ignoriert, benutzt wird nur BearbeiterDB--></BearbeiterDB_MYSQL_ignore>
+       <BearbeiterDB_OracleImAmt_ignore
+           MySQLServer = "ora-clu-vip-003"
+            Schema = "paradigma"
+             ServiceName =  "paradigma.kreis-of.local"
+            Tabelle = "bearbeiter"
+            username = "webgis"
+            password = "luftikus"
+            dbtyp = "mysql"  
+     ><!--wird ignoriert, benutzt wird nur BearbeiterDB--></BearbeiterDB_OracleImAmt_ignore>
+       <VorgangDB
+            MySQLServer = "ora-clu-vip-003"
+            Schema = "paradigma"
+             ServiceName =  "paradigma.kreis-of.local"
+            Tabelle = "vorgang"
+            username = "paradigma"
+            password = "luftikus12"
+            dbtyp = "oracle"   
+     ><!--Das ist die oracle version, aktuell--></VorgangDB>
+<AlbDB
+              MySQLServer = "localhost"
+            Schema = "paradigma"
+            ServiceName = ""
+            Tabelle = "vorgang"
+            username = "paradigma"
+            password = "luftikus12"
+            dbtyp = "mysql"   
+     ><!--Das ist die MYSQL version, aktuell--></AlbDB>
+<KontaktDB
+            MySQLServer = "ora-clu-vip-003"
+            Schema = "paradigma"
+             ServiceName =  "paradigma.kreis-of.local"
+            Tabelle = "vorgang"
+            username = "paradigma"
+            password = "luftikus12"
+            dbtyp = "oracle"   
+     ><!--Das ist die oracle version, aktuell--></KontaktDB>
+ <RaumbezugDB
+            MySQLServer = "ora-clu-vip-003"
+            Schema = "paradigma"
+            ServiceName = "paradigma.kreis-of.local"
+            Tabelle = "vorgang"
+            username = "paradigma"
+            password = "luftikus12"
+            dbtyp = "oracle"   
+     ><!--Das ist die oracle version, aktuell--></RaumbezugDB>
+<EreignisDB
+           MySQLServer = "ora-clu-vip-003"
+            Schema = "paradigma"
+            ServiceName = "paradigma.kreis-of.local"
+            Tabelle = "vorgang"
+            username = "paradigma"
+            password = "luftikus12"
+            dbtyp = "oracle"   
+     ><!--Das ist die oracle version, aktuell--></EreignisDB>     
+<ArchivDB
+           MySQLServer = "ora-clu-vip-003"
+            Schema = "paradigma"
+            ServiceName = "paradigma.kreis-of.local"
+            Tabelle = "dokumente"
+            username = "paradigma"
+            password = "luftikus12"
+            dbtyp = "oracle"   
+     ><!--Das ist die oracle version, aktuell--></ArchivDB>  
+<Wiedervorlage
+            MySQLServer = "ora-clu-vip-003"
+            Schema = "paradigma"
+            ServiceName = "paradigma.kreis-of.local"
+            Tabelle = "wv"
+            username = "paradigma"
+            password = "luftikus12"
+            dbtyp = "oracle"   
+     ><!--Das ist die oracle version, aktuell--></Wiedervorlage>  
+<Temp
+            MySQLServer = "ora-clu-vip-003"
+            Schema = "paradigma"
+            ServiceName = "paradigma.kreis-of.local"
+            Tabelle = "dokumente"
+            username = "paradigma"
+            password = "luftikus12"
+            dbtyp = "oracle"   
+     ><!--Das ist die oracle version, aktuell--></Temp>  
+<Beteiligte
+           MySQLServer = "ora-clu-vip-003"
+            Schema = "paradigma"
+            ServiceName = "paradigma.kreis-of.local"
+            Tabelle = "beteiligte"
+            username = "paradigma"
+            password = "luftikus12"
+            dbtyp = "oracle"   
+     ><!--Das ist die oracle version, aktuell--></Beteiligte>   
+     <WebgisDB
+            MySQLServer = "w2gis02"
+            Schema = "webgiscontrol"
+            ServiceName = "paradigma.kreis-of.local"
+            Tabelle = "featureclasses"
+            username = "webgis"
+            password = "luftikus"
+            dbtyp = "mysql"   
+     ><!--Das ist die oracle version, aktuell--></WebgisDB>     
+<HaloDB
+            MySQLServer = "w2gis02"
+            Schema = "halosort"
+            ServiceName = "paradigma.kreis-of.local"
+            Tabelle = "halofs"
+            username = "webgis"
+            password = "luftikus"
+            dbtyp = "mysql"   
+     ><!--Das ist die oracle version, aktuell--></HaloDB>   
+<FlurstuecksDB
+            MySQLServer = "w2gis02"
+            Schema = "basis"
+            ServiceName = "paradigma.kreis-of.local"
+            Tabelle = "basis"
+            username = "webgis"
+            password = "luftikus"
+            dbtyp = "mysql"   
+     ><!--Das ist die oracle version, aktuell--></FlurstuecksDB>  
+<VorgangsBeteiligte 
+            MySQLServer = "ora-clu-vip-003"
+            Schema = "paradigma"
+            ServiceName = "paradigma.kreis-of.local"
+            Tabelle = "personen"
+            username = "paradigma"
+            password = "luftikus12"
+            dbtyp = "oracle"   
+     ><!--Das ist die oracle version, aktuell--></VorgangsBeteiligte>      
+<ProbaugDBalt
+            MySQLServer = "w2gis02"
+            Schema = "probaug"
+            ServiceName = "paradigma.kreis-of.local"
+            Tabelle = "antraege"
+            username = "webgis"
+            password = "luftikus"
+            dbtyp = "mysql"   
+     ><!--Das ist die oracle version, aktuell--></ProbaugDBalt>   
+     <ProbaugDB
+            MySQLServer = "ora-clu-vip-004.kreis-of.local"
+            Schema = "probaug"
+            ServiceName = "bau.kreis-of.local"
+            Tabelle = "gisview1"
+            username = "bauguser"
+            password = "test"
+            dbtyp = "oracle"   
+     ><!--Das ist die oracle version, aktuell--></ProbaugDB>   
+     <Zahlung
+            MySQLServer = "ora-clu-vip-003"
+            Schema = "paradigma"
+            ServiceName = "paradigma.kreis-of.local"
+            Tabelle = "Zahlungen"
+            username = "paradigma"
+            password = "luftikus12"
+            dbtyp = "oracle"   
+     ><!--Das ist die oracle version, aktuell--></Zahlung>            
+    </ini> 

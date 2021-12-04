@@ -1,0 +1,31 @@
+﻿<Window x:Class="sucheUtm32"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:mgis"
+        mc:Ignorable="d"
+        Title="UTM32-Koordinate anzeigen" Height="191.38" Width="300" WindowStartupLocation="CenterScreen">
+    <DockPanel Margin="0,0,0,0">
+        <StackPanel Margin="5,5,5,5" HorizontalAlignment="Center">
+            <StackPanel Orientation="Horizontal" >
+                <TextBlock Text="Rechts:  32"  Margin="5,0,0,0" Padding="5" Width="70"
+                            ToolTip="Bitte die führende '32' weglassen"
+                           
+                           
+                           HorizontalAlignment="Left"></TextBlock>
+                <TextBox Name="tbrechts" Width="150"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" >
+                <TextBlock Text="Hoch:"  Margin="5,0,0,0" ToolTip="Beginnt hier meist mit '55'" Padding="5" Width="50" HorizontalAlignment="Left"></TextBlock>
+                <TextBox Name="tbhoch" Width="171"/>
+            </StackPanel>
+            <Button Name="startKoord" Click="startKoord_Click" Content="Zeige in der Karte" Margin="5" Width="221"/>
+
+            <Button Name="btnAbbruch" Click="btnAbbruch_Click" IsCancel="True" Width="1" Height="1"/>
+            <Button Name="btnKoordUmrechner2" Click="btnKoordUmrechner2_Click" Style="{StaticResource lessButton}"  
+                    ToolTip="Übergibt die Koordinaten an einen Externen Umrechner."  Margin="15"
+                                                    Content=" Koordinaten umrechnen"  Width="140"  />
+        </StackPanel>
+    </DockPanel>
+</Window>

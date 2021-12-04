@@ -1,0 +1,513 @@
+﻿<Window x:Class="winEbenenHaupt"
+         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:webgiscontrol"
+        mc:Ignorable="d"
+        Title="Ebene" Height="750" Width="1500" WindowStartupLocation="CenterScreen"  Background="AliceBlue">
+    <DockPanel>
+        <StackPanel Orientation="Horizontal"  DockPanel.Dock="Top">
+            <TextBlock Text="AID" Width="150" FontSize="16"/>
+            <TextBlock Name="tbaid" FontSize="16"/>
+        </StackPanel>
+        <TabControl >
+            <TabItem  Background="AliceBlue" Header="Stamm  ">
+                <StackPanel Margin="10" Background="AliceBlue" >
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel Name="links">
+                            <GroupBox Header="Stammdaten" Width="600" HorizontalAlignment="Left"
+                              Background="LightGray">
+                                <StackPanel Margin="10" x:Name="spStamm">
+                                    <StackPanel Orientation="Horizontal" IsEnabled="true">
+                                        <TextBlock Text="HauptSachgebiet" Width="150"/>
+                                        <TextBox x:Name="tbHauptSachgebiet" Width="150"/>
+                                        <!--<ComboBox Name="cmbSachgebiete" Width="30" SelectionChanged="cmbSachgebiete_SelectionChanged"/>-->
+                                        <ComboBox x:Name="cmbSachgebiet" SelectionChanged="cmbSachgebiet_SelectionChanged"  ItemsSource="{Binding}"
+                      DisplayMemberPath="sachgebiet"  SelectedValuePath="sachgebiet"  Width="20" HorizontalAlignment="Left"/>
+
+                                        <Button x:Name="btnHauptSachgeietschreiben" Click="btnHauptSachgeietschreiben_Click" Content=" OK" IsEnabled="False"
+                                                ToolTip="Änderung in die DB-übernehmen"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Titel" Width="150"/>
+                                        <TextBox x:Name="tbtitel" Width="390"/>
+                                        <Button x:Name="btnTitelschreiben" Click="btnTitelschreiben_Click" Content=" OK" IsEnabled="False"
+                                                ToolTip="Änderung in die DB-übernehmen"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Schlagworte:" Width="150"/>
+                                        <TextBox x:Name="tbSchlag" Width="390" TextChanged="tbSchlag_TextChanged"/>
+                                        <Button x:Name="btnSchlagschreiben" Click="btnSchlagschreiben_Click" Content=" OK" IsEnabled="False"
+                                                ToolTip="Änderung in die DB-übernehmen"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Ebene:" Width="150"/>
+                                        <TextBox x:Name="tbEbene" Width="390" TextChanged="tbEbene_TextChanged"/>
+                                        <Button x:Name="btnEbeneschreiben" Click="btnEbeneschreiben_Click" Content=" OK" IsEnabled="False"
+                                                ToolTip="Änderung in die DB-übernehmen"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Rang" Width="150"/>
+                                        <TextBox x:Name="tbrang" Width="150"/>
+                                        <ComboBox x:Name="cmbRang" Width="20" SelectionChanged="cmbRang_SelectionChanged"  ItemsSource="{Binding}"
+                                                              DisplayMemberPath="sachgebiet"  SelectedValuePath="sachgebiet"    HorizontalAlignment="Left"/>
+                                        <Button x:Name="btnRangschreiben" Click="btnRangschreiben_Click" Content=" OK" IsEnabled="False"
+                                                ToolTip="Änderung in die DB-übernehmen"/>
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Maßstab Imagemap" Width="150"/>
+                                        <TextBox x:Name="tbmassstab_imap" Width="150" TextChanged="tbmassstab_imap_TextChanged"/>
+                                        <Button x:Name="btnmassstab_imapeschreiben" Click="btnmassstab_imapeschreiben_Click" Content=" OK" IsEnabled="False"
+                                                ToolTip="Änderung in die DB-übernehmen"/>
+                                    </StackPanel>
+                                    <!--<StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Anzahl attribute" Width="150"/>
+                                        <TextBox Name="tbanzahlattribute" Width="150"/>
+                                    </StackPanel>-->
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text=" " Width="150"/>
+                                        <CheckBox x:Name="cbMitImap" Checked="cbMitImap_Checked" Click="cbMitImap_Checked" Content="Mit ImageMap" Width="120"/>
+                                        <Button x:Name="btnMitImapschreiben" Click="btnMitImapschreiben_Click" Content=" OK" IsEnabled="False"
+                                                ToolTip="Änderung in die DB-übernehmen"/>
+
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text=" " Width="150"/>
+                                        <CheckBox x:Name="cbMitLegende"   Content="mit Legende" Width="120" Checked="cbMitLegende_Checked" Click="cbMitLegende_Checked"/>
+                                        <Button x:Name="btnMitLegendeschreiben" Click="btnMitLegendeschreiben_Click" Content=" OK" IsEnabled="False"
+                                                ToolTip="Änderung in die DB-übernehmen"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Name="spIstaktiv">
+                                        <TextBlock Text=" " Width="150"/>
+                                        <CheckBox x:Name="cbIstaktiv"  Content="ist Aktiv (status)" Click="cbIstaktiv_Click" Width="120"/>
+                                        <Button x:Name="btnIstaktivschreiben" Click="btnIstaktivschreiben_Click" Content=" OK" IsEnabled="False"
+                                                ToolTip="Änderung in die DB-übernehmen"/>
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text=" " Width="150"/>
+                                        <CheckBox x:Name="cbIsthgrund" Content="ist Hintergrund"  Width="120" Click="cbIsthgrund_Click"/>
+                                        <Button x:Name="btnIsthgrundchreiben" Click="btnIsthgrundchreiben_Click" Content=" OK" IsEnabled="False"
+                                                ToolTip="Änderung in die DB-übernehmen"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal"  >
+                                        <TextBlock Text=" " Width="150"/>
+                                        <CheckBox Name="cbMitObjekten" Content="Mit Objekten " Click="cbMitObjekten_Click" Width="120"/>
+                                        <Button x:Name="btnIstmitObjekten" Click="btnIstmitObjekten_Click" Content=" OK" IsEnabled="False"
+                                                ToolTip="Änderung in die DB-übernehmen"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="result. Pfad:" Width="150"/>
+                                        <TextBox x:Name="tbPfad" Width="390" IsEnabled="False"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text=" Pfad (View):" Width="150"/>
+                                        <TextBox x:Name="tbPfadView" Width="390" IsEnabled="False"/>
+                                    </StackPanel>
+
+                                </StackPanel>
+                            </GroupBox>
+                    
+
+                        </StackPanel>
+                        <StackPanel>
+                            <GroupBox Header="Doku" Width="600" HorizontalAlignment="Left"
+                                                Background="LightGray" >
+                                <StackPanel Margin="10" Name="spDoku">
+                                    <StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Inhalt" Width="100"/>
+                                            <TextBox Name="tbINhalt" Width="378" Height="206" TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True"
+                                                     TextChanged="tbINhalt_TextChanged" HorizontalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Auto"/>
+                                            <Button x:Name="btnInhaltschreiben" Click="btnInhaltschreiben_Click" Content=" OK" IsEnabled="False"
+                                                ToolTip="Änderung in die DB-übernehmen"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Entstehung" Width="100"/>
+                                            <TextBox x:Name="tbEntstehung" Width="378" Height="183" TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True" 
+                                                     HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" 
+                                                     TextChanged="tbEntstehung_TextChanged"/>
+                                            <Button x:Name="btnEntstehungschreiben" Click="btnEntstehungschreiben_Click" Content=" OK" IsEnabled="False"
+                                                ToolTip="Änderung in die DB-übernehmen"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Aktualisiert" Width="100"/>
+                                            <TextBox Name="tbAktualisiert" Width="150" TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True" TextChanged="tbAktualisiert_TextChanged"/>
+                                            <Button x:Name="btnAktualisiertschreiben" Click="btnAktualisiertschreiben_Click" Content=" OK" IsEnabled="False"
+                                                ToolTip="Änderung in die DB-übernehmen"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Massstab" Width="100"/>
+                                            <TextBox Name="tbMassstabDoku" Width="150" TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True" TextChanged="tbMassstabDoku_TextChanged"/>
+                                            <Button x:Name="btnMassstabschreiben" Click="btnMassstabschreiben_Click" Content=" OK" IsEnabled="False"
+                                                ToolTip="Änderung in die DB-übernehmen"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Beschränkungen" Width="100"/>
+                                            <TextBox Name="tbBeschraenk" Width="378" Height="66" TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True"
+                                                     TextChanged="tbBeschraenk_TextChanged" HorizontalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Auto"/>
+                                            <Button x:Name="btnBeschraenkschreiben" Click="btnBeschraenkschreiben_Click" Content=" OK" IsEnabled="False"
+                                                ToolTip="Änderung in die DB-übernehmen"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Datenabgabe" Width="100"/>
+                                            <TextBox Name="tbDatenabgabe" Width="378" Height="62" TextWrapping="Wrap" 
+                                                    TextChanged="tbDatenabgabe_TextChanged" AcceptsReturn="True" AcceptsTab="True"/>
+                                            <Button x:Name="btnDatenabgabeschreiben" Click="btnDatenabgabeschreiben_Click" Content=" OK" IsEnabled="False"
+                                                ToolTip="Änderung in die DB-übernehmen"/>
+                                        </StackPanel>
+                                    </StackPanel>
+
+                                </StackPanel>
+                            </GroupBox>
+                            <xctk:DropDownButton Content="Click Me hurz" Margin="15" Background="Wheat">
+                                <xctk:DropDownButton.DropDownContent>
+                                    <TextBlock Text="hurz"/>
+                                </xctk:DropDownButton.DropDownContent>
+                            </xctk:DropDownButton>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+            </TabItem>
+            <TabItem  Header="TabellenDefinition" Name="tiTabellenDef">
+                <StackPanel>
+                    <StackPanel Name="links1">
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal" Visibility="Collapsed">
+                                <TextBlock Text=" Anzahl Attrib.Tabellen:" Width="250"/>
+                                <TextBox Name="tAnzahlAttributtabellen" Width="90" IsEnabled="False"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="10">
+                                <TextBlock Text=" Anzahl Attrib.Tabellen (real):" Width="250" FontWeight="Black"/>
+                                <TextBox Name="tAnzahlAttributtabellenReal" Width="90" FontWeight="Black" IsEnabled="False"/>
+                            </StackPanel>
+                            <Button Name="btnTabelleAdd" Content="Tabelle hinzufügen" Click="btnTabelleAdd_Click" Height="25"/>
+                        </StackPanel>
+                        <GroupBox Header="DB-Anbindung (Attributtabelle)" Background="Beige"  Width="600" HorizontalAlignment="Left"
+                                  BorderThickness="2" BorderBrush="DarkTurquoise" Name="gb1"
+                                        >
+                            <StackPanel >
+                                <StackPanel Orientation="Horizontal" Margin="10">
+                                    <TextBlock Text="InterneID" Name="tbtabinterneID" Margin="10"/>
+                                    <Button Name="btnTab0deleten" Click="btnTab0deleten_Click" Content="diese Tabelle löschen" Width="140" Height="25"/>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Tabellen Nr (tab_nr)" Width="250"/>
+                                    <TextBox Name="tbDBtab_nr0" Width="150"    />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Schema" Width="250"/>
+                                    <TextBox Name="tbSchema0" Width="150"/>
+                                    <ComboBox Name="cmbSchemas0" SelectionChanged="cmbSchemas0_SelectionChanged"  ItemsSource="{Binding}"
+                      DisplayMemberPath="schemaname"  SelectedValuePath="schemaname"  Width="20" HorizontalAlignment="Left"/>
+                                    <Button x:Name="btnSchemas0schreiben" Click="btnSchemas0schreiben_Click" Content=" OK" IsEnabled="False"
+                                                ToolTip="Änderung in die DB-übernehmen"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Tabelle" Width="250"/>
+                                    <TextBox Name="tbtabelle0" Width="150"/>
+                                    <ComboBox Name="cmbtabelle0" SelectionChanged="cmbtabelle0_SelectionChanged"  ItemsSource="{Binding}"
+                      DisplayMemberPath="tabellenname"  SelectedValuePath="tabellenname"  Width="20" HorizontalAlignment="Left"/>
+                                    <Button x:Name="btntabelle0schreiben" Click="btntabelle0schreiben_Click" Content=" OK" IsEnabled="False"
+                                                ToolTip="Änderung in die DB-übernehmen"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Spaltenname der ID (tab_id)" Width="250"/>
+                                    <TextBox Name="tbtab_ID0" Width="150"/>
+                                    <ComboBox Name="cmbtabid0" SelectionChanged="cmbtabid0_SelectionChanged"  ItemsSource="{Binding}"
+                      DisplayMemberPath="sachgebiet"  SelectedValuePath="sachgebiet"  Width="20" HorizontalAlignment="Left"/>
+                                    <Button x:Name="btntabid0schreiben" Click="btntabid0schreiben_Click" Content=" OK" IsEnabled="False"
+                                                ToolTip="Änderung in die DB-übernehmen"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Titel zur Tabelle (tab_titel)" Width="250"/>
+                                    <TextBox Name="tbtabtitel0" Width="150" TextChanged="tbtabtitel0_TextChanged"/>
+                                    <Button x:Name="btntabtitel0schreiben" Click="btntabtitel0schreiben_Click" Content=" OK" IsEnabled="False"
+                                                ToolTip="Änderung in die DB-übernehmen"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="TabellenAnzeige (tabellen_anzeige)" Width="250"/>
+                                    <TextBox Name="tbTabellenAnzeige0" Width="150"/>
+                                    <ComboBox Name="cmbTabellen_Anzeige0" SelectionChanged="cmbTabellen_Anzeige0_SelectionChanged"   
+                                                      Width="20" HorizontalAlignment="Left">
+                                        <ComboBoxItem Tag=""></ComboBoxItem>
+                                        <ComboBoxItem Tag="attributtabelle">attributtabelle</ComboBoxItem>
+                                        <ComboBoxItem Tag="normal">normal</ComboBoxItem>
+                                        <ComboBoxItem Tag="homepage">homepage</ComboBoxItem>
+                                        <ComboBoxItem Tag="schalter">schalter</ComboBoxItem>
+                                        <ComboBoxItem Tag="landschaftsplan">landschaftsplan</ComboBoxItem>
+                                        <ComboBoxItem Tag="vorlage">vorlage</ComboBoxItem>
+                                    </ComboBox>
+                                    <Button x:Name="btnTabellenAnzeige0schreiben" Click="btnTabellenAnzeige0schreiben_Click" Content=" OK" IsEnabled="False"
+                                                ToolTip="Änderung in die DB-übernehmen"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Linkspalten (linktabs)" Width="250" ToolTip="linkspalten zu den zusatztabellen. in der reihenfolge der Tabellen (zuerst zu tabelle mit tab_nr=2, dann 3..."/>
+                                    <TextBox Name="tbLinkspalten0" Width="150"/>
+                                    <ComboBox Name="cmbLINKTabs0" SelectionChanged="cmbLINKTabs0_SelectionChanged"  ItemsSource="{Binding}"
+                      DisplayMemberPath="sachgebiet"  SelectedValuePath="sachgebiet"  Width="20" HorizontalAlignment="Left"/>
+                                    <Button x:Name="btnLINKTabs0schreiben" Click="btnLINKTabs0schreiben_Click" Content=" OK" IsEnabled="False"
+                                                ToolTip="Änderung in die DB-übernehmen"/>
+                                </StackPanel>
+                                <!--<StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Anzahl Tabellen (tabellen_anzahl)" Width="250"/>
+                                        <TextBox Name="tbABanzahl" Width="150"/>
+                                    </StackPanel>-->
+                     
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                    <StackPanel Name="rechts">
+                        <GroupBox Header="DB-Anbindung (Attributtabelle)" Background="Beige"  Width="600" HorizontalAlignment="Left"
+                                  Name="gb2"
+                                        >
+                            <StackPanel >
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Tabellen Nr (tab_nr)" Width="250"/>
+                                    <TextBox Name="tbDBtab_nr1" Width="150"    />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Schema" Width="250"/>
+                                    <TextBox Name="tbSchema1" Width="150"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Tabelle" Width="250"/>
+                                    <TextBox Name="tbtabelle1" Width="150"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Spaltenname der ID (tab_id)" Width="250"/>
+                                    <TextBox Name="tbtabID1" Width="150"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Titel zur Tabelle (tab_titel)" Width="250"/>
+                                    <TextBox Name="tbtabtitel1" Width="150"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="TabellenAnzeige (tabellen_anzeige)" Width="250"/>
+                                    <TextBox Name="tbTabellenAnzeige1" Width="150"/>
+                                </StackPanel>
+
+                            </StackPanel>
+                        </GroupBox>
+                        <GroupBox Header="DB-Anbindung (Attributtabelle)" Background="Beige"  Width="600" HorizontalAlignment="Left"
+                                     Name="gb3"   >
+                            <StackPanel >
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Tabellen Nr (tab_nr)" Width="250"/>
+                                    <TextBox Name="tbDBtab_nr2" Width="150"    />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Schema" Width="250"/>
+                                    <TextBox Name="tbSchema2" Width="150"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Tabelle" Width="250"/>
+                                    <TextBox Name="tbtabelle2" Width="150"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Spaltenname der ID (tab_id)" Width="250"/>
+                                    <TextBox Name="tbtabID2" Width="150"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Titel zur Tabelle (tab_titel)" Width="250"/>
+                                    <TextBox Name="tbtabtitel2" Width="150"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="TabellenAnzeige (tabellen_anzeige)" Width="250"/>
+                                    <TextBox Name="tbTabellenAnzeige2" Width="150"/>
+                                </StackPanel>
+
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </StackPanel>
+
+
+            </TabItem>
+            <TabItem  Header="Tabellenvorlagen">
+                <DockPanel>
+                    <StackPanel DockPanel.Dock="Top">
+
+                        <StackPanel Orientation="Horizontal">
+                            <DataGrid  Background="AntiqueWhite" Name="dgVorlagen" AutoGenerateColumns="True"  ItemsSource="{Binding}"    Width="850" Height="600"
+                   SelectionChanged="dgSG_SelectionChanged" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible">
+                            </DataGrid>
+                            <StackPanel Margin="20">
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <TextBlock Text="tab_nr=" Padding="3"></TextBlock>
+                                    <TextBox Name="tbvorlagenTabnrEingabe" Width="30" >1</TextBox>
+                                    <!--<Button Name="btnDatenTabelleRefresh" Content="Refresh" Click="btnDatenTabelleRefresh_Click" Margin="10,0,0,0"/>-->
+
+                                </StackPanel>
+                                <Button Name="btnAdd" Click="btnAdd_Click" Content="Hinzu" Margin="10"/>
+                    
+                                <!--<Button Name="btnNeuerTitel" Click="btnNeuerTitel_Click" Content="Bearbeiten" Margin="10"/>-->
+
+                                <Button Name="btnRefreshVorlagen" Content="Refresh " Click="btnRefreshVorlagen_Click" Margin="10" />
+                           
+                                
+                                <Border BorderThickness="1" BorderBrush="Black" Margin="0,140,0,0">
+                                    <StackPanel>
+                               
+                                        <StackPanel Orientation="Horizontal" Background="LightGreen">
+                                            <TextBlock Text="ID" Width="70"/>
+                                            <TextBox Name="tbvorlagenID" Width="300" IsReadOnly="True"/>
+                                            <!--<ComboBox Name="cmbSchemas0" SelectionChanged="cmbSchemas0_SelectionChanged"  ItemsSource="{Binding}"
+                      DisplayMemberPath="schemaname"  SelectedValuePath="schemaname"  Width="20" HorizontalAlignment="Left"/>-->
+                                            <!--<Button x:Name="btnvorlagenIDschreiben" Click="btnvorlagenIDschreiben_Click" Content=" OK" IsEnabled="False"
+                                                ToolTip="Änderung in die DB-übernehmen"/>-->
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Background="LightGreen">
+                                            <TextBlock Text="TabNr" Width="70"/>
+                                            <TextBox Name="tbvorlagenTabNr" Width="300" IsReadOnly="True"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Background="LightGreen">
+                                            <TextBlock Text="Nr" Width="70" ToolTip="Die Reihenfolge in der Liste"/>
+                                            <TextBox Name="tbvorlagenNr" Width="300" TextChanged="tbvorlagenNr_TextChanged" />
+                                            <Button x:Name="btnvorlagenNrschreiben" Click="btnvorlagenNrschreiben_Click" Content=" OK" IsEnabled="False"
+                                                ToolTip="Änderung in die DB-übernehmen"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Background="LightGreen">
+                                            <TextBlock Text="Feldname" Width="70" ToolTip="alter Feldname"/>
+                                            <TextBox Name="tbvorlagenFeldname" Width="280" TextChanged="tbvorlagenFeldname_TextChanged" />
+                                            <ComboBox Name="cmbVorlagenFeldname" SelectionChanged="cmbVorlagenFeldname_SelectionChanged"  ItemsSource="{Binding}"
+                      DisplayMemberPath="sachgebiet"  SelectedValuePath="sachgebiet"  Width="20" HorizontalAlignment="Left"/>
+                                            <Button x:Name="btnvorlagenFeldnameschreiben" Click="btnvorlagenFeldnameschreiben_Click" Content=" OK" IsEnabled="False"
+                                                ToolTip="Änderung in die DB-übernehmen"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Background="LightGreen">
+                                            <TextBlock Text="Titel" Width="70" ToolTip="Neuer Feldname"/>
+                                            <TextBox Name="tbvorlagenTitel" Width="300" TextChanged="tbvorlagenTitel_TextChanged" />
+
+                                            <Button x:Name="btnvorlagenTitelschreiben" Click="btnvorlagenTitelschreiben_Click" Content=" OK" IsEnabled="False"
+                                                ToolTip="Änderung in die DB-übernehmen"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Background="LightGreen">
+                                            <TextBlock Text="Typ" Width="70" ToolTip=" "/>
+                                            <TextBox Name="tbvorlagenTyp" Width="280" TextChanged="tbvorlagenTyp_TextChanged" />
+                                            <ComboBox Name="cmbVorlagenTyp" SelectionChanged="cmbVorlagenTyp_SelectionChanged" 
+                                                   Width="20" HorizontalAlignment="Left">
+                                                <ComboBoxItem Tag="g">g - gruppe (Überschrift)</ComboBoxItem>
+                                                <ComboBoxItem Tag="l">l - link (feststehender Text unter template)</ComboBoxItem>
+                                                <ComboBoxItem Tag="n">n - normal</ComboBoxItem>
+                                                <ComboBoxItem Tag="s">s - summe (mehere Datensätze 1 : n)</ComboBoxItem>
+                                                <ComboBoxItem Tag="t">t- template (mehere Felder unter template)</ComboBoxItem>
+                                                <ComboBoxItem Tag="c">c - coordinate aus geom</ComboBoxItem>
+                                                <ComboBoxItem Tag="k">k - konstante (feststehender Text unter template)'</ComboBoxItem>
+                                                k - konstante (feststehender Text unter template)
+                                            </ComboBox>
+                                            <Button x:Name="btnvorlagenTypschreiben" Click="btnvorlagenTypschreiben_Click" Content=" OK" IsEnabled="False"
+                                                ToolTip="Änderung in die DB-übernehmen"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Background="LightGreen">
+                                            <TextBlock Text="CssClass" Width="70" ToolTip="Neuer Feldname"/>
+                                            <TextBox Name="tbvorlagenCssClass" Width="280" TextChanged="tbvorlagenCssClass_TextChanged" />
+                                            <ComboBox Name="cmbVorlagenCssClass" SelectionChanged="cmbVorlagenCssClass_SelectionChanged"   
+                                                      Width="20" HorizontalAlignment="Left">
+                                                <ComboBoxItem Tag=""> </ComboBoxItem>
+                                                <ComboBoxItem Tag="norm">norm</ComboBoxItem>
+                                                <ComboBoxItem Tag="teil">teil</ComboBoxItem>
+                                                <ComboBoxItem Tag="gruppe">gruppe</ComboBoxItem>
+                                            </ComboBox>
+                                            <Button x:Name="btnvorlagenCssClassschreiben" Click="btnvorlagenCssClassschreiben_Click" Content=" OK" IsEnabled="False"
+                                                ToolTip="Änderung in die DB-übernehmen"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Background="LightGreen">
+                                            <TextBlock Text="Template" Width="70" ToolTip="Neuer Feldname"/>
+                                            <TextBox Name="tbvorlagenTemplate" Width="280" TextChanged="tbvorlagenTemplate_TextChanged" Height="66" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" />
+                                            <ComboBox Name="cmbVorlagenTemplate" SelectionChanged="cmbVorlagenTemplate_SelectionChanged"  ItemsSource="{Binding}"
+                                                     DisplayMemberPath="sachgebiet"  SelectedValuePath="sachgebiet"  Width="20" HorizontalAlignment="Left"/>
+                                            <Button x:Name="btnvorlagenTemplateschreiben" Click="btnvorlagenTemplateschreiben_Click" Content=" OK" IsEnabled="False"
+                                                ToolTip="Änderung in die DB-übernehmen"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Background="LightGreen">
+                                            <TextBlock Text="Anwendung" Width="70" ToolTip="1- nur in desk, 2-in web und desk"/>
+                                            <TextBox Name="tbvorlagenAnwendung" Width="280" TextChanged="TbvorlagenAnwendung_TextChanged" />
+
+                                            <ComboBox Name="cmbVorlagenAnwendung" SelectionChanged="CmbVorlagenAnwendung_SelectionChanged" 
+                                                   Width="20" HorizontalAlignment="Left">
+                                                <ComboBoxItem Tag="1">nur auf desktop </ComboBoxItem>
+                                                <ComboBoxItem Tag="2">in web und desk</ComboBoxItem>
+                                            </ComboBox>
+                                            <Button x:Name="btnvorlagenAnwendungschreiben" Click="BtnvorlagenAnwendungschreiben_Click" Content=" OK" IsEnabled="False"
+                                                ToolTip="Änderung in die DB-übernehmen"/>
+                                        </StackPanel>
+                                        <Button Name="btnremove" Click="btnVorlageremove_Click" Content="Löschen" Margin="20"/>
+                                    </StackPanel>
+
+                                </Border>
+                            </StackPanel>
+
+
+                        </StackPanel>
+
+                    </StackPanel>
+                </DockPanel>
+            </TabItem>
+            <TabItem  Header="ActiveDirectoryGruppen">
+                <StackPanel Margin="20" Width="600" HorizontalAlignment="Left">
+                    <TextBlock Text=" Haken gesetzt = Erlaubnis erteilt" Margin="5"/>
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <TextBox Text="Internet" Width="300"></TextBox>
+                        <CheckBox Name="cbGruppeInternet" Margin="5" Click="cbGruppeInternet_Click"/>
+                        <Button Name="btnGruppeInternetSchreiben" Click="btnGruppeInternetSchreiben_Click" Content="OK" IsEnabled="False"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <TextBox Text="Intranet" Width="300"></TextBox>
+                        <CheckBox Name="cbGruppeIntranet" Margin="5" Click="cbGruppeIntranet_Click"/>
+                        <Button Name="btnGruppeIntranetSchreiben" Click="btnGruppeIntranetSchreiben_Click" Content="OK" IsEnabled="False"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <TextBox Text="AD: Umwelt" Width="300"></TextBox>
+                        <CheckBox Name="cbGruppeUmwelt" Margin="5" Click="cbGruppeUmwelt_Click"/>
+                        <Button Name="btnGruppeUmweltSchreiben" Click="btnGruppeUmweltSchreiben_Click_1" Content="OK" IsEnabled="False"/>
+                    </StackPanel>
+           
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <TextBox Text="AD: Bauaufsicht" Width="300"></TextBox>
+                        <CheckBox Name="cbGruppeBauaufsichtt" Margin="5" Click="cbGruppeBauaufsichtt_Click"/>
+                        <Button Name="btnGruppeBauaufsichtSchreiben" Click="btnGruppeBauaufsichtSchreiben_Click" Content="OK" IsEnabled="False"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <TextBox Text="AD: Gefahrenabwehr- und Gesundheitszentrum" Width="300"></TextBox>
+                        <CheckBox Name="cbGruppeSicherheit" Margin="5" Click="cbGruppeSicherheit_Click"/>
+                        <Button Name="btnGruppeSicherheitSchreiben" Click="btnGruppeSicherheitSchreiben_Click" Content="OK" IsEnabled="False"/>
+                    </StackPanel>
+
+
+                </StackPanel>
+            </TabItem>
+            <TabItem  Header="SQLS">
+                <StackPanel >
+                    <TextBlock Text="Internes" Width="100"/>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox Name="tbInternes" MinWidth="570" MinHeight="256" MaxHeight="750" MaxWidth="1500" TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True"
+                                                     TextChanged="tbInternes_TextChanged" HorizontalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Auto"/>
+                        <Button x:Name="btnInternesschreiben" Click="BtnInternesschreiben_Click" Content=" OK" IsEnabled="False"
+                                                ToolTip="Änderung in die DB-übernehmen"/>
+                    </StackPanel>
+                </StackPanel>
+            </TabItem>
+            
+
+            <TabItem  Header="Objektdefinition" Margin="-2,0,-2,-3"></TabItem>
+            <TabItem  Header="Datentabelle">
+                <StackPanel Margin="20" >
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Text="tab_nr="></TextBlock>
+                        <TextBox Name="tbDatentabelleTabnrEingabe" Width="30" >1</TextBox>
+                        <Button Name="btnDatenTabelleRefresh" Content="Refresh" Click="btnDatenTabelleRefresh_Click" Margin="10,0,0,0"/>
+                    </StackPanel>
+                
+                <DataGrid  Background="AntiqueWhite" Name="dgDatentabelle" AutoGenerateColumns="True"  ItemsSource="{Binding}"  Height="400"
+                   SelectionChanged="dgEbenen_SelectionChanged" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible">
+                </DataGrid>
+                </StackPanel>
+            </TabItem>
+        </TabControl>
+    </DockPanel>
+</Window>

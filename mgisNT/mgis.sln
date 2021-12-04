@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2027
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "mgis2NT", "mgis2NT.vbproj", "{3FAB66F3-5D42-48F4-B3D7-49D9CCCA3DEB}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "gisDossier", "..\dossier\gisDossier.vbproj", "{8F65F6F2-5C46-44BE-8D95-92BD8BAF3147}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "sharedGis_Dossier", "..\shared\sharedGis_Dossier.shproj", "{EA63366D-8E77-4636-9A51-F0990E477317}"
+EndProject
+Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		..\shared\sharedGis_Dossier.projitems*{3fab66f3-5d42-48f4-b3d7-49d9ccca3deb}*SharedItemsImports = 4
+		..\shared\sharedGis_Dossier.projitems*{8f65f6f2-5c46-44be-8d95-92bd8baf3147}*SharedItemsImports = 4
+		..\shared\sharedGis_Dossier.projitems*{ea63366d-8e77-4636-9a51-f0990e477317}*SharedItemsImports = 13
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3FAB66F3-5D42-48F4-B3D7-49D9CCCA3DEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FAB66F3-5D42-48F4-B3D7-49D9CCCA3DEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FAB66F3-5D42-48F4-B3D7-49D9CCCA3DEB}.Debug|x64.ActiveCfg = Debug|x64
+		{3FAB66F3-5D42-48F4-B3D7-49D9CCCA3DEB}.Debug|x64.Build.0 = Debug|x64
+		{3FAB66F3-5D42-48F4-B3D7-49D9CCCA3DEB}.Debug|x86.ActiveCfg = Debug|x86
+		{3FAB66F3-5D42-48F4-B3D7-49D9CCCA3DEB}.Debug|x86.Build.0 = Debug|x86
+		{3FAB66F3-5D42-48F4-B3D7-49D9CCCA3DEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FAB66F3-5D42-48F4-B3D7-49D9CCCA3DEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FAB66F3-5D42-48F4-B3D7-49D9CCCA3DEB}.Release|x64.ActiveCfg = Release|x64
+		{3FAB66F3-5D42-48F4-B3D7-49D9CCCA3DEB}.Release|x64.Build.0 = Release|x64
+		{3FAB66F3-5D42-48F4-B3D7-49D9CCCA3DEB}.Release|x86.ActiveCfg = Release|x86
+		{3FAB66F3-5D42-48F4-B3D7-49D9CCCA3DEB}.Release|x86.Build.0 = Release|x86
+		{8F65F6F2-5C46-44BE-8D95-92BD8BAF3147}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F65F6F2-5C46-44BE-8D95-92BD8BAF3147}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F65F6F2-5C46-44BE-8D95-92BD8BAF3147}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{8F65F6F2-5C46-44BE-8D95-92BD8BAF3147}.Debug|x64.Build.0 = Debug|Any CPU
+		{8F65F6F2-5C46-44BE-8D95-92BD8BAF3147}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8F65F6F2-5C46-44BE-8D95-92BD8BAF3147}.Debug|x86.Build.0 = Debug|Any CPU
+		{8F65F6F2-5C46-44BE-8D95-92BD8BAF3147}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F65F6F2-5C46-44BE-8D95-92BD8BAF3147}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F65F6F2-5C46-44BE-8D95-92BD8BAF3147}.Release|x64.ActiveCfg = Release|Any CPU
+		{8F65F6F2-5C46-44BE-8D95-92BD8BAF3147}.Release|x64.Build.0 = Release|Any CPU
+		{8F65F6F2-5C46-44BE-8D95-92BD8BAF3147}.Release|x86.ActiveCfg = Release|Any CPU
+		{8F65F6F2-5C46-44BE-8D95-92BD8BAF3147}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D3EDAEDC-43CA-442A-9C75-680F19D8189F}
+	EndGlobalSection
+EndGlobal

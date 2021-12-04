@@ -1,0 +1,35 @@
+﻿<Window x:Class="winBMedit"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:mgis" WindowStartupLocation="CenterScreen"
+        mc:Ignorable="d" Background="{StaticResource flaechenBackground}" 
+        Title="Lesezeichen Editor" Height="300" Width="800">
+    <DockPanel>
+        <StackPanel Margin="10">
+          
+            <GroupBox Header="" BorderThickness="1" BorderBrush="Black">
+
+                <StackPanel  VerticalAlignment="Center" Orientation="Vertical" Margin="5">
+                    <StackPanel Orientation="Horizontal" Margin=" 5 ">
+                        <TextBlock Width="200">Titel eingeben: </TextBlock>
+                        <TextBox  Name="tbBMneu"   Width="536" TextChanged="tbBMneu_TextChanged"></TextBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <TextBlock Width="200">Für den FD freigeben:</TextBlock>
+                        <CheckBox Name="cbFreigabefuerGruppe" Click="cbFreigabefuerGruppe_Click"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="20">
+                        <Button Name="btnBookmarkSave" Margin="5" Content="Speichern" Click="btnBookmarkSave_Click" Visibility="Visible"  IsEnabled="False"/>
+                        <Button Name="btnBMeditAbbruch" Margin="5" Content="Abbruch" Click="btnBMeditAbbruch_Click" Visibility="Visible"  />
+                        <Button Name="btnBMloeschen" Margin="5" Content="Löschen" Click="btnBMloeschen_Click" Visibility="Visible"  IsEnabled="False" />
+                    </StackPanel>
+                    <Button Name="btnBMaktivieren" Click="btnBMaktivieren_Click" Content="Lesezeichen anwenden"  Width="200" 
+                            Margin="20" HorizontalAlignment="Left"/>
+                </StackPanel>
+            </GroupBox>
+        </StackPanel>
+
+    </DockPanel>
+</Window>

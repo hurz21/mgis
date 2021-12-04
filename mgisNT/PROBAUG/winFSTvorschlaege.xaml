@@ -1,0 +1,33 @@
+﻿<Window x:Class="winProbaugFSTVorschlaege"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:mgis"
+        mc:Ignorable="d"
+        Title="winProbaugfstVorschlaege" Height="800" Width="640.945" WindowStartupLocation="CenterScreen">
+    <DockPanel>
+        <StackPanel Height="90" DockPanel.Dock="Top" Margin="10">
+            <TextBlock Name="tbfst" FontWeight="Bold" Text="test" />
+            <TextBlock Text="Das gewünschte Flurstück existiert nicht. Möchten Sie eines der vorhandenen Flurstücke verwenden? "/>
+            <TextBlock Text=" >>> Dann Klicken Sie es an."/>
+            <Button Name="btnAbbruch" Click="btnAbbruch_Click" Content="Abbruch" Width="100"/>
+        </StackPanel>
+        <DataGrid x:Name="dgfstVorschlaege" ItemsSource="{Binding}"     Visibility="Visible"    Margin="15"
+                   MaxHeight="680" AutoGenerateColumns="False"
+                                
+                                   ColumnHeaderStyle="{StaticResource dgHeaderStyle}"  SelectionChanged="dgfstVorschlaege_SelectionChanged">
+            <DataGrid.Columns>
+                <!--<DataGridTextColumn  Header="Gemeinde" Width="Auto" Binding="{Binding gemeindeName}"  />-->
+                <DataGridTextColumn  Header="Flur" Width="Auto" Binding="{Binding flur}"  />
+                <DataGridTextColumn Header="Zaehler" Width="40" Binding="{Binding zaehler}" />
+                <DataGridTextColumn Header="Nenner" Width="40" Binding="{Binding nenner}" />
+
+
+
+
+            </DataGrid.Columns>
+        </DataGrid>
+
+    </DockPanel>
+</Window>
