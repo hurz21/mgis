@@ -313,9 +313,70 @@
 
     Private Sub dropped(sender As Object, e As DragEventArgs)
         e.Handled = True
-        droptiff(e)
+        'droptiff(e)
+        dropPDF(e)
     End Sub
 
+    Private Sub dropPDF(e As DragEventArgs)
+        Dim filenames As String()
+        Dim zuielname As String = ""
+        Dim endung As String = ".pdf"
+        Dim listeZippedFiles, listeNOnZipFiles, allFeiles As New List(Of String)
+        Dim titelVorschlag As String = ""
+        Try
+            l(" MOD dropped anfang")
+            If e.Data.GetDataPresent(DataFormats.FileDrop) Then
+                filenames = CType(e.Data.GetData(DataFormats.FileDrop), String())
+            End If
+
+            If filenames(0).ToLower.EndsWith(".pdf") Then
+                endung = ".pdf"
+            End If
+            l(" MOD dropped 2")
+            If filenames(0).ToLower.EndsWith(endung) Then
+                l(" MOD dropped 3")
+                zuielname = IO.Path.Combine(srv_unc_path & "\fkat\baulasten", tools.FSTausPROBAUGListe(0).gemarkungstext.Trim & "\" & tbBaulastNr.Text.Trim & endung).ToLower.Trim
+                l(" MOD dropped 4 " & filenames(0).ToLower & " nach " & zuielname)
+                IO.File.Copy(filenames(0).ToLower, zuielname, True)
+                rawList(0).dateiExistiert = True
+                rawList(0).datei = zuielname
+                l(" MOD dropped 5")
+                'pdfdatei erzeugen
+                clsTIFFtools.zerlegeMultipageTIFF(zuielname, tools.baulastenoutDir)
+                refreshTIFFbox()
+                Dim erfolg As Boolean = clsGIStools.updateGISDB(tbBaulastNr.Text, zuielname, tools.FSTausPROBAUGListe(0).gemarkungstext.Trim, endung)
+                If erfolg Then
+                    Dim mesres As MessageBoxResult
+                    mesres = MessageBox.Show("Die tiff - Datei wurde erfolgreich ins GIS kopiert!" & Environment.NewLine &
+                                    "Ausserdem wurde die PDF-Datei erzeugt/erneuert." & Environment.NewLine &
+                                    "" & Environment.NewLine &
+                                    "Soll die Quelldatei gelöscht werden ? (J/N)" & Environment.NewLine &
+                                    " J - Löschen" & Environment.NewLine &
+                                    " N - bewahren " & Environment.NewLine,
+                                             "Quelldatei löschen?", MessageBoxButton.YesNo,
+                                                MessageBoxImage.Question, MessageBoxResult.Yes
+                                    )
+                    If mesres = MessageBoxResult.Yes Then
+                        If Not dateiLoeschen(filenames) Then
+                            MessageBox.Show("Datei liess sich nicht löschen. Haben Sie sie noch im Zugriff ? Abbruch!!")
+                        End If
+                    Else
+
+                    End If
+                Else
+                    MessageBox.Show("DB-Eintrag liess sich nicht erneuern. Bitte beim admin melden ? Abbruch!!")
+                End If
+
+
+            End If
+
+            l(" MOD dropped ende")
+        Catch ex As Exception
+            l("Fehler in dropped: " & zuielname & Environment.NewLine &
+              zuielname.Trim.ToLower & "   " & ex.ToString())
+            MessageBox.Show("Datei läßt sich nicht löschen. ")
+        End Try
+    End Sub
     Private Sub droptiff(e As DragEventArgs)
         Dim filenames As String()
         Dim zuielname As String = ""
@@ -345,7 +406,7 @@
                 'pdfdatei erzeugen
                 clsTIFFtools.zerlegeMultipageTIFF(zuielname, tools.baulastenoutDir)
                 refreshTIFFbox()
-                Dim erfolg As Boolean = clsGIStools.updateGISDB(tbBaulastNr.Text, zuielname, tools.FSTausPROBAUGListe(0).gemarkungstext.Trim)
+                Dim erfolg As Boolean = clsGIStools.updateGISDB(tbBaulastNr.Text, zuielname, tools.FSTausPROBAUGListe(0).gemarkungstext.Trim, endung)
                 If erfolg Then
                     Dim mesres As MessageBoxResult
                     mesres = MessageBox.Show("Die tiff - Datei wurde erfolgreich ins GIS kopiert!" & Environment.NewLine &
