@@ -7,6 +7,7 @@ Public Class clsProBGTools
         Dim sql, sqlgeschlossen As String
         Try
             l(" MOD holeProBaugDaten anfang")
+            '
 
             sql = getSQLProbaug(baulastblattnr)
             sqlgeschlossen = "SELECT  feld3 from obj01bla "
