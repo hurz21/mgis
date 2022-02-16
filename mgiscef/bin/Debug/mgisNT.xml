@@ -1,0 +1,455 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+mgisNT
+</name>
+</assembly>
+<members>
+<member name="T:mgis.My.MyWpfExtension">
+ <summary>
+ Modul zum Definieren der im My-Namespace für WPF verfügbaren Eigenschaften
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:mgis.My.MyWpfExtension.Application">
+ <summary>
+ Gibt das Anwendungsobjekt für die ausgeführte Anwendung zurück.
+ </summary>
+</member>
+<member name="P:mgis.My.MyWpfExtension.Computer">
+ <summary>
+ Gibt Informationen über den Hostcomputer zurück.
+ </summary>
+</member>
+<member name="P:mgis.My.MyWpfExtension.User">
+ <summary>
+ Gibt Informationen über den aktuellen Benutzer zurück. Wenn Sie die Anwendung mit den aktuellen Windows-
+ Anmeldeinformationen ausführen möchten, rufen Sie My.User.InitializeWithWindowsUser() auf.
+ </summary>
+</member>
+<member name="P:mgis.My.MyWpfExtension.Log">
+ <summary>
+ Gibt das Anwendungsprotokoll zurück. Die Listener können in der Konfigurationsdatei der Anwendung konfiguriert werden.
+ </summary>
+</member>
+<member name="P:mgis.My.MyWpfExtension.Windows">
+ <summary>
+ Gibt die im Projekt definierte Windows-Auflistung zurück.
+ </summary>
+</member>
+<member name="T:mgis.My.Resources.Resources">
+<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member>
+<member name="P:mgis.My.Resources.Resources.ResourceManager">
+<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member>
+<member name="P:mgis.My.Resources.Resources.Culture">
+<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member>
+<member name="P:mgis.My.Resources.Resources.BuildDate">
+<summary>
+  Looks up a localized string similar to 01.09.2020 13:41:43,83  
+.
+</summary>
+</member>
+<member name="T:mgis.winBM">
+<summary>
+winBM
+</summary>
+</member>
+<member name="M:mgis.winBM.InitializeComponent">
+<summary>
+InitializeComponent
+</summary>
+</member>
+<member name="T:mgis.winBMedit">
+<summary>
+winBMedit
+</summary>
+</member>
+<member name="M:mgis.winBMedit.InitializeComponent">
+<summary>
+InitializeComponent
+</summary>
+</member>
+<member name="T:mgis.winSelection">
+<summary>
+winSelection
+</summary>
+</member>
+<member name="M:mgis.winSelection.InitializeComponent">
+<summary>
+InitializeComponent
+</summary>
+</member>
+<member name="T:mgis.winSendEmail">
+<summary>
+winSendEmail
+</summary>
+</member>
+<member name="M:mgis.winSendEmail.InitializeComponent">
+<summary>
+InitializeComponent
+</summary>
+</member>
+<member name="T:mgis.winDBabfrage">
+<summary>
+winDBabfrage
+</summary>
+</member>
+<member name="M:mgis.winDBabfrage.InitializeComponent">
+<summary>
+InitializeComponent
+</summary>
+</member>
+<member name="T:mgis.winGIDauswahl">
+<summary>
+winGIDauswahl
+</summary>
+</member>
+<member name="M:mgis.winGIDauswahl.InitializeComponent">
+<summary>
+InitializeComponent
+</summary>
+</member>
+<member name="T:mgis.winImapMenue">
+<summary>
+winImapMenue
+</summary>
+</member>
+<member name="M:mgis.winImapMenue.InitializeComponent">
+<summary>
+InitializeComponent
+</summary>
+</member>
+<member name="P:mgis.clsDatenbankZugriff.ServiceName">
+ <summary>
+ ServiceName für OracleDB
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:mgis.clsDatenbankZugriff.dbtyp">
+ <summary>
+ "mdb" oder "dbf" oder "mysql"  "postgres"
+ </summary>
+ <value></value>
+ <remarks></remarks>
+</member>
+<member name="M:mgis.clsDBtools.SpalteZuDatatableHinzufuegen(System.Data.DataTable,System.String,System.String)">
+ <summary>
+ ergänzt in der datatalbe ein spalte mit dem angegebenen typ
+ </summary>
+ <param name="meinelokaleDT"></param>
+ <param name="Spaltenname"></param>
+ <param name="SpaltenTyp"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:mgis.clsOracleIns.GetNewid(Devart.Data.Oracle.OracleCommand@,System.String)">
+ <summary>
+ für INSERT unter Oracle
+ </summary>
+ <param name="com"></param>
+ <param name="SqlString">Mit Returning sequenz</param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="F:mgis.ParaPunkt._abstract">
+ <summary>
+ ergibt sich aus der suchangabe: dreieich, am hasenpfad 1
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:mgis.ParaPunkt._name">
+ <summary>
+ z.B. hier emissionsquelle
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="T:mgis.winEigentuemer4Polygon">
+<summary>
+winEigentuemer4Polygon
+</summary>
+</member>
+<member name="M:mgis.winEigentuemer4Polygon.InitializeComponent">
+<summary>
+InitializeComponent
+</summary>
+</member>
+<member name="P:mgis.clsLayer.ldoku">
+ <summary>
+ for the ACTIVE layer
+ </summary>
+ <returns></returns>
+ prop    
+ prop
+ 
+</member>
+<member name="M:mgis.clsLayer.calcMapfileFullname(System.String)">
+ <summary>
+ braucht den pfad
+ </summary>
+ <returns></returns>
+</member>
+<member name="F:mgis.clsLayerPres._RBischecked">
+ <summary>
+ wird durch 'RBsichtbarkeit' sichtbar
+ </summary>
+</member>
+<member name="T:mgis.winOption">
+<summary>
+winOption
+</summary>
+</member>
+<member name="M:mgis.winOption.InitializeComponent">
+<summary>
+InitializeComponent
+</summary>
+</member>
+<member name="T:mgis.winProbaugFSTVorschlaege">
+<summary>
+winProbaugFSTVorschlaege
+</summary>
+</member>
+<member name="M:mgis.winProbaugFSTVorschlaege.InitializeComponent">
+<summary>
+InitializeComponent
+</summary>
+</member>
+<member name="T:mgis.winProbaugAdressVorschlaege">
+<summary>
+winProbaugAdressVorschlaege
+</summary>
+</member>
+<member name="M:mgis.winProbaugAdressVorschlaege.InitializeComponent">
+<summary>
+InitializeComponent
+</summary>
+</member>
+<member name="F:mgis.clsParapolyline._abstract">
+ <summary>
+ ergibt sich aus der suchangabe: dreieich, am hasenpfad 1
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:mgis.clsParapolyline._GKstring">
+ <summary>
+ die gauss-krüger als delimited string
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:mgis.clsParapolyline._ShapeSerial">
+ <summary>
+ der serialisierte aktuelle shape (wie mapwingis)
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:mgis.clsParapolygon._abstract">
+ <summary>
+ ergibt sich aus der suchangabe: dreieich, am hasenpfad 1
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:mgis.clsParapolygon._GKstring">
+ <summary>
+ die gauss-krüger als delimited string
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:mgis.clsParapolygon._ShapeSerial">
+ <summary>
+ der serialisierte aktuelle shape (wie mapwingis)
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="T:mgis.winboxOS">
+<summary>
+winboxOS
+</summary>
+</member>
+<member name="M:mgis.winboxOS.InitializeComponent">
+<summary>
+InitializeComponent
+</summary>
+</member>
+<member name="F:mgis.ParaAdresse._abstract">
+ <summary>
+ ergibt sich aus der suchangabe: dreieich, am hasenpfad 1
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:mgis.ParaAdresse._name">
+ <summary>
+ z.B. hier emissionsquelle
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="T:mgis.winDetailAdressSuche">
+<summary>
+winDetailAdressSuche
+</summary>
+</member>
+<member name="M:mgis.winDetailAdressSuche.InitializeComponent">
+<summary>
+InitializeComponent
+</summary>
+</member>
+<member name="M:mgis.clsFSTtools.holeKoordinaten4Flurstueck(System.String,System.String,mgis.ParaFlurstueck@)">
+ <summary>
+ holt sich die koordinate des extends des flurstücks
+ berechnet daraus letztlich den kartengen.aktMap.aktrange
+ der sollte auch beim speichern des flurstücks verwendet werden
+ setzt: aktFST.normflst.GKhoch,aktFST.punkt.X,aktGlobPoint.strX
+ </summary>
+</member>
+<member name="F:mgis.ParaFlurstueck._status">
+ <summary>
+ status=1: Raumbezug eines verwandten Vorgangs
+ </summary>
+ <remarks> status=1: Raumbezug eines verwandten Vorgangs</remarks>
+</member>
+<member name="T:mgis.sucheUtm32">
+<summary>
+sucheUtm32
+</summary>
+</member>
+<member name="M:mgis.sucheUtm32.InitializeComponent">
+<summary>
+InitializeComponent
+</summary>
+</member>
+<member name="T:mgis.WinDetailSucheFST">
+<summary>
+WinDetailSucheFST
+</summary>
+</member>
+<member name="M:mgis.WinDetailSucheFST.InitializeComponent">
+<summary>
+InitializeComponent
+</summary>
+</member>
+<member name="T:mgis.winLeg">
+<summary>
+winLeg
+</summary>
+</member>
+<member name="M:mgis.winLeg.InitializeComponent">
+<summary>
+InitializeComponent
+</summary>
+</member>
+<member name="T:mgis.winWMShtmlDB">
+<summary>
+winWMShtmlDB
+</summary>
+</member>
+<member name="M:mgis.winWMShtmlDB.InitializeComponent">
+<summary>
+InitializeComponent
+</summary>
+</member>
+<member name="T:mgis.Application">
+<summary>
+Application
+</summary>
+</member>
+<member name="M:mgis.Application.InitializeComponent">
+<summary>
+InitializeComponent
+</summary>
+</member>
+<member name="M:mgis.Application.Main">
+<summary>
+Application Entry Point.
+</summary>
+</member>
+<member name="M:mgis.clsMiniMapTools.PolygonAufbereiten(mgis.clsParapolygon)">
+ <summary>
+ punkte nach GK ueberführen
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="T:mgis.MainWindow">
+<summary>
+MainWindow
+</summary>
+</member>
+<member name="M:mgis.MainWindow.InitializeComponent">
+<summary>
+InitializeComponent
+</summary>
+</member>
+<member name="M:mgis.pgisTools.calcBbox(System.String,System.String,System.Int32)">
+ <summary>
+ die bbox wird zurückgegeben
+ </summary>
+ <param name="rechts"></param>
+ <param name="hoch"></param>
+ <param name="radius"></param> 
+</member>
+<member name="M:mgis.clsString.noWhiteSpace(System.String@)">
+ <summary>
+ wird gegen leerstring getauscht
+ </summary>
+ <param name="meintext"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:mgis.clsString.noWhiteSpace(System.String@,System.String)">
+ <summary>
+ ersatz des whitespce durch neues zeichen , meist leerzeichen
+ </summary>
+ <param name="meintext"></param>
+ <param name="ersatzZeichen"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:mgis.clsString.removeLeadingChar(System.String,System.String)">
+ <summary>
+ entfernt den buchstabe am anfang eines wortes
+ </summary>
+ <param name="mater"></param>
+ <param name="buchstabe"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:mgis.meineHttpNet.meinHttpJob(System.String,System.String,System.String@,System.Text.Encoding,System.Int32)">
+ <summary>
+  timeout ist kleiner 1 also wird nicht auf die antwort gewartet
+ </summary>
+ <param name="proxystring"></param>
+ <param name="aufrufstring"></param>
+ <param name="hinweis"></param>
+ <param name="encode"></param>
+ <param name="timeoutinMillisec"></param>
+ <returns></returns>
+   
+</member>
+<member name="M:mgis.meineExtensionsIsnullorempty.ToLogString(System.Exception,System.String)">
+ <summary> 
+ <para>Creates a log-string from the Exception.</para>
+ <para>The result includes the stacktrace, innerexception et cetera, separated by <seealso cref="P:System.Environment.NewLine"/>.</para>
+ </summary>
+ <param name="ex">The exception to create the string from.</param>
+ <param name="additionalMessage">Additional message to place at the top of the string, maybe be empty or null.</param>
+ <returns></returns>
+</member>
+<member name="T:mgis.myPoint">
+ <summary>
+ x,y, as double
+ </summary>
+ <remarks></remarks>
+</member>
+</members>
+</doc>

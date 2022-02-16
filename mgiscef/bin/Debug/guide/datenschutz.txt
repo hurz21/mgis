@@ -1,0 +1,10 @@
+Das GIS speichert ausschliesslich anwenderbezogene Daten die für den 
+Betrieb notwendig sind.
+Es sind dies: 
+ a -Der letzte Kartenausschnitt einer GIS-Sitzung und
+ b -die letzte Themenzusammenstellung einer GIS-Sitzung
+ c -optional werden Favoritenzusammenstellungen gespeichert.
+
+Es werden ausserdem anonyme Zugriffstatistiken für das Controlling erstellt. 
+Diese sind weder Anwender- noch Fachdienstbezogen!
+ 

@@ -1,0 +1,53 @@
+<html>
+<head>
+    <title>SELFHTML: Seitentitel</title>
+    <style>
+        img {
+            vertical-align: text-top;
+            float: left;
+        }
+    </style>
+	<script type="text/javascript"> 
+      // document.addEventListener("wheel", myWheel); 	
+	   function myWheel(e) {  
+	     //alert("wheel " + e.wheelDelta);
+	     //alert("wheel " + e.wheelDelta + " x " + e.pageX + " y " + e.pageY));
+	   }
+     
+        document.addEventListener('click', printMousePos, true);
+        laststring = "";
+        lastcoord = "";
+        function Datenabfrage(aid, x, gid) {
+            //alert(lastcoord + " aid " + aid + ", " + x + "," + gid)
+            //This code will call WebView_JSDemoAbout
+            laststring = aid + ", " + x + "," + gid 
+			//alert(lastcoord)
+            if (lastcoord != "") {
+				//alert("v>>>" +laststring + ',' +lastcoord)
+				boundAsync.showMessage(laststring , lastcoord ); 
+                laststring = "";
+                lastcoord = "";
+            }
+        }
+        function printMousePos(e) {
+				//alert("click" + e.which) 
+            cursorX = e.pageX;
+            cursorY = e.pageY;
+            lastcoord = cursorX + "," + cursorY
+           //  alert("pageX: " + cursorX + ",pageY: " + cursorY);
+            if (laststring != "") { 
+				  boundAsync.showMessage(laststring , lastcoord);
+                laststring = "";
+                lastcoord = "";
+            }
+        }
+		       
+    </script>
+</head>
+
+<body style="width: [BREITE]pt;height: [HOEHE]pt;overflow :hidden;vertical-align=top; oncontextmenu:'return false'"  oncontextmenu='return false'>
+    <img src='leer.png'   width='[BREITE]pt' height='[HOEHE]pt' left='550pt' top='-100' usemap='#m-imagemap' align="left" 
+	style="width: [BREITE]pt;height: [HOEHE]pt;overflow :hidden;vertical-align=top; top:-100">
+    [IMAGEMAPFROMMAPSERVER]
+</body>
+</html>
