@@ -1,0 +1,201 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+bgm
+</name>
+</assembly>
+<members>
+<member name="T:bgm.My.MyWpfExtension">
+ <summary>
+ Module used to define the properties that are available in the My Namespace for WPF
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:bgm.My.MyWpfExtension.Application">
+ <summary>
+ Returns the application object for the running application
+ </summary>
+</member>
+<member name="P:bgm.My.MyWpfExtension.Computer">
+ <summary>
+ Returns information about the host computer.
+ </summary>
+</member>
+<member name="P:bgm.My.MyWpfExtension.User">
+ <summary>
+ Returns information for the current user.  If you wish to run the application with the current 
+ Windows user credentials, call My.User.InitializeWithWindowsUser().
+ </summary>
+</member>
+<member name="P:bgm.My.MyWpfExtension.Log">
+ <summary>
+ Returns the application log. The listeners can be configured by the application's configuration file.
+ </summary>
+</member>
+<member name="P:bgm.My.MyWpfExtension.Windows">
+ <summary>
+ Returns the collection of Windows defined in the project.
+ </summary>
+</member>
+<member name="T:bgm.My.Resources.Resources">
+<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member>
+<member name="P:bgm.My.Resources.Resources.ResourceManager">
+<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member>
+<member name="P:bgm.My.Resources.Resources.Culture">
+<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member>
+<member name="P:bgm.My.Resources.Resources.BuildDate">
+<summary>
+  Looks up a localized string similar to 18.06.2020 13:54:48,95  
+.
+</summary>
+</member>
+<member name="T:bgm.winBestand">
+<summary>
+winBestand
+</summary>
+</member>
+<member name="M:bgm.winBestand.InitializeComponent">
+<summary>
+InitializeComponent
+</summary>
+</member>
+<member name="P:bgm.clsDatenbankZugriff.ServiceName">
+ <summary>
+ ServiceName für OracleDB
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:bgm.clsDatenbankZugriff.dbtyp">
+ <summary>
+ "mdb" oder "dbf" oder "mysql"  "postgres"
+ </summary>
+ <value></value>
+ <remarks></remarks>
+</member>
+<member name="F:bgm.ParaFlurstueck._status">
+ <summary>
+ status=1: Raumbezug eines verwandten Vorgangs
+ </summary>
+ <remarks> status=1: Raumbezug eines verwandten Vorgangs</remarks>
+</member>
+<member name="T:bgm.winHaupt">
+<summary>
+winHaupt
+</summary>
+</member>
+<member name="M:bgm.winHaupt.InitializeComponent">
+<summary>
+InitializeComponent
+</summary>
+</member>
+<member name="M:bgm.filehelper.GetFilesRecursive(System.String,System.String)">
+ <summary>
+ This method starts at the specified directory.
+ It traverses all subdirectories.
+ It returns a List of those directories.
+ </summary>
+</member>
+<member name="M:bgm.clsString.noWhiteSpace(System.String@)">
+ <summary>
+ wird gegen leerstring getauscht
+ </summary>
+ <param name="meintext"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:bgm.clsString.noWhiteSpace(System.String@,System.String)">
+ <summary>
+ ersatz des whitespce durch neues zeichen , meist leerzeichen
+ </summary>
+ <param name="meintext"></param>
+ <param name="ersatzZeichen"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:bgm.clsString.removeLeadingChar(System.String,System.String)">
+ <summary>
+ entfernt den buchstabe am anfang eines wortes
+ </summary>
+ <param name="mater"></param>
+ <param name="buchstabe"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="T:bgm.myPoint">
+ <summary>
+ x,y, as double
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:bgm.meineHttpNet.meinHttpJob(System.String,System.String,System.String@,System.Text.Encoding,System.Int32)">
+ <summary>
+  timeout ist kleiner 1 also wird nicht auf die antwort gewartet
+ </summary>
+ <param name="proxystring"></param>
+ <param name="aufrufstring"></param>
+ <param name="hinweis"></param>
+ <param name="encode"></param>
+ <param name="timeoutinMillisec"></param>
+ <returns></returns>
+   
+</member>
+<member name="T:bgm.winDetail">
+<summary>
+winDetail
+</summary>
+</member>
+<member name="M:bgm.winDetail.InitializeComponent">
+<summary>
+InitializeComponent
+</summary>
+</member>
+<member name="T:bgm.winWerkzeuge">
+<summary>
+winWerkzeuge
+</summary>
+</member>
+<member name="M:bgm.winWerkzeuge.InitializeComponent">
+<summary>
+InitializeComponent
+</summary>
+</member>
+<member name="T:bgm.winFST">
+<summary>
+winFST
+</summary>
+</member>
+<member name="M:bgm.winFST.InitializeComponent">
+<summary>
+InitializeComponent
+</summary>
+</member>
+<member name="T:bgm.Application">
+<summary>
+Application
+</summary>
+</member>
+<member name="M:bgm.Application.InitializeComponent">
+<summary>
+InitializeComponent
+</summary>
+</member>
+<member name="M:bgm.Application.Main">
+<summary>
+Application Entry Point.
+</summary>
+</member>
+</members>
+</doc>

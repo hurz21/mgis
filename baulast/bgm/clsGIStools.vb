@@ -241,7 +241,7 @@ Public Class clsGIStools
         End Try
     End Function
 
-    Friend Shared Function updateGISDB(baulastblatnr As String, zuielname As String, gemarkung As String) As Boolean
+    Friend Shared Function updateGISDB(baulastblatnr As String, zuielname As String, gemarkung As String, endung As String) As Boolean
         Dim sql As String
         Dim neuerTIFFname As String
         'fkat/baulasten/Sprendlingen/2284.tiff     
@@ -251,7 +251,7 @@ Public Class clsGIStools
 
         Try
             l(" MOD updateGISDB anfang")
-            neuerTIFFname = srv_subdirBaulsten & "/" & gemarkung & "/" & baulastblatnr.Trim & ".tiff"
+            neuerTIFFname = srv_subdirBaulsten & "/" & gemarkung & "/" & baulastblatnr.Trim & endung
             'update " & tools.srv_schema & "." & tools.srv_tablename & " set tiff2='fkat/baulasten/' || trim(gemarkung) || '/' || trim(jahr_blattnr) || '.tiff'
             sql = "update " & tools.srv_schema & "." & tools.srv_tablename & " Set tiff='" & neuerTIFFname & "' where jahr_blattnr='" & baulastblatnr & "'"
             Dim dtRBplus As New DataTable
