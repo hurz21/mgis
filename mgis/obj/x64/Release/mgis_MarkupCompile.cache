@@ -4,16 +4,16 @@
 winexe
 VB
 .vb
-C:\Users\feinen_j\Source\Repos\hurz21\mgis\mgis\obj\x64\Release\
+D:\a_gh\mgis\mgis\mgis\obj\x64\Release\
 mgis
 none
 false
 
-C:\Users\feinen_j\Source\Repos\hurz21\mgis\mgis\Application.xaml
+D:\a_gh\mgis\mgis\mgis\Application.xaml
 16863283782
 2-1862553951
-119-1317501567
-18947305372
+119-1659526707
+181587625124
 bookmark\winBM.xaml;bookmark\winBMedit.xaml;dbabfrage\winDBabfrage.xaml;dbabfrage\winGIDauswahl.xaml;dbabfrage\winImapMenue.xaml;Dictionary1.xaml;eigentuemer\winEigentuemer4Polygon.xaml;gisstart\MainWindow.xaml;optionen\winOption.xaml;PROBAUG\winFSTvorschlaege.xaml;PROBAUG\winProbaugAdressVorschlaege.xaml;suchen\objektsuche\winboxOS.xaml;suchen\sucheadress\winDetailAdressSuche.xaml;suchen\sucheFst\WinDetailSucheFST.xaml;suchen\suchekoordinate\sucheUtm32.xaml;legende\winLeg.xaml;
 
 True

@@ -4,16 +4,16 @@
 winexe
 VB
 .vb
-C:\Users\feinen_j\Source\Repos\hurz21\mgis\webgiscontrol\webgiscontrol\obj\Release\
+D:\a_gh\mgis\mgis\webgiscontrol\webgiscontrol\obj\Release\
 webgiscontrol
 none
 false
 
-C:\Users\feinen_j\Source\Repos\hurz21\mgis\webgiscontrol\webgiscontrol\Application.xaml
+D:\a_gh\mgis\mgis\webgiscontrol\webgiscontrol\Application.xaml
 61112213311
 4-827057642
 24-154372598
-151789147977
+152144337541
 MainWindow.xaml;mapfileTest\mapfileTest.xaml;sachgebiete\winSachgeiete.xaml;winAlleLayer.xaml;stammedit\winEbenenHaupt.xaml;winInfo.xaml;
 
 True
