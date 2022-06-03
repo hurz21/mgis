@@ -4,16 +4,16 @@
 winexe
 VB
 .vb
-D:\a_gh\mgis\mgis\webgiscontrol\webgiscontrol\obj\Debug\
+C:\a_gh\mgis\mgis\webgiscontrol\webgiscontrol\obj\Debug\
 webgiscontrol
 none
 false
 
-D:\a_gh\mgis\mgis\webgiscontrol\webgiscontrol\Application.xaml
+C:\a_gh\mgis\mgis\webgiscontrol\webgiscontrol\Application.xaml
 61112213311
 4-827057642
 24-154372598
-152144337541
+15526235847
 MainWindow.xaml;mapfileTest\mapfileTest.xaml;sachgebiete\winSachgeiete.xaml;winAlleLayer.xaml;stammedit\winEbenenHaupt.xaml;winInfo.xaml;
 
 True

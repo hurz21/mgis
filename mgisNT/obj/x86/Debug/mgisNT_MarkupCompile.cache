@@ -4,16 +4,16 @@
 winexe
 VB
 .vb
-D:\a_gh\mgis\mgis\mgisNT\obj\x86\Debug\
+C:\a_gh\mgis\mgis\mgisNT\obj\x86\Debug\
 mgis
 none
 false
 
-D:\a_gh\mgis\mgis\mgisNT\Application.xaml
+C:\a_gh\mgis\mgis\mgisNT\Application.xaml
 16863283782
 2-1862553951
-123766120518
-18-263256196
+123420190276
+18-1457209168
 bookmark\winBM.xaml;bookmark\winBMedit.xaml;dbabfrage\winDBabfrage.xaml;dbabfrage\winGIDauswahl.xaml;dbabfrage\winImapMenue.xaml;Dictionary1.xaml;eigentuemer\winEigentuemer4Polygon.xaml;gisstart\MainWindow.xaml;optionen\winOption.xaml;PROBAUG\winFSTvorschlaege.xaml;PROBAUG\winProbaugAdressVorschlaege.xaml;suchen\objektsuche\winboxOS.xaml;suchen\sucheadress\winDetailAdressSuche.xaml;suchen\sucheFst\WinDetailSucheFST.xaml;suchen\suchekoordinate\sucheUtm32.xaml;legende\winLeg.xaml;
 
 True

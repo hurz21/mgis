@@ -4,16 +4,16 @@
 winexe
 VB
 .vb
-D:\a_gh\mgis\mgis\gisedit\obj\x64\Release\
+C:\a_gh\mgis\mgis\gisedit\obj\x64\Release\
 gisEdit
 none
 false
 
-D:\a_gh\mgis\mgis\gisedit\Application.xaml
+C:\a_gh\mgis\mgis\gisedit\Application.xaml
 4157553359
 2-917415490
 29-2084507968
-142091260207
+13942956720
 MainWindow.xaml;naturdenkmale\editor\winEditor.xaml;naturdenkmale\win161.xaml;roundButton.xaml;
 
 True
